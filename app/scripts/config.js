@@ -1,3 +1,4 @@
+// TODO Rename this file to `amd_config` or something like that to avoid ambiguity
 require.config({
     baseUrl: '/scripts',
     paths: {
