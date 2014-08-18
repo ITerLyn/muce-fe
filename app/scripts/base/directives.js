@@ -25,6 +25,7 @@ define([
     }
 
     function dateTimePickerLinker($scope, $elem, $attr, ngModelCtrl) {
+        // TODO DO NOT omit the braces!
         if (!$.fn.datetimepicker) return;
         ngModelCtrl.$formatters.unshift(function(valueFromModel) {
             // return how data will be shown in input
