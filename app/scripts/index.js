@@ -22,6 +22,7 @@ require([
     ]);
 
     function tongji() {
+        // TODO Some browsers may not work if you don't insert the elemente to DOM
         $('<img/>').attr('src', '/images/tongji.png');
     };
 
@@ -50,6 +51,7 @@ require([
 
     muceApp.run(function() {
         // set window.userName which is required by ...
+        // TODO If this is a constant, capitalize it
         window.userName = MuceCom.getNameFromCookie();
     });
 
