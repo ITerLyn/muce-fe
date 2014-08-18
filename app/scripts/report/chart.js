@@ -19,6 +19,7 @@ define([
             nowDimensionsType: [],
             nowDimensionsVal: [],
             saveFilters: function() {
+                // TODO Use `Function.bind()` instead
                 var self = this;
                 console.log($scope.dimenAdv);
                 // trigger fetchReports
