@@ -63,7 +63,7 @@ define([], function() {
                     }
                     break;
             }
-
+            // TODO Use absolute equal
             if (item.attr.type != 'hidden') {
                 formItemWrapper = _.template(tplEl.html(), item);
                 host.append(formItemWrapper);
