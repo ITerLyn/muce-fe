@@ -33,4 +33,4 @@ define([], function() {
             'getDbParts': 'GET /mq/:db/:table/partitions'
         });
     });
-})
+}) // TODO Missing semicolon
