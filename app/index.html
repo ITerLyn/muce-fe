@@ -3,59 +3,122 @@
     <head>
         <title>Muce 3.0 - Wandoulabs</title>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="components/datetimepicker/jquery.datetimepicker.css">
-        <link rel="stylesheet" href="styles/index.css">
-        <link rel="stylesheet" href="http://todc.github.io/todc-bootstrap/dist/css/todc-bootstrap.min.css">
-        <link rel="stylesheet" href="components/angular-ui-select/dist/select.min.css">
-        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
-    </head>
-    <body>
-        <!-- alert global -->
-        <div class="alert alert-error global-error-msg">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong></strong>
-        </div>
-        <!-- alert global - old for before code -->
-        <div class="global-error-container"><div muce-notices></div></div>
+        <!-- build:css /styles/all.css -->
+        <link rel="stylesheet" href="vendors/ace-v1.2/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="vendors/ace-v1.2/css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="vendors/ace-v1.2/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="vendors/ace-v1.2/css/ace-fonts.css" />
+        <link rel="stylesheet" href="vendors/ace-v1.2/css/ace.min.css" />
 
+        <link rel="stylesheet" href="components/ngQuickDate/dist/ng-quick-date.css">
+        <link rel="stylesheet" href="components/ngQuickDate/dist/ng-quick-date-default-theme.css">
+
+        <link rel="stylesheet" href="components/bootstrap-daterangepicker/daterangepicker-bs2.css">
+
+        <link rel="stylesheet" href="components/codemirror/lib/codemirror.css">
+        <link rel="stylesheet" href="components/codemirror/addon/hint/show-hint.css" />
+        <link rel="stylesheet" href="components/angular-ui-select/dist/select.min.css">
+        <link rel="stylesheet" href="vendors/select2.css">
+        <link rel="stylesheet" href="components/AngularJS-Toaster/toaster.css">
+
+        <link rel="stylesheet" href="components/angular-spinkit/build/angular-spinkit.min.css">
+
+        <link rel="stylesheet" href="components/multiple-select/multiple-select.css">
+        <link rel="stylesheet" href="components/intro.js/introjs.css">
+
+        <link rel="stylesheet" href="styles/index.css">
+        <!-- endbuild -->
+
+        <!-- angular.js at the bottom, define "ng-cloak" css yourself  -->
+        <style type="text/css">
+          [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+              display: none !important;
+          }
+        </style>
+    </head>
+    <body ng-controller="baseCtrl" ng-class="_pageClass" ng-cloak>
+        <!-- alert global - old for before code -->
         <!-- top navbar -->
-        <div ng-include src="'templates/partials/navbar.html'"></div>
+        <div muce-include="templates/partials/navbar.html" ng-hide="minimalui"></div>
 
         <!-- page container -->
-        <div class="container-fluid container-wrapper">
-            <!-- ng-view -> page -->
+        <div class="container-fluid container-wrapper" ng-class="{'i-no-navbar': minimalui}">
+            <toaster-container></toaster-container>
+            <!-- toaster-options="{'position-class': 'toast-top-full-width'}" -->
             <div ui-view></div>
         </div>
 
-        <!-- scroll arrow -->
+        <!-- Todo: scroll arrow -->
         <div class="scroll-key">
             <span class="scroll-top">⬆</span>
             <span class="scroll-bottom">⬇</span>
         </div>
 
-        <!-- bower:js -->
+        <!-- Google Analytices -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-55851863-1', 'auto');
+          ga('send', 'pageview');
+
+        </script>
+
+        <!-- build:js /scripts/base.js -->
         <script src="components/jquery/dist/jquery.js"></script>
+        <script src="components/underscore/underscore.js"></script>
         <script src="components/angular/angular.js"></script>
+
+        <!-- need remove -->
+        <!-- <script src="components/bootstrap/dist/js/bootstrap.js"></script> -->
+        <script src="components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="components/angular-animate/angular-animate.js"></script>
         <script src="components/angular-ui-router/release/angular-ui-router.js"></script>
         <script src="components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-        <script src="components/ng-grid/build/ng-grid.js"></script>
+
         <script src="components/angular-validation/dist/angular-validation.js"></script>
         <script src="components/angular-validation/dist/angular-validation-rule.js"></script>
-        <script src="components/angular-classy/angular-classy.js"></script>
-        <script src="components/underscore/underscore.js"></script>
-        <script src="components/bootstrap/dist/js/bootstrap.js"></script>
-        <!-- endbower -->
-        <script src="components/datetimepicker/jquery.datetimepicker.js"></script>
         <script src="components/angular-ui-select/dist/select.min.js"></script>
+        <script src="components/ngQuickDate/dist/ng-quick-date.js"></script>
+        <script src="components/angular-bindonce/bindonce.js"></script>
+        <script src="components/AngularJS-Toaster/toaster.js"></script>
+        <script src="components/angular-spinkit/build/angular-spinkit.min.js"></script>
 
-        <script src="//muce.corp.wandoujia.com/scripts/vendor/4792da56.jquery.timer.js"></script>
-        <script src="//muce.corp.wandoujia.com/scripts/vendor/highCharts-2.3.2/6588e6ca.highcharts.js"></script>
-        <script src="//muce.corp.wandoujia.com/scripts/vendor/highCharts-2.3.2/b44d85b6.exporting.js"></script>
-        <script src="//muce.corp.wandoujia.com/scripts/vendor/53ace77b.knockout.js"></script>
-        <script src="//muce.corp.wandoujia.com/scripts/vendor/codeMirror-3.0/fc04e944.codemirror.js"></script>
-        <script src="//muce.corp.wandoujia.com/scripts/vendor/codeMirror-3.0/2f805d0b.mysql.js"></script>
-        <script src="//muce.corp.wandoujia.com/scripts/vendor/ed892db4.mousetrap.min.js"></script>
+        <!-- // codemirrior -->
+        <script src="components/codemirror/lib/codemirror.js"></script>
+        <script src="components/codemirror/mode/sql/sql.js"></script>
+        <script src="components/codemirror/addon/hint/show-hint.js"></script>
+        <!-- <script src="components/codemirror/addon/hint/sql-hint.js"></script> -->
+        <script src="components/angular-ui-codemirror/ui-codemirror.js"></script>
 
+        <!-- // highcharts -->
+        <script src="vendors/Highcharts-4.0.3/js/highcharts.src.js"></script>
+        <script src="vendors/Highcharts-4.0.3/js/highcharts-more.src.js"></script>
+        <script src="vendors/Highcharts-4.0.3/js/modules/exporting.src.js"></script>
+        <script src="components/highcharts-ng/dist/highcharts-ng.js"></script>
+
+        <script src="components/quick-ng-repeat/quick-ng-repeat.js"></script>
+        <script src="components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+
+        <script src="components/zeroclipboard/dist/ZeroClipboard.min.js"></script>
+
+        <script src="components/intro.js/intro.js"></script>
+        <script src="components/angular-intro.js/src/angular-intro.js"></script>
+
+        <!-- for tool - uamp -->
+        <script src="components/moment/moment.js"></script>
+        <script src="components/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="components/multiple-select/jquery.multiple.select.js"></script>
+        <!-- endbuild -->
+
+        <!-- build:js /scripts/templates.js -->
+        <script src="scripts/templates.js"></script>
+        <!-- endbuild -->
+
+        <!-- build:js(.tmp) /scripts/app.js -->
         <script src="components/requirejs/require.js" data-main="scripts/index"></script>
+        <!-- endbuild -->
     </body>
 </html>

@@ -1,121 +1,137 @@
 define([
-    'report/chart',
-    'report/add'
-], function(chartPanelCtrl) {
+    'report/baseCtrl',
+    'report/sidebarCtrl',
+    'report/delPanelCtrl',
+    'report/settingCtrl',
+    'report/detailCtrl',
+    'report/tableCtrl',
+    'report/resModal',
+    'report/management'
+], function(reportBaseCtrl, sidebarCtrl, delPanelCtrl, settingCtrl, detailCtrl, tableCtrl) {
 
-    function reportCtrl($scope) {
-        // those variable is used across report module
-    }
+    var Config = {
+        delAlertPrefix: 'Are you sure you wish to delete ',
+        quickDataList: _.zip(
+            'Last day,Last 2 days,Last 3 days,Last 1 week,Last 2 week,Last 1 month'.split(','), [-1, -2, -3, -7, -14, -31]
+        ),
+        periodFormatMap: {
+            0: 'yyyy-MM-dd',
+            1: 'yyyy-MM-dd hh:mm'
+        },
+        apiDateFormatMap: {
+            0: 'yyyyMMdd',
+            1: 'yyyyMMddhh'
+        },
+        csvFileNameTpl: '[MUCE REPORT] <%= report %> - <%= start %>_<%= end %>'
+    };
+    // WTF?! Name Conflict!!!
+    window.Config = Config;
 
-    // side - group->category-report list select
-    function navbarCtrl(apiHelper, $scope, $rootScope) {
-        // fetch group list, and default assign first group
-        apiHelper('getGroupList', {
-            busy: 'global'
-        }).then(function(data) {
-            $scope.groupList = data;
-            $scope.currentGroup = data[0];
-        });
-
-        $scope.switchGroup = function(group) {
-            $scope.currentGroup = group;
-        };
-
-        $scope.switchCategory = function(category) {
-            $scope.currentCategory = category;
-        };
-
-        $scope.switchReport = function(report) {
-            $rootScope.currentReport = report;
-        };
-
-        // update category list when user change select
-        $scope.$watch('currentGroup', function(val) {
-            if (!val) return;
-            apiHelper('getCategoryList', {
-                groupId: val.id
-            }, {
-                busy: 'global'
-            }).then(function(data) {
-                $scope.categoryList = data;
-                // Todo: 更新 ulr?! or resign by routeParam
-                $scope.currentCategory = data[0];
-            });
-        }, true);
-
-        // update report List when user change select
-        $scope.$watch('currentCategory', function(val) {
-            if (!val) return;
-            apiHelper('getReportList', {
-                categoryId: val.id
-            }, {
-                busy: 'global'
-            }).then(function(data) {
-                $scope.reportList = data;
-                $rootScope.currentReport = data[0];
-            });
-        }, true);
-
-        // currentGroup[groupList], currentCategory[categoryList], currentReport[reportList]
-    }
-
-    // add modal 内部
-    function addModalCtrl($scope, $modal) {
-        $scope.addTypes = ['group', 'category', 'dimension', 'metric', 'report'];
-        $scope.openModal = function(type) {
-            if (type === 'metric') {
-                // support resolve
-                $modal.open({
-                    templateUrl: 'templates/report/metric-tabs-modal.html',
-                    size: 'lg' // '', sm
-                });
-                return;
+    var routeInfo = {
+        'report': {
+            url: '/report',
+            views: {
+                'sidebar@report': {
+                    templateUrl: 'templates/report/sidebar.html',
+                    controller: 'sidebarCtrl'
+                },
+                'setting@report': {
+                    templateUrl: 'templates/report/setting.html',
+                    controller: 'settingCtrl'
+                },
+                '@': {
+                    templateUrl: 'templates/report/index.html',
+                    controller: 'reportBaseCtrl'
+                }
             }
-            // support resolve
-            $modal.open({
-                templateUrl: 'templates/report/modal.html',
-                controller: type + 'ModalCtrl',
-                size: 'lg' // '', sm
-            });
-        };
-    }
-
-    // delete widget 内部
-    function delPanelCtrl(apiHelper, $scope, $timeout) {
-        // scope: currentDelType, selectedItems, currentDelList, currentQuery
-        $scope.delTypes = ['group', 'category', 'dimension', 'metric', 'categoryt_report_relation'];
-        $scope.currentDelType = $scope.delTypes[0];
-
-        $scope.$watch('currentDelType', function(val) {
-            if (!val) return;
-            resetType();
-            apiHelper('get' + _.capitalize(val) + 'List').then(function(data) {
-                $scope.currentDelList = data;
-            });
-        });
-
-        function resetType() {
-            $scope.currentQuery = '';
-            $scope.currentDelList = [];
-            // loading
+        },
+        'report.detail': {
+            url: '/:group/:category/:report?startDate&endDate&period&dimensions&filters',
+            templateUrl: 'templates/report/chart-table.html',
+            controller: 'detailCtrl'
+        },
+        'report.management': {
+            url: '^/management',
+            abstract: true,
+            views: {
+                '@': {
+                    templateUrl: 'templates/management/base.html',
+                    controller: 'managementBaseCtrl'
+                }
+            }
+        },
+        'report.management.metric': {
+            url: '/metric',
+            views: {
+                'pannel@report.management': {
+                    templateUrl: 'templates/management/metric.html',
+                    controller: 'viewMetricsCtrl'
+                }
+            }
+        },
+        'report.management.dimension': {
+            url: '/dimension',
+            views: {
+                'pannel@report.management': {
+                    templateUrl: 'templates/management/dimension.html',
+                    controller: 'viewDimensionsCtrl'
+                }
+            }
+        },
+        'report.management.report': {
+            url: '/report',
+            views: {
+                'pannel@report.management': {
+                    templateUrl: 'templates/management/report.html',
+                    controller: 'viewReportsCtrl'
+                }
+            }
         }
+    };
 
-        // config select2 (with template, includes checkbox, selectedItems)
-        $scope.delSelectedHandler = function() {
-            // checkbox selectedItems exist, with notice?!
-            // post and generate del opt differentiate by type
-            apiHelper('del' + _.capitalize(currentDelType), {
-
-            }, null).then(function(data) {
-
-            });
+    /* add modal */
+    function addModalCtrl($scope, $modal) {
+        $scope.addTypes = ['group', 'category', 'report', 'metric', 'dimension'];
+        $scope.openModal = function(e, type) {
+            e.preventDefault();
+            if (type !== 'metric') {
+                $modal.open({
+                    templateUrl: 'templates/report/modal.html',
+                    controller: type + 'ModalCtrl',
+                    size: 'lg'
+                });
+            } else {
+                $modal.open({
+                    templateUrl: 'report/metric-tabs-modal.html',
+                    size: 'lg',
+                    controller: 'metricModalWrapperCtrl'
+                });
+            }
         };
     }
 
-    angular.module('muceApp.report', ['muceApp.report.add'])
-        .controller('reportCtrl', reportCtrl)
-        .controller('navbarCtrl', navbarCtrl)
+    angular.module('muceApp.report', ['muceApp.report.resModal', 'muceApp.report.management'])
+        .controller('reportBaseCtrl', reportBaseCtrl)
+        .controller('sidebarCtrl', sidebarCtrl)
         .controller('addModalCtrl', addModalCtrl)
         .controller('delPanelCtrl', delPanelCtrl)
-        .controller('chartPanelCtrl', chartPanelCtrl);
+        .controller('settingCtrl', settingCtrl)
+        .controller('detailCtrl', detailCtrl)
+        .controller('tableCtrl', tableCtrl)
+        .config(function($stateProvider, $urlRouterProvider) {
+            _.each(routeInfo, function(opt, name) {
+                $stateProvider.state(name, opt);
+            });
+            $urlRouterProvider
+                .when('/management', '/management/report')
+        }).run(function($rootScope) {
+            $rootScope.$on('$stateChangeStart',
+                function(event, toState, toParams, fromState, fromParams) {
+                    // event.preventDefault();
+                    console.log(toState);
+                    console.log(toParams);
+                    // transitionTo() promise will be rejected with
+                    // a 'transition prevented' error
+                });
+        });
 });

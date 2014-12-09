@@ -1,0 +1,81 @@
+<div ng-intro-options="IntroOptions" ng-intro-method="showIntro">
+    <!-- Search inline ~~ -->
+    <p class="report-op-bar">
+        <span>Filter Options</span>
+        <select ng-model="filterField" id="intro-management-search_type">
+            <option ng-repeat="f in filterOpts" value="{{f}}">{{f}}</option>
+        </select> <b>-</b> <input type="text" ng-model="filterText">
+
+        <a ng-click="showIntro()">Intro Me!</a>
+
+        <label class="pull-right" id="intro-management-show_disable_report">
+            Show Disable Report
+            <input name="switch-field-1" ng-model="showDisable"
+                class="ace ace-switch ace-switch-7" type="checkbox">
+            <span class="lbl"></span>
+        </label>
+    </p>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Period</th>
+            <th>Group & Category</th>
+            <th class="i-nowrap-cell">Metric</th>
+            <th>Dimension</th>
+            <!-- <th>Created Time</th> -->
+            <th>Modified Time</th>
+            <th>Owner</th>
+            <th>Comment</th>
+            <th>isEnable</th>
+            <th>Operate</th>
+        </tr>
+        <tr ng-repeat="report in reportList|filter:filterObj">
+            <td>{{report.id}}</td>
+            <td>{{report.name}}</td>
+            <td>
+                <span ng-repeat="period in report.periods">
+                    {{period|transPeriod}}
+                </span>
+            </td>
+            <td>
+                <span ng-repeat="i in report.groupCategories">
+                    {{i}}
+                    <i class="icon-trash" tooltip="remove relationship"
+                        ng-click="delReportRelation(i, report)"></i>
+                    <br>
+                </span>
+            </td>
+            <td class="i-nowrap-cell">
+                <!-- popover card to show more info  -->
+                <span ng-repeat="m in report.metrics">
+                    {{m.name}}
+                    <i class="icon-info-sign"
+                        popover-html-unsafe="{{genMetricCardHtml(m)}}"
+                        popover-trigger="mouseenter"
+                        popover-animation="true"></i>
+                    <br/>
+                </span>
+            </td>
+            <td class="i-nowrap-cell">
+                <span ng-bind-html="report.dimensions|joinArrExt:{'key': 'name', 'joiner': '<br>'}"></span>
+            </td>
+            <!-- <td>{{report.createTime|date:'yyyy-MM-dd'}}</td> -->
+            <td>{{report.modifyTime|date:'yyyy-MM-dd'}}</td>
+            <td>{{report.owner}}</td>
+            <td>{{report.comment}}</td>
+            <td>
+                <div enable-flag-switch
+                    switch-callback="toggleResStatus" data="report"
+                    is-enable="{{report.enable?1:''}}" type="report"></div>
+            </td>
+            <td>
+                <a ng-click="editReport(report)">Edit</a>
+                <a ng-click="invokeRelationModal(report)">Relation</a>
+                <a ng-click="invokeSQLModal(report)">View SQL</a>
+                <a ng-click="delReport(report)" ng-show="$root.checkAdmin()">Delete</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div muce-include="templates/report/snippet.html"></div>

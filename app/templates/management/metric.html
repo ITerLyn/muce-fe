@@ -1,0 +1,42 @@
+<div>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Hql</th>
+            <th>Metric Type</th>
+            <th>Data Type</th>
+            <th>Event Id</th>
+            <th>Create Time</th>
+            <th>Modified Time</th>
+            <th>Owner</th>
+            <th>Comment</th>
+            <td>isEnable</td>
+            <th>Operate</th>
+        </tr>
+        <tr ng-repeat="metric in metricList">
+            <td>{{metric.id}}</td>
+            <td>{{metric.name}}</td>
+            <td>{{metric.hql}}</td>
+            <!-- <td ng-show="metric.metricType=='COMBINE'">{{metric.hql}}</td>
+            <td ng-show="metric.metricType=='NORMAL'">
+                <div tip-marker content="metric.hql"></div>
+            </td> -->
+            <td>{{metric.metricType}}</td>
+            <td>{{metric.type|castTypeFromInt}}</td>
+            <td>{{metric.eventId}}</td>
+            <td>{{metric.createTime|date:'yyyy-MM-dd'}}</td>
+            <td>{{metric.modifyTime|date:'yyyy-MM-dd'}}</td>
+            <td>{{metric.owner}}</td>
+            <td>{{metric.comment}}</td>
+            <td><div enable-flag-switch
+                    switch-callback="toggleResStatus" data="metric"
+                    is-enable="{{metric.enable?1:''}}" type="metric"></div></td>
+            <td>
+                <a ng-click="editMetric(metric)">Edit</a>
+                <a ng-click="delMetric(metric)">Delete</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div muce-include="templates/report/snippet.html"></div>

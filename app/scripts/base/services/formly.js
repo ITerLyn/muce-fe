@@ -43,9 +43,14 @@ define([
                 var formKey = $element.parents('div-form').attr('key') + 'Data';
 
                 // shortcut for hook referTpl
+                var _ctrl;
                 if ($scope.options.referTpl) {
                     $element.html($templateCache.get($scope.options.referTpl));
                     $compile($element.contents())($scope);
+                    $timeout(function() {
+                        _ctrl = $element.find('input,textarea,select').data("$ngModelController");
+                        _ctrl && $scope[$scope.formName].$addControl(_ctrl);
+                    }, 500);
                     return;
                 }
 
@@ -60,7 +65,14 @@ define([
 
                     $element.html($templateCache.get('formly/basic-field-tpl')
                         .replace('PLACEHOLDER', controlHtml));
+                    if ($scope.options.wrapAttr) {
+                        $element.find('.control-group').attr($scope.options.wrapAttr);
+                    }
                     $compile($element.contents())($scope);
+                    $timeout(function() {
+                        _ctrl = $element.find('input,textarea,select').data("$ngModelController");
+                        _ctrl && $scope[$scope.formName].$addControl(_ctrl);
+                    }, 500);
                     return;
                 }
 
@@ -88,7 +100,7 @@ define([
                             $input.setAttribute('ng-' + key, val);
                         });
                     }
-                    if ($scope.options.options) {
+                    if ($scope.options.type === 'select') {
                         $input.setAttribute('ng-options', $scope.options.optionStr || defaultNgOptionStr);
                     }
                     // && $scope.options.attrs
@@ -105,7 +117,7 @@ define([
                         $scope[$scope.formName].$addControl(
                             $element.find('input,textarea,select').data("$ngModelController")
                         );
-                    }, 500)
+                    }, 500);
                 });
             },
             controller: function fieldController($scope) {
@@ -162,10 +174,17 @@ define([
                         $timeout(function() {
                             element.on('click', function(e) {
                                 e.preventDefault();
-                                // quick fix:
                                 var form = scope.$$childHead[attrs.formlySubmit];
+                                if (!form && attrs.target) {
+                                    // quick fix: tabset
+                                    form = $('#' + attrs.target).scope().$$childTail[attrs.formlySubmit];
+                                }
                                 $validationProvider.validate(form).success(function() {
-                                    $parse(attrs.ngClick)(scope);
+                                    if (attrs.target) {
+                                        $parse(attrs.ngClick)($('#' + attrs.target).scope());
+                                    } else {
+                                        $parse(attrs.ngClick)(scope);
+                                    }
                                 });
                             });
                         });
@@ -176,7 +195,7 @@ define([
         ])
         .config(function($validationProvider) {
             $validationProvider.setErrorHTML(function(msg) {
-                return "<p class=\"muce-form-help-block\"><span class=\"w-text-warning\">" + msg + "</span></p>";
+                return "<p class=\"i-form-help-block\"><span class=\"w-text-warning\">" + msg + "</span></p>";
             });
 
             $validationProvider.setExpression(rules.expression).setDefaultMsg(rules.defaultMsg);

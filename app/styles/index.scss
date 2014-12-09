@@ -1,129 +1,34 @@
-@import "vendor/bootstrap";
-@import "vendor/bootstrap-responsive";
-
-@import "main";
-@import "analyze";
-@import "channels";
-@import "docs";
-@import "mq";
-@import "realtime";
-@import "login";
-
-@import "vendor/font-awesome";
-@import "vendor/jquery-ui-timepicker-addon";
+@import "compass";
+@import "component/misc";
 
 @import "component/loader";
+@import "component/animate";
 
-// Todo: component directory should be created
-.global-error-container {
-    position: absolute;
-    top: 50px;
-    z-index: 100000;
-    right: 30px;
-    .alert{
-        margin: 3px 0;
+/* global setting */
+.tool-realtime-dashboard, .tool-realtime-dashboard-mgr {
+    .navbar .navbar-inner {
+        background-color: #000;
     }
-}
-
-// report page fix
-#report_container {
-    .nav-sidebar {
+    .container-wrapper {
+        margin-top: 40px;
         padding: 0;
-
-        h3{
-            font-size: 18px;
-            line-height: 22px;
-            padding-left: 10px;
-            border-left: 2px solid red;
-        }
-
-        select{
-            max-width: 100%;
-        }
-        input{
-            max-width: 95%;
-        }
     }
-
-    .setting-wrapper {
-        .date-operator, .dimension-operator {
-            & > * {
-                margin-right: 10px;
-            }
-        }
-        .date-operator {
-            .btn-group {
-                margin-bottom: 10px;
-                .btn {
-                    padding-left: 18px;
-                    padding-right: 18px;
-                }
-            }
-        }
-        .dimension-operator {
-            button, label{
-                display: inline-block;
-            }
-            margin-bottom: 10px;
-            & > button{
-                margin-bottom: 5px;
-            }
-            label select {
-                margin: 0;
-            }
-        }
-        .trigger-wrapper{
-            vertical-align: middle;
-            margin-top: 10px;
-        }
-
-        select{
-            width: 130px;
-        }
-    }
-
-    .chart-wrapper {
-        height: 450px;
-        max-height: 450px;
-    }
-
-    .detail-list{
-        padding-left: 0;
-    }
-
-    .table-wrapper {
-        thead td {
-            cursor: pointer;
-            i {
-                padding-left: 10px;
-            }
-        }
-        margin: 20px 0;
-        border: none;
-        min-height: initial;
+    .scroll-key {
+        display: none;
     }
 }
 
-
-// component - todo with prefix
-.selected-wrapper {
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-.search-select-wrapper{
-    label{
-        white-space: nowrap;
-    }
-}
-.form-dimen-adv {
-    .controls select{
-        width: 35%;
-    }
-    .controls input{
-        width: 40%;
-    }
+.i-no-navbar.container-wrapper {
+    margin-top: 0;
 }
 
+a {
+    cursor: pointer;
+    &.active {
+        color: #005580;
+        background: #EEE;
+    }
+}
 
 label > input[type=checkbox] {
     margin: 0;
@@ -131,44 +36,679 @@ label > input[type=checkbox] {
     vertical-align: middle;
 }
 
-// global
 [class^="icon-"] {
     cursor: pointer;
-    &:hover{
+    &:hover {
         cursor: pointer;
-        color: red;
+        color: #87b87f;
         transition: all .5s ease;
     }
 }
 
-.muce-form-help-block {
+textarea {
+    transition: all linear .2s;
+}
+
+.navbar .navbar-inner {
+    max-height: 40px;
+    min-height: 40px;
+    background-color: #438eb9;
+    background-image: none;
+
+    .brand {
+        line-height: 40px;
+        padding-left: 20px;
+        padding: 0 0 0 20px;
+        height: 40px;
+
+        b {
+            font-size: 12px;
+            padding-left: 5px;
+        }
+    }
+}
+
+/* dropdown item cusror for bs*/
+.dropdown-menu li a {
+    cursor: pointer;
+}
+.formly .select2-container {
+    width: 320px;
+    .select2-results {
+        overflow-x: auto;
+    }
+}
+
+/* 同比环比~~ */
+.chain-opt-wrapper {
+    p > label {
+        display: inline;
+    }
+}
+
+.select2-results .select2-result-single {
+    margin-left: 0;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 2dppx)  {
+    .select2-search input,
+    .select2-search-choice-close,
+    .select2-container .select2-choice abbr,
+    .select2-container .select2-choice .select2-arrow b {
+        background-image: none !important;
+    }
+}
+
+.form-horizontal {
+    /* multi-chooser */
+    .search-select-wrapper {
+        width: 220px;
+    }
+}
+
+.CodeMirror-hints {
+    overflow: scroll;
+    width: 500px;
+    z-index: 9999;
+    .CodeMirror-hint {
+        max-width: none;
+        overflow: visible;
+    }
+}
+
+/* 外部组件设置 */
+
+
+/*// 业务前缀 mc-<modle>-
+// 组件前缀 i-<componentName>-
+// 一次性限定 x-语义+限定
+
+// 基础组件*/
+.mc-notices {
+    .alert {
+        max-width: 400px;
+        word-wrap: break-word;
+    }
+}
+
+/*scroll button*/
+.scroll-key {
+    position: fixed;
+    right: 2px;
+    top: 200px;
+}
+.scroll-key span {
+    cursor: pointer;
+    padding: 2px;
+    color: rgb(70, 136, 71);
+    background-color: rgb(223, 240, 216);
+    border: 1px solid rgb(214, 233, 198);
+    display: block;
+    text-align: center;
+    margin: 5px 0;
+    border-right: 4px;
+}
+
+.container-wrapper {
+    margin-top: 40px;
+
+    @media (max-width: 980px) {
+        margin-top: 10px;
+    }
+}
+
+/* report page fix */
+.mc-report-container {
+    margin-top: 15px;
+    /* Todo: check */
+    .detail-list {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .chart-wrapper {
+        height: 450px;
+        max-height: 450px;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 420px;
+        font-size: 30px;
+        border: 1px solid #ccc;
+        position: relative;
+    }
+
+    .setting-wrapper {
+        margin-bottom: 10px;
+        // quick compoent
+        .quickdate {
+            width: 200px;
+            margin-bottom: 10px;
+
+            .quickdate-button {
+                width: 90%;
+            }
+        }
+
+        .date-operator, .dimension-operator {
+            & > * {
+                margin-right: 10px;
+                margin-bottom: 0!important;
+                vertical-align: middle;
+                display: inline-block!important;
+            }
+        }
+        .dimension-operator {
+            & > .ng-hide {
+                display: none!important;
+            }
+        }
+        .date-operator {
+            .btn-group {
+                .btn {
+                    padding-left: 18px;
+                    padding-right: 18px;
+                }
+            }
+        }
+        .dimension-operator {
+            margin: 10px 0;
+
+            button, label {
+                display: inline-block;
+            }
+            // margin-bottom: 10px;
+
+            & > button {
+                // margin-bottom: 5px;
+            }
+            label select {
+                margin: 0;
+            }
+        }
+        .trigger-wrapper {
+            /* vertical-align: middle;
+            margin-top: 10px; */
+        }
+
+        select {
+            width: 130px;
+        }
+    }
+
+    .table-wrapper {
+        min-height: 500px;
+        /*margin: 20px 0;*/
+        border: none;
+        min-height: initial;
+
+        td {
+            text-align: center;
+            max-width: 300px;
+            word-break: break-all;
+        }
+
+        thead td {
+            cursor: pointer;
+            i {
+                padding-left: 10px;
+            }
+        }
+
+        double-bounce-spinner {
+            position: fixed;
+            bottom: -85px;
+            left: 55%;
+        }
+    }
+}
+
+.mc-report-filter-table {
+    table-layout: fixed;
+
+    td > select, td > input {
+        width: 95%;
+    }
+}
+
+/* advanced dimension modal */
+.mc-report-dimenAdv-form {
+    .controls select {
+        width: 35%;
+    }
+    .controls input {
+        width: 40%;
+    }
+}
+
+.mc-report-sidebar {
+    padding: 0;
+
+    > li {
+        margin-top: 5px;
+    }
+
+    .sidebar-list {
+        & > li {
+            position: relative;
+            overflow: hidden;
+
+            a {
+                padding: 8px 14px;
+                margin: 0 0 -1px;
+                padding-right: 4px;
+            }
+
+            i[class*="icon-"] {
+                font-size: 14px;
+                position: absolute;
+                top: 8px;
+                right: 5px;
+            }
+        }
+    }
+
+    .nav-list {
+        margin-top: 10px;
+        border-radius: 6px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+
+        & > li > a {
+            border: 1px solid #E5E5E5;
+        }
+    }
+
+    .btn-group {
+        width: 100%;
+
+        .btn-name, .btn-caret {
+            height: 35px;
+            font-size: 16px;
+        }
+
+        .btn-name {
+            width: 87%;
+        }
+
+        .dropdown-menu {
+            width: 100%;
+            overflow: auto;
+        }
+    }
+
+    .report-list {
+
+        & > li {
+            i.icon-pencil {
+                right: 20px!important;
+            }
+        }
+    }
+
+    h3 {
+        font-size: 18px;
+        line-height: 22px;
+        padding-left: 10px;
+        border-left: 2px solid red;
+    }
+    select {
+        max-width: 100%;
+    }
+    input {
+        max-width: 95%;
+    }
+}
+
+/* mq page */
+.mc-mq-container {
+    margin-top: 15px;
+    .span3 {
+        width: 16%;
+    }
+    .span9 {
+        width: 80%;
+    }
+    .CodeMirror {
+        height: 112px;
+        margin: 5px 2px 22px 0;
+        font-family: monospace;
+        position: relative;
+        border: 1px solid #d9d9d9;
+        line-height: normal;
+        width: 100%;
+    }
+    .CodeMirror-scroll {
+      overflow-y: hidden;
+      overflow-x: auto;
+    }
+
+    .mq-tb-view {
+        position: relative;
+
+        .tbinfo-db-tb-name {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+    }
+
+    .mq-db-list {
+        .db-list{
+            list-style: none;
+            margin: 0;
+        }
+        .db-item {
+            margin-bottom: 3px;
+            .dropdown-toggle {
+                width: 90%;
+                overflow: hidden;
+                padding: 0;
+            }
+        }
+    }
+
+    .mq-job-history {
+
+    }
+}
+
+.mc-mgr {
+    margin-top: 20px;
+
+    .report-op-bar {
+        select, input {
+            width: 120px;
+            margin-bottom: 0;
+        }
+    }
+}
+
+/* Todo */
+.collapse-sidebar-container {
+    position: relative;
+    .collapse-sidebar-trigger {
+        left: 14.1%;
+        top: 5px;
+    }
+    .span2 {
+        margin-left: 0;
+    }
+    &.mc-uamp {
+        .collapse-sidebar-trigger {
+            left: 180px;
+        }
+    }
+}
+.modal-open i.collapse-sidebar-trigger {
+    background-color: #000;
+    border: none;
+}
+
+.sidebar-collapsed {
+    &.mc-uamp {
+        .main-content {
+            margin-left: 0;
+        }
+        .sidebar {
+            margin-left: -200px;
+            opacity: 0;
+            background-color: #fff;
+        }
+        .collapse-sidebar-trigger {
+            left: 10px;
+            top: -5px;
+        }
+    }
+    .span2 {
+        margin-left: -18%;
+        transition: all .5s cubic-bezier(0.25,.46,.45,.94);
+    }
+    .span10 {
+        margin-left: 0px;
+        width: 100%;
+        transition: all .5s cubic-bezier(0.25,.46,.45,.94);
+    }
+    .collapse-sidebar-trigger {
+        left: 30px;
+        top: -25px;
+    }
+}
+.collapse-sidebar-trigger {
+    transition: all .5s cubic-bezier(0.25,.46,.45,.94);
+    display: inline-block;
+    cursor: pointer;
+    font-size: 14px;
+    color: #aaa;
+    border: 1px solid #bbb;
+    padding: 0 5px;
+    line-height: 18px;
+    border-radius: 16px;
+    background-color: #fff;
+
+    position: absolute;
+    top: 15px;
+    z-index: 9999;
+}
+
+
+/* tool - UAMP */
+
+.mc-uamp {
+    .main-content {
+        padding: 10px;
+        transition: all .5s cubic-bezier(0.25,.46,.45,.94);
+    }
+    .sidebar {
+        transition: all .2s cubic-bezier(0.25,.46,.45,.94);
+        text-align: center;
+        &::before {
+            margin-left: 0;
+            background-color: #fff;
+        };
+        h3{
+            font-size: 18px;
+            line-height: 24px;
+            i{
+                padding-right: 8px;
+            }
+        }
+        li a {
+            font-size: 14px;
+            line-height: 40px;
+            height: 44px;
+        }
+    }
+    .op-bar {
+        .multi-fn-datepicker, .uamp-checkbox-select, .apply-btn {
+            display: inline-block;
+            margin-right: 5px;
+        }
+    }
+    .bottom-op-bar {
+        .btn.ng-hide-remove, .btn.ng-hide-add {
+            display: inline-block!important;
+        }
+    }
+    .multi-fn-datepicker {
+        .datepicker, .fn-chooser {
+            display: inline-block;
+        }
+        .datepicker {
+            input {
+                width: 100px;
+            }
+        }
+    }
+    .metric-minus-up {
+        color: green;
+    }
+    .metric-minus-down {
+        color: red;
+    }
+    .uamp-checkbox-select {
+        display: inline-block;
+        select[multiple] {
+            margin-left: 5px;
+            width: 200px;
+        }
+    }
+    .chart {
+        margin-bottom: 40px;
+        position: relative;
+        .chart-date-range-picker-wrapper {
+            position: absolute;
+            right: 10px;
+            top: -50px;
+            z-index: 1000;
+            .input-prepend {
+                margin-bottom: 0;
+            }
+        }
+    }
+    table {
+        td {
+            a {
+                text-decoration: none;
+                i {
+                    margin-left: 5px;
+                }
+            }
+        }
+        td.diff-data-cell {
+            text-align: right;
+        }
+        td:first-child {
+            text-align: left;
+        }
+    }
+}
+
+
+.x-control-stack-select select {
+    margin: 5px 0;
+}
+
+/* component define here */
+.i-error-container {
+    position: absolute;
+    top: 50px;
+    z-index: 100000;
+    right: 30px;
+    .alert {
+        margin: 3px 0;
+        .close {
+            right: 0;
+        }
+    }
+}
+
+/* component - multi-choose */
+.i-multi-choose-wrapper {
+    .checkbox-wrapper {
+        max-height: 300px;
+        overflow: scroll;
+        min-height: 100px;
+        position: relative;
+        .loading-indicator {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+        }
+    }
+    .selected-wrapper {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+    .search-select-wrapper {
+        border: 1px solid #ccc;
+        padding: 10px;
+        label {
+            white-space: nowrap;
+        }
+    }
+    .suggestion-item {
+        margin: 0;
+        line-height: 30px;
+        font-size: 15px;
+    }
+    .selected-name .icon-minus-sign {
+        margin-right: 5px;
+    }
+}
+
+/* component - helper */
+.i-form-help-block{
     display: block;
     margin: 5px 0 0;
 }
-.muce-form-help-inline {
+.i-form-help-inline {
     display: inline-block;
     margin: 0 0 0 10px;
+}
+.i-bg-red {
+    background-color: #f2dede;
 }
 .w-text-warning {
     color: #f24949;
 }
-
-textarea{
-    transition: all linear .2s;
+.w-text-success {
+    color: green;
 }
-.control-stack-select select{
-    margin: 5px 0;
+.i-text-warning-nav {
+    color: red!important;
+    cursor: not-allowed;
+}
+.i-stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+.i-nowrap-cell {
+    white-space: nowrap;
+}
+.i-cursor-handle {
+    cursor: pointer;
+}
+.i-ng-bg-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin-top: 10px;
+
+    i {
+        font-size: 16px;
+    }
 }
 
-// fix select width
-.select2-container, .select2-drop, .select2-search, .select2-search input{
-    width: 220px;
+.annotation-container {
+    width: 200px;
+    text-align: left;
+    line-height: 20px;
+    position: absolute;
 }
 
-// .ng-invalid.ng-dirty{
-//     .has-error .form-control;
-// }
+/* component archive */
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+    12.5% {
+        transform: translateX(-6px) rotateY(-5deg);
+    }
+    37.5% {
+        transform: translateX(5px) rotateY(4deg);
+    }
+    62.5% {
+        transform: translateX(-3px) rotateY(-2deg);
+    }
+    87.5% {
+        transform: translateX(2px) rotateY(1deg);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+.i-ux-shake {
+    animation: shake 400ms ease-in-out;
+}
 
-// label.has-error.control-label {
-//     .has-error .control-label;
-// }
+

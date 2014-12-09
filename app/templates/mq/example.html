@@ -1,0 +1,27 @@
+<div id="mq_user_query_example" class="span9">
+    <div class="bs-docs-example">
+        <code>&lt;distinct&gt;</code> Android DAU #
+    </div>
+    <pre class="prettyprint linenums">select count(distinct id) from detail_common_package where product = 'ANDROID' and p_date='20141026'
+    </pre>
+    <div class="bs-docs-example">
+        <code>&lt;group by&gt;</code> 按 view_url 来看用户数
+    </div>
+    <pre class="prettyprint linenums">select count(distinct id),view_url from detail_clickevent WHERE p_date>='20141020' and p_date<='20141023' group by view_url
+    </pre>
+    <div class="bs-docs-example">
+        <code>&lt;like&gt;</code> Music DLU: 音乐 vertical 日访问用户数
+    </div>
+    <pre class="prettyprint linenums">select count (distinct id) from detail_showevent where view_url like '％/music％' and view_url not like '%/mything%' and p_date='20141026'
+    </pre>
+    <div class="bs-docs-example">
+        <code>&lt;limit&gt;</code> 查询前10条 detail_taskevent 日志
+    </div>
+    <pre class="prettyprint linenums">select * from detail_taskevent where p_date=20141010 and p_hourmin=1200 limit 10
+    </pre>
+    <div class="bs-docs-example">
+        <code>&lt;in&gt;</code> App Consumption: 服务器接收到 App Download 和 Play请求的次数。
+    </div>
+    <pre class="prettyprint linenums">select count(*) from detail_taskevent where product = 'ANDROID' and task_action in ('DOWNLOAD', 'PLAY') and content_type= 'APP' and p_date='20141026'
+    </pre>
+</div>

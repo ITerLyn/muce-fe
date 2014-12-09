@@ -1,0 +1,120 @@
+<link rel="stylesheet" href="assets/css/datepicker.css" />
+<link rel="stylesheet" href="assets/css/bootstrap-timepicker.css" />
+<link rel="stylesheet" href="assets/css/daterangepicker.css" />
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/date-time/bootstrap-datepicker.min.js"></script>
+<script src="assets/js/date-time/bootstrap-timepicker.min.js"></script>
+<script src="assets/js/date-time/moment.min.js"></script>
+<script src="assets/js/date-time/daterangepicker.js"></script>
+
+<div class="mc-uamp collapse-sidebar-container">
+    <i class="icon-double-angle-left collapse-sidebar-trigger"></i>
+    <div class="sidebar">
+        <h3>
+            <i class="icon-bar-chart"></i>Key Metrics
+        </h3>
+        <ul class="nav nav-list">
+            <li ng-repeat="report in reportList"
+                ng-click="selectReport(report.id)"
+                ng-class="{'active': state.report.id === report.id}">
+                <a>{{report.name}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="op-bar" ng-show="state.hasFetchData">
+            <div class="multi-fn-datepicker">
+                <!-- export: state.timezone -->
+                <div data-toggle="buttons-radio" class="btn-group fn-chooser">
+                    <button class="btn" type="button"
+                        ng-class="{'active': state.timespan==i[0]}"
+                        ng-click="state.timespan=i[0];"
+                        ng-repeat="i in state.report.timespan">
+                        {{i[1]}}
+                    </button>
+                </div>
+
+                <!-- config: [state.timezone] -->
+                <div class="input-append datepicker">
+                    <input class="date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" />
+                    <span class="add-on">
+                        <i class="icon-calendar"></i>
+                    </span>
+                </div>
+            </div>
+
+            <!-- label+input-select2-multi -->
+            <script type="text/ng-template" id="uamp-checkbox-select.html">
+                <label class="uamp-checkbox-select">
+                    <span>{{i.disp_name}}</span>
+                    <select multiple="multiple" data-dimension-id="{{i.id}}">
+                        <option value="((ALL))">全部</option>
+                        <option ng-repeat="i in i.dimension_value" ng-value="i.dimensionvalue">
+                            {{i.disp_name}}
+                        </option>
+                    </select>
+                </label>
+            </script>
+            <!-- config: [report] -->
+            <div uamp-checkbox-select ng-repeat="i in state.report.dimension"></div>
+
+            <button class="btn apply-btn" ng-click="fetchReportData()">Apply</button>
+        </div>
+
+        <!-- collapsable-data-table -->
+        <table class="table">
+            <tr>
+                <td ng-if="state.isSelectMetricMode">选择</td>
+                <td ng-repeat="th in reportData.tableTitle track by $index"
+                    ng-class="{'diff-data-cell': isDiffCellTh(th)}">
+                    <a ng-click="toggleRowSort($index)">
+                        {{th.disp_name}}<i ng-show="state.report.order" ng-class="{
+                            'icon-sort': $index !== sortType,
+                            'icon-arrow-up': $index == sortType && !sortReverse,
+                            'icon-arrow-down': $index == sortType && sortReverse}"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr ng-repeat="metric in flatMetricsData" ng-show="inferFromParent(metric)">
+                <td ng-if="state.isSelectMetricMode">
+                    <input type="checkbox" ng-model="metric.selected">
+                </td>
+
+                <td ng-show="inferFromParent(metric)" ng-style="setMetricLevelStyle(metric)">
+                    <i class="icon-plus" ng-show="metric.haschild"
+                        ng-click="toggleMetricOpenStatus(metric)"
+                        ng-class='{"icon-plus": !metric.isopened, "icon-minus": metric.isopened}'>
+                    </i>
+                    {{metric.name}}
+                </td>
+
+                <td ng-repeat="val in metric.data track by $index"
+                    ng-class="{'diff-data-cell': isDiffCell(val, $index)}"
+                    ng-bind-html="formatByType(val, $index)"></td>
+            </tr>
+        </table>
+
+        <p class="bottom-op-bar">
+            <button type="button" class="btn" btn-checkbox
+                ng-model="state.isSelectMetricMode">{{state.isSelectMetricMode?'取消':'看趋势'}}</button>
+            <button type="button" class="btn"
+                ng-show="state.isSelectMetricMode" ng-click="renderChart()">绘制</button>
+            <!-- 监控 selectMetrics 的值，toggle 重现绘制 -->
+            <button class="btn" ng-click="exportCsv()">导出 CSV</button>
+        </p>
+
+        <!-- chart config: [state.metric-list] -->
+        <div class="chart" ng-show="state.isShowChart">
+            <label for="chart-date-range-picker" class="chart-date-range-picker-wrapper">
+                时间范围 -
+                <div class="input-prepend">
+                    <span class="add-on">
+                        <i class="icon-calendar"></i>
+                    </span>
+                    <input type="text" name="chart-date-range-picker" class="chart-date-range-picker" />
+                </div>
+            </label>
+            <highchart config="chartConfig"></highchart>
+        </div>
+    </div>
+</div>

@@ -1,30 +1,63 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container-fluid">
-            <!-- <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button> -->
-            <a class="brand" href="report">Muce</a>
-            <p class="navbar-text pull-right">
-                <span class="warning">CONFIDENTIAL!</span> |
-                <span class="navbar-link user-name"></span> |
-                <a href="/muce-webapp/j_spring_security_logout">Logout</a>
-            </p>
+
+            <a class="brand" ui-sref="report.detail">
+                Muce<b>Beta</b>
+            </a>
+
+            <ul class="nav pull-right">
+                <li>
+                    <a class="i-text-warning-nav" >CONFIDENTIAL!</a>
+                </li>
+                <li>
+                    <!-- Todo: replace muce3 help manual -->
+                    <a href="https://docs.google.com/a/wandoujia.com/presentation/d/1aeySLFxcfWBCet_S6BTIIdBFIUUrbvrah9GiOunVx7U/edit?usp=sharing" target="_blank">Help</a>
+                </li>
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle">
+                        <img ng-src="{{userInfo.img||'http://img.wdjimg.com/who/avatar2.png'}}" width="24">
+                        {{userInfo.mail.split('@')[0]}}
+                        <i class="icon-caret-down"></i>
+                    </a>
+                    <!-- <ul class="dropdown-menu">
+                      <li><a ui-sref="#">LogOut</a></li>
+                    </ul> -->
+                </li>
+            </ul>
+
             <div class="nav-collapse collapse" muce-navbar>
                 <ul class="nav">
-                    <li ng-repeat="nav in navs">
-                        <a class="profile-bar muce-nav-tab" ui-sref-active="selected"
-                            data-id="#{{nav}}_container" ui-sref="{{nav}}">
-                        {{nav|capitalize}}</a>
+                    <li ng-class="{ active: $state.is('report.detail') }">
+                        <a class="muce-nav-tab" ui-sref="report.detail">
+                            Report
+                        </a>
                     </li>
 
-                    <li>
-                        <a href="https://docs.google.com/a/wandoujia.com/document/d/1yG3Dx-Cyvyu91QBiVz36RSs_IOoj1a9-Q4Flv-cZUrM/edit" target="_blank">Help</a>
+                    <li ng-class="{ active: $state.includes('report.management') }">
+                        <a class="muce-nav-tab" href="/#/management">
+                            Management
+                        </a>
                     </li>
-                    <li>
-                        <a href="https://docs.google.com/a/wandoujia.com/forms/d/1_XmNMNhuB1KM-irbFVKCQ9jQS_C8cphwuSqLddrC-oU/viewform" target="_blank">Feedback</a>
+
+                    <li ng-class="{ active: $state.includes('mq') }">
+                        <a class="muce-nav-tab" ui-sref="mq.history">
+                            MuceQuery
+                        </a>
+                    </li>
+
+                    <li ui-sref-active="active">
+                        <a class="muce-nav-tab" ui-sref="tool-uamp">KeyMetrics</a>
+                    </li>
+
+                    <li class="dropdown" ui-sref-active="active">
+                        <a href="#" class="dropdown-toggle">
+                            Tools <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a ui-sref="tool-realtime-dashboard">RealTime Dashboard [Beta]</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>

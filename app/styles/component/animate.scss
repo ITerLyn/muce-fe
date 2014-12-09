@@ -1,0 +1,50 @@
+@import "compass";
+/* ngShow/ngHide - add and remove
+    ngIf - enter and leave
+    ngInclude - enter and leave
+    ngRepeat - enter and leave, etc
+*/
+
+/* Todo: add fade-down, fade-down, fade-right; */
+
+/*.ux-fadeDown*/
+.ng-enter {-webkit-animation: fadeDownEnter .3s linear;}
+.ng-hide-add, .ng-hide-remove {
+    display: inherit!important;
+}
+.ng-hide-remove {-webkit-animation: fadeDownEnter .3s linear;}
+
+.mc-uamp {
+    table, input, .btn, .btn-group, .op-bar {
+        .ng-enter {-webkit-animation: initial;}
+        .ng-hide-add, .ng-hide-remove {
+            display: inherit!important;
+        }
+        .ng-hide-remove {-webkit-animation: initial;}
+    }
+}
+
+.disable-ux {
+    &.ng-enter {-webkit-animation: initial;}
+    &.ng-leave {-webkit-animation: initial;}
+
+    &.ng-hide-add, &.ng-hide-remove {
+        display: inherit!important;
+    }
+    &.ng-hide-add {
+        -webkit-animation: initial;
+    }
+}
+
+@include keyframes(fadeDownEnter) {
+    from {
+        @include transform(translate3D(0,-15px,0));
+        opacity: 0;
+    }
+    to {
+        @include transform(translate3D(0,0,0));
+        opacity: 1;
+    }
+}
+
+

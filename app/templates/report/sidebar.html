@@ -1,0 +1,104 @@
+<div class="nav nav-sidebar mc-report-sidebar">
+    <!-- Todo: inline loading indicator -->
+
+    <!--Group-->
+    <li>
+        <h3>Group:</h3>
+        <div class="btn-group" dropdown>
+
+            <button class="btn btn-success dropdown-toggle btn-name">
+                <span tooltip="{{state.group.name}}">{{state.group.name||'loading...'}}</span>
+            </button>
+
+            <button class="btn btn-success btn-caret dropdown-toggle">
+                <span class="caret"></span>
+            </button>
+
+            <ul class="dropdown-menu sidebar-list">
+                <li ng-repeat="group in state.groupList"
+                    ng-mouseenter="isShow=true"
+                    ng-mouseleave="isShow=false">
+                    <a ng-click="switchTypeVal('group', group)" dropdown-toggle>
+                        {{group.name}}
+                    </a>
+                    <i class="icon-pencil" ng-show="isShow"
+                        ng-click="openEditModal('group', group)"></i>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    <!--Category-->
+    <li>
+        <h3>Category:</h3>
+        <div class="btn-group" dropdown>
+            <button class="btn btn-info btn-name" dropdown-toggle>
+                <span tooltip="{{state.category.name}}">
+                    {{state.categoryList ? (state.categoryList.length ? state.category.name : 'No Category') : 'loading...'}}
+                </span>
+            </button>
+
+            <button class="btn btn-info dropdown-toggle btn-caret">
+                <span class="caret"></span>
+            </button>
+
+            <ul class="dropdown-menu sidebar-list">
+                <li ng-repeat="category in state.categoryList"
+                    ng-mouseenter="isShow=true"
+                    ng-mouseleave="isShow=false">
+                    <a ng-click="switchTypeVal('category', category)" dropdown-toggle>
+                        {{category.name}}
+                    </a>
+                    <i class="icon-pencil" ng-show="isShow"
+                        ng-click="openEditModal('category', category)"></i>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    <li>
+        <h3>Report:</h3>
+        <!--Report List-->
+        <p class="text-warning orange" ng-show="!state.reportList || !state.reportList.length"
+            style="padding-left: 10px;">
+            <i class="icon-warning-sign"></i>
+            No Report Created!
+        </p>
+        <ul class="nav nav-list sidebar-list report-list">
+            <li ng-repeat="report in state.reportList"
+                ng-mouseenter="isShow=true"
+                ng-mouseleave="isShow=false"
+                ng-class="{'active': (state.report == report)}">
+                <a ng-click="switchTypeVal('report', report)">
+                    {{report.name}}
+                </a>
+                <!-- <i class="icon-trash" ng-show="isShow"
+                    ng-click="delReport(report)"></i> -->
+            </li>
+        </ul>
+    </li>
+
+    <li ng-controller="addModalCtrl">
+        <h3>Add:</h3>
+        <!-- Add List -->
+        <ul class="nav nav-list sidebar-list">
+            <li ng-repeat="type in addTypes">
+                <a ng-click="openModal($event, type)">Add {{type|capitalize}}</a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- Delete MultiChoose-->
+    <li ng-controller="delPanelCtrl">
+        <h3>Delete:</h3>
+        <select ng-model="currentDelType" ng-options="type for type in delTypes">
+            <!-- <option ng-repeat="type in delTypes"
+                val="{{type}}">{{type|capitalize}}</option> -->
+        </select>
+
+        <div multi-chooser choices-list="currentDelList" trigger-del="delSelectedHandler()"></div>
+    </li>
+</div>
+
+
+

@@ -1,0 +1,32 @@
+<div class="mq-tb-view" ng-show="currentDb">
+    <div class="tbinfo-db-tb-name">
+        <i class="icon-th"></i>
+        <span class="label label-important">{{currentDb}}</span>
+        <i class="icon-table"></i>
+        <span class="label label-info">{{currentTb}}</span>
+    </div>
+    <tabset ng-show="currentTb">
+        <tab heading="Schema">
+            <table class="table table-striped">
+                <tbody>
+                    <tr bindonce quick-ng-repeat="ii in tbInfo.schema track by $index"
+                        quick-repeat-list="tbInfo.schema">
+                        <td bo-text="ii"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </tab>
+        <tab heading="Partition">
+            <table class="table table-striped">
+                <tbody>
+                    <tr bindonce quick-ng-repeat="ii in tbInfo.partition track by $index"
+                        quick-repeat-list="tbInfo.partition">
+                        <td bo-text="ii"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </tab>
+    </tabset>
+</div>
+
+

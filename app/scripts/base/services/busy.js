@@ -81,6 +81,7 @@ define(function() {
 
             this.$get = function($rootScope, $q) {
                 function handleResponse(r) {
+                    if (!r.config) return;
                     if (!r.config.busy) return;
 
                     if (r.config.busy === 'global') {
@@ -97,9 +98,8 @@ define(function() {
                     'request': function(config) {
                         if (config.busy) {
                             if (config.busy === 'global') {
-                                angular.element(document.getElementsByTagName('body')[0])
-                                    .append(angular.element('<div class="muce-loader outer">')
-                                        .append('<div class="muce-loader inner">'));
+                                if ($('.muce-loader.outer').length) return;
+                                $('body').append($('<div class="muce-loader outer"><div class="muce-loader inner"></div></div>'));
                             } else {
                                 $rootScope.$broadcast('busy.begin', {
                                     busy: config.busy
