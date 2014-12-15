@@ -4,6 +4,46 @@ define(function() {
         var _state = $rootScope.state;
         console.log('settingCtrl');
 
+        $(document).ready(function() {
+            var _quickMap = {};
+            _.each(Config.quickDataList, function(i) {
+                _quickMap[i[0]] = [moment().subtract('days', i[1])._d, moment()._d];
+            });
+
+            $('input[name="daterange"]').daterangepicker({
+                ranges: _quickMap,
+                // format: 'YYYY-MM-DD',
+                endDate: moment(),
+                maxDate: moment()
+            }, function(start, end) {
+                _state.endDate = end._d;
+                _state.startDate = start._d;
+                fetchReports();
+            });
+        });
+
+        function setDefaultDateRange() {
+            function updateInput() {
+                var $daterange = $('#daterange');
+                if ($daterange) {
+                    $daterange.data('daterangepicker').setStartDate(_state.startDate);
+                    $daterange.data('daterangepicker').setEndDate(_state.endDate);
+                }
+            }
+            if (!_state.startDate) {
+                var now = new Date();
+                now.setHours(0, 0, 0, 0);
+                _state.startDate = new Date(now.getTime() + (1000 * 60 * 60 * 24) * 14);
+                _state.endDate = new Date(Helper.getMaxAvailableDate());
+                updateInput();
+            }
+            if (_state._isFromUrlInit) {
+                _state._isFromUrlInit = false;
+                updateInput();
+            }
+            fetchReports();
+        }
+
         $scope.ghostDimension = {
             name: ''
         };
@@ -25,8 +65,13 @@ define(function() {
             if (!val) return;
             var now = new Date();
             now.setHours(0, 0, 0, 0);
-            _state.startDate = new Date(now.getTime() + (1000 * 60 * 60 * 24) * val);
+            _state.startDate = new Date(now.getTime() + (1000 * 60 * 60 * 24) * (-val));
             _state.endDate = new Date(Helper.getMaxAvailableDate());
+            var $daterange = $('#daterange');
+            if ($daterange) {
+                $daterange.data('daterangepicker').setStartDate(_state.startDate);
+                $daterange.data('daterangepicker').setEndDate(_state.endDate);
+            }
             fetchReports();
         });
 
@@ -95,10 +140,14 @@ define(function() {
         $rootScope.$watch('state.reportDetail', function(data) {
             if (!data) return;
             if (!_state.firstInit) {
-                $scope.currentQuick = 0;
+                /*$scope.currentQuick = 0;
                 $timeout(function() {
                     _state.period = data.periods[0];
                     $scope.currentQuick = -14; // last two week
+                });*/
+                $timeout(function() {
+                    _state.period = data.periods[0];
+                    setDefaultDateRange();
                 });
                 return;
             }
@@ -122,11 +171,17 @@ define(function() {
                     _state[type] = Helper.deSerApiDate($state.params[type], $state.params.period);
                 });
                 _state.period = $state.params.period;
+                _state._isFromUrlInit = true;
+                setDefaultDateRange();
             } else {
-                $scope.currentQuick = 0;
+                /*$scope.currentQuick = 0;
                 $timeout(function() {
                     _state.period = data.periods[0];
                     $scope.currentQuick = -14; // last two week
+                });*/
+                $timeout(function() {
+                    _state.period = data.periods[0];
+                    setDefaultDateRange();
                 });
             }
         }, true);
@@ -148,7 +203,7 @@ define(function() {
                 report: _state.report.name,
                 startDate: Helper.serApiDate(_state.startDate, _state.period),
                 endDate: Helper.serApiDate(_state.endDate, _state.period),
-                period: ''+_state.period,
+                period: '' + _state.period,
                 dimensions: JSON.stringify(_.pluck(_state.dimenAdv.dimensions, 'id')),
                 filters: JSON.stringify(_state.dimenAdv.filters)
             };
