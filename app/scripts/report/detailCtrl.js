@@ -105,7 +105,7 @@ define(['report/highchart'], function(highchart) {
                 _annotations = data.annotations || [];
                 highchart.buildLineChart($rootScope.state.reportDetail, data);
                 // special handler for transposition fetch and process
-                if (_state.reportDetail.transMetrics) {
+                if ($rootScope.state.reportDetail.transMetrics) {
                     $timeout(function() {
                         apiHelper('getReport', $rootScope.state.report.id, {
                             busy: 'global',
