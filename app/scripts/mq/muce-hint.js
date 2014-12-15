@@ -20,7 +20,7 @@
 
     function getKeywords(editor) {
         // by siva
-        var list = 'SELECT,DISTINCT,FROM,WHERE,GROUP,BY,COUNT,AND,p_date,ORDER,DESC,LIMIT,RANK,AS,SORT,DISTRIBUTE,JOIN,COLLECT_SET,ON,IF,IS,NULL,LEFT,OUTER,SEMI,UNION,ALL,IN,RIGHT,SUM,HAVING,LIKE'.split(',');
+        var list = 'SELECT,DISTINCT,FROM,WHERE,GROUP,BY,COUNT,AND,ORDER,DESC,LIMIT,RANK,AS,SORT,DISTRIBUTE,JOIN,COLLECT_SET,ON,IF,IS,NULL,LEFT,OUTER,SEMI,UNION,ALL,BETWEEN,IN,RIGHT,SUM,HAVING,LIKE'.split(',');
         var _ret = {};
         _.each(list, function(i) {
             _ret[i] = true;
