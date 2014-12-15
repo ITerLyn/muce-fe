@@ -1,0 +1,52 @@
+/* mq page */
+.mc-mq-container {
+    margin-top: 15px;
+    .span3 {
+        width: 16%;
+    }
+    .span9 {
+        width: 80%;
+    }
+    .CodeMirror {
+        height: 112px;
+        margin: 5px 2px 22px 0;
+        font-family: monospace;
+        position: relative;
+        border: 1px solid #d9d9d9;
+        line-height: normal;
+        width: 100%;
+    }
+    .CodeMirror-scroll {
+      overflow-y: hidden;
+      overflow-x: auto;
+    }
+
+    .mq-tb-view {
+        position: relative;
+
+        .tbinfo-db-tb-name {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+    }
+
+    .mq-db-list {
+        .db-list{
+            list-style: none;
+            margin: 0;
+        }
+        .db-item {
+            margin-bottom: 3px;
+            .dropdown-toggle {
+                width: 90%;
+                overflow: hidden;
+                padding: 0;
+            }
+        }
+    }
+
+    .mq-job-history {
+
+    }
+}

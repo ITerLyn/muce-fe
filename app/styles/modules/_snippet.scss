@@ -1,0 +1,169 @@
+.x-control-stack-select select {
+    margin: 5px 0;
+}
+
+/* component define here */
+.i-error-container {
+    position: absolute;
+    top: 50px;
+    z-index: 100000;
+    right: 30px;
+    .alert {
+        margin: 3px 0;
+        .close {
+            right: 0;
+        }
+    }
+}
+
+/* component - multi-choose */
+.i-multi-choose-wrapper {
+    .checkbox-wrapper {
+        max-height: 300px;
+        overflow: scroll;
+        min-height: 100px;
+        position: relative;
+        .loading-indicator {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+        }
+    }
+    .selected-wrapper {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+    .search-select-wrapper {
+        border: 1px solid #ccc;
+        padding: 10px;
+        label {
+            white-space: nowrap;
+        }
+    }
+    .suggestion-item {
+        margin: 0;
+        line-height: 30px;
+        font-size: 15px;
+    }
+    .selected-name .icon-minus-sign {
+        margin-right: 5px;
+    }
+}
+
+/* component - helper */
+.i-form-help-block{
+    display: block;
+    margin: 5px 0 0;
+}
+.i-form-help-inline {
+    display: inline-block;
+    margin: 0 0 0 10px;
+}
+.i-bg-red {
+    background-color: #f2dede;
+}
+.w-text-warning {
+    color: #f24949;
+}
+.w-text-success {
+    color: green;
+}
+.i-text-warning-nav {
+    color: red!important;
+    cursor: not-allowed;
+}
+.i-stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+.i-nowrap-cell {
+    white-space: nowrap;
+}
+.i-cursor-handle {
+    cursor: pointer;
+}
+.i-ng-bg-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin-top: 10px;
+
+    i {
+        font-size: 16px;
+    }
+}
+
+.annotation-container {
+    width: 200px;
+    text-align: left;
+    line-height: 20px;
+    position: absolute;
+}
+
+
+/* Todo */
+.collapse-sidebar-container {
+    position: relative;
+    .collapse-sidebar-trigger {
+        left: 14.1%;
+        top: 5px;
+    }
+    .span2 {
+        margin-left: 0;
+    }
+    &.mc-uamp {
+        .collapse-sidebar-trigger {
+            left: 180px;
+        }
+    }
+}
+.modal-open i.collapse-sidebar-trigger {
+    background-color: #000;
+    border: none;
+}
+
+.sidebar-collapsed {
+    &.mc-uamp {
+        .main-content {
+            margin-left: 0;
+        }
+        .sidebar {
+            margin-left: -200px;
+            opacity: 0;
+            background-color: #fff;
+        }
+        .collapse-sidebar-trigger {
+            left: 10px;
+            top: -5px;
+        }
+    }
+    .span2 {
+        margin-left: -18%;
+        transition: all .5s cubic-bezier(0.25,.46,.45,.94);
+    }
+    .span10 {
+        margin-left: 0px;
+        width: 100%;
+        transition: all .5s cubic-bezier(0.25,.46,.45,.94);
+    }
+    .collapse-sidebar-trigger {
+        left: 30px;
+        top: -25px;
+    }
+}
+.collapse-sidebar-trigger {
+    transition: all .5s cubic-bezier(0.25,.46,.45,.94);
+    display: inline-block;
+    cursor: pointer;
+    font-size: 14px;
+    color: #aaa;
+    border: 1px solid #bbb;
+    padding: 0 5px;
+    line-height: 18px;
+    border-radius: 16px;
+    background-color: #fff;
+
+    position: absolute;
+    top: 15px;
+    z-index: 9999;
+}

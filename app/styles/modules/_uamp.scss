@@ -1,0 +1,90 @@
+/* tool - UAMP */
+.mc-uamp {
+    .main-content {
+        padding: 10px;
+        transition: all .5s cubic-bezier(0.25,.46,.45,.94);
+    }
+    .sidebar {
+        transition: all .2s cubic-bezier(0.25,.46,.45,.94);
+        text-align: center;
+        &::before {
+            margin-left: 0;
+            background-color: #fff;
+        };
+        h3{
+            font-size: 18px;
+            line-height: 24px;
+            i{
+                padding-right: 8px;
+            }
+        }
+        li a {
+            font-size: 14px;
+            line-height: 40px;
+            height: 44px;
+        }
+    }
+    .op-bar {
+        .multi-fn-datepicker, .uamp-checkbox-select, .apply-btn {
+            display: inline-block;
+            margin-right: 5px;
+        }
+    }
+    .bottom-op-bar {
+        .btn.ng-hide-remove, .btn.ng-hide-add {
+            display: inline-block!important;
+        }
+    }
+    .multi-fn-datepicker {
+        .datepicker, .fn-chooser {
+            display: inline-block;
+        }
+        .datepicker {
+            input {
+                width: 100px;
+            }
+        }
+    }
+    .metric-minus-up {
+        color: green;
+    }
+    .metric-minus-down {
+        color: red;
+    }
+    .uamp-checkbox-select {
+        display: inline-block;
+        select[multiple] {
+            margin-left: 5px;
+            width: 200px;
+        }
+    }
+    .chart {
+        margin-bottom: 40px;
+        position: relative;
+        .chart-date-range-picker-wrapper {
+            position: absolute;
+            right: 10px;
+            top: -50px;
+            z-index: 1000;
+            .input-prepend {
+                margin-bottom: 0;
+            }
+        }
+    }
+    table {
+        td {
+            a {
+                text-decoration: none;
+                i {
+                    margin-left: 5px;
+                }
+            }
+        }
+        td.diff-data-cell {
+            text-align: right;
+        }
+        td:first-child {
+            text-align: left;
+        }
+    }
+}
