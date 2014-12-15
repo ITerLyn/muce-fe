@@ -21,15 +21,6 @@
 
     .setting-wrapper {
         margin-bottom: 10px;
-        // quick compoent
-        .quickdate {
-            width: 200px;
-            margin-bottom: 10px;
-
-            .quickdate-button {
-                width: 90%;
-            }
-        }
 
         .daterange-wrapper {
             position: relative;
@@ -46,7 +37,7 @@
             }
         }
 
-        .date-operator, .dimension-operator, .dimension-wrapper {
+        &, .date-operator, .dimension-operator, .dimension-wrapper {
             & > * {
                 margin-right: 10px;
                 margin-bottom: 0!important;
@@ -93,6 +84,7 @@
 
         select {
             width: 130px;
+            margin-bottom: 0;
         }
     }
 
