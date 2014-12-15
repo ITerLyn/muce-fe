@@ -201,20 +201,18 @@ define(function() {
         };
 
         $scope.formatSubVal = function(val) {
-            if (val > 0) {
-                return '<b class="w-text-success">' + val + '</b>'
-            } else {
-                return '<b class="w-text-warning">' + val + '</b>'
-            }
+            return val;
         };
 
         $scope.formatDivideVal = function(val) {
             var _val = $filter('percentage')(val);
-            if (val > 0) {
+            if (val >= 0.05) {
                 return '<b class="w-text-success">' + _val + '</b>'
-            } else {
+            }
+            if (val <= -0.05) {
                 return '<b class="w-text-warning">' + _val + '</b>'
             }
+            return _val;
         };
 
         /* Utility */
