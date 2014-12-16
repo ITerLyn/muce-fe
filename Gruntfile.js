@@ -52,6 +52,15 @@ var connectOpt = {
                             }
                         });
                         next();
+                    }, function injectAPIHost(req, res, next) {
+                        var apiPath = '/scripts/base/services/api.js';
+                        if (req.url === apiPath) {
+                            require('fs').readFile('app' + apiPath, 'utf8', function(err, data) {
+                                res.end(data.replace('/api/v1', 'http://muce3.wandoulabs.com/api/v1'));
+                            });
+                        } else {
+                            next();
+                        }
                     },
                     require('grunt-connect-proxy/lib/utils').proxyRequest,
                     lrSnippet,
