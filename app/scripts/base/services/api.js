@@ -20,7 +20,7 @@ define([
             inner data strut - method, url
         */
         var _maps = {},
-            _urlPrfix = 'http://muce3.wandoulabs.com/api/v1';
+            _urlPrfix = '/api/v1';
 
         function _buildUrl(toUrl, params) {
             if (!params) return toUrl;
