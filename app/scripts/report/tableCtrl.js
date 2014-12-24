@@ -21,6 +21,7 @@ define(function() {
                     id: 'date',
                     name: 'Date'
                 }].concat(tbFields);
+                $scope.transOrderType = 'date';
                 $scope.tableRows = _allTableData.result;
             } else {
                 // 普通的处理逻辑
