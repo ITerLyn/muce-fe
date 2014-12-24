@@ -48,9 +48,10 @@
             </td>
             <td class="i-nowrap-cell">
                 <!-- popover card to show more info  -->
-                <span ng-repeat="m in report.metrics">
+                <span ng-repeat="m in report.metrics" class="with-metric-popover">
                     {{m.name}}
                     <i class="icon-info-sign"
+                        popover-placement="right"
                         popover-html-unsafe="{{genMetricCardHtml(m)}}"
                         popover-trigger="mouseenter"
                         popover-animation="true"></i>

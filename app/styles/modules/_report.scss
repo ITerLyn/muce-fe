@@ -43,6 +43,9 @@
                 margin-bottom: 0!important;
                 vertical-align: middle;
                 display: inline-block!important;
+                &.ng-hide {
+                    display: none!important;
+                }
             }
         }
         .dimension-wrapper {

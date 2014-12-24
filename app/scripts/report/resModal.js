@@ -8,8 +8,9 @@ define(function() {
             attrs: {
                 range: '4,30',
                 'text-area-elastic': true,
-                'rows': '4',
-                'cols': '50'
+                rows: '4',
+                cols: '50',
+                requiredErrorMessage: 'Required. Not Allow New Line'
             }
         },
         groupField: {
@@ -549,6 +550,7 @@ define(function() {
 
                 if ($scope._data) {
                     $scope.formlyData = $scope._data;
+                    $scope.formlyData.type = '' + $scope._data.type;
                     // Todo: dataType, fields bug
                     $scope.formlyData.field = _.find(data, function(i) {
                         return i.name == $scope._data.fieldName;

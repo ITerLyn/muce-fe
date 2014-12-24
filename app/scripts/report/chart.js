@@ -73,8 +73,8 @@ define([
         $scope.$watch('currentQuick', function(val) {
             if (!val) return;
             // set start_date, end_date, then fetchReport
-            $scope.startDate = new Date().getTime() + (1000 * 60 * 60 * 24) * val;
-            $scope.endDate = new Date().getTime();
+            $scope.endDate = new Date().getTime() + (1000 * 60 * 60 * 24) * val;
+            $scope.startDate = new Date().getTime();
             $scope.fetchReports();
         });
 

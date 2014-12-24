@@ -1,3 +1,19 @@
+.with-metric-popover {
+    .popover {
+        max-width: 550px;
+        .popover-content table {
+            table-layout: fixed;
+            word-wrap: break-word;
+            width: 100%;
+            td:nth-child(1) {
+                width: 20%;
+            }
+        }
+    }
+}
+
+
+
 /* global setting */
 .tool-realtime-dashboard, .tool-realtime-dashboard-mgr {
     .navbar .navbar-inner {
