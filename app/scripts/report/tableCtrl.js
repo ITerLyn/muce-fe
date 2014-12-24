@@ -9,7 +9,7 @@ define(function() {
             _pageSize = 50,
             _totalPg; // store all tableData
         $scope.tableRows = [];
-        $rootScope.$on('report:renderReportData', function(event, opt) {
+        var triggerRenderReportData = _.throttle(function(event, opt) {
             // store full amount data inner
             var _tmp;
             _reportDetail = opt[0];
@@ -31,7 +31,8 @@ define(function() {
                 buildGridHeader(_reportDetail, _allTableData);
                 buildGridData();
             }
-        });
+        }, 1000);
+        $rootScope.$on('report:renderReportData', triggerRenderReportData);
 
         /* Data Table */
         function buildGridHeader(reportDetail, data) {

@@ -33,8 +33,8 @@ define(function() {
             if (!_state.startDate) {
                 var now = new Date();
                 now.setHours(0, 0, 0, 0);
-                _state.startDate = new Date(now.getTime() + (1000 * 60 * 60 * 24) * 14);
-                _state.endDate = new Date(Helper.getMaxAvailableDate());
+                _state.endDate = new Date(now.getTime() + (1000 * 60 * 60 * 24) * 14);
+                _state.startDate = new Date(Helper.getMaxAvailableDate());
                 updateInput();
             }
             if (_state._isFromUrlInit) {

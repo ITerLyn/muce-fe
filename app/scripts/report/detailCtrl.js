@@ -67,7 +67,7 @@ define(['report/highchart'], function(highchart) {
         };
 
         // watch annotation scope, emit jQuery event
-        $rootScope.$watchCollection('state._allChartData.annotations', function(data) {
+        var throUpdateAnnotation = _.throttle(function(data) {
             console.log(arguments[0]);
             if (!data) return;
             $(".chart-wrapper").trigger('updateAnnotations');
@@ -75,7 +75,8 @@ define(['report/highchart'], function(highchart) {
             // http://jsfiddle.net/gh/get/jquery/1.7.2/highslide-software/highcharts.com/tree/master/samples/highcharts/plotoptions/series-point-events-remove/
             // http://api.highcharts.com/highcharts#Point
             highchart.buildLineChart(_state.reportDetail, _state._allChartData);
-        });
+        }, 1000);
+        $rootScope.$watchCollection('state._allChartData.annotations', throUpdateAnnotation);
         /* End */
 
         function triggerFetchDone(data) {
