@@ -489,6 +489,18 @@ define(function() {
             $scope.$watch('metricList', function(val, old) {
                 // update shadow validtor ngmodel
                 if (!val || !old) return;
+                var arr = _.pluck(_.filter($scope.metricList, function(i) {
+                    return i.selected;
+                }), 'id');
+                if (arr.length) {
+                    apiHelper('getDimensionsByMetrics', {
+                        params: {
+                            metrics: JSON.stringify(arr)
+                        }
+                    }).then(function(data) {
+                        $scope.dimensionList = data;
+                    });
+                }
                 $scope._validateMetric = new Date().getTime();
             }, true);
 

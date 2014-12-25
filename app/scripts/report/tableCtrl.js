@@ -193,17 +193,42 @@ define(function() {
             if (data[field.id] == null) {
                 return 'empty';
             }
-            if (field.name.indexOf('Rate') > -1) {
-                return 'divide';
+            // if (field.metricType) return field.metricType;
+            if (field.name == 'Metric') {
+                data._metric = _.find(_state.reportDetail.metrics, function(i) {
+                    return i.name == data[field.id];
+                });
             }
-            if (field.name.indexOf('Diff') > -1) {
-                return 'subtract';
+            var _m = data._metric;
+            if (_m) {
+                if (_m.type == 2) {
+                    if ((field.name.indexOf('Diff') > -1)) {
+                        // field.metricType = 'subtract';
+                        return 'subtract';
+                    }
+                    if (field.name !== 'Metric') {
+                        // field.metricType = 'percent';
+                        return 'percent';
+                    }
+                } else {
+                    if (field.name.indexOf('Rate') > -1) {
+                        // field.metricType = 'divide';
+                        return 'divide';
+                    }
+                }
             }
             return 'normal';
         };
 
         $scope.formatSubVal = function(val) {
-            return val;
+            var _val = $filter('percentage')(val);
+            if (val >= 0.05) {
+                return '<b class="w-text-success">' + _val + '</b>'
+            }
+            if (val <= -0.05) {
+                return '<b class="w-text-warning">' + _val + '</b>'
+            }
+            return _val;
         };
 
         $scope.formatDivideVal = function(val) {

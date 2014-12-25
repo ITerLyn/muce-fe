@@ -11,6 +11,10 @@ define([], function() {
             prefix: '/meta/'
         });
 
+        apiHelper.config({
+            'getDimensionsByMetrics': 'GET /meta/dimensionsByMetrics'
+        });
+
         // Report
         apiHelper.config({
             'getReport': 'GET /report/:id',

@@ -69,6 +69,9 @@
                     <span bo-switch-when="empty">
                         <b class="w-text-warning">No Data</b>
                     </span>
+                    <span bo-switch-when="percent"
+                        bo-text="row[i.id]|percentage">
+                    </span>
                     <span bo-switch-when="divide"
                         bo-html="formatDivideVal(row[i.id])">
                     </span>
