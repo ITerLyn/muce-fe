@@ -602,7 +602,7 @@ define(function() {
                 if ($scope._data) {
                     // adjust timestamp for _data
                     _.each(['modifyTime', 'createTime'], function(_tkey) {
-                        $scope._data[_tkey] = $filter('date')($scope._data[_tkey], 'yyyy-MM-dd mm:ss');
+                        $scope._data[_tkey] = $filter('date')($scope._data[_tkey], 'yyyy-MM-dd hh:mm');
                     });
 
                     // case for metric(whicih has event field huge table)
