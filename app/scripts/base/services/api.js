@@ -56,6 +56,7 @@ define([
             return $http(_.extend({
                 method: _api.method,
                 // cache: true,
+                timeout: 8000,
                 url: _buildUrl(_api.url, arguments),
             }, opt));
         }
@@ -112,8 +113,12 @@ define([
         .factory('apiHelperInterceptor', function($q, $notice) {
             function responseErrorHandler(response) {
                 try {
-                    $notice.error('status-' + response.status + ': ' +
-                        (response.config.url || '') + '<br>' + (response.data.msg || ', 接口出问题啦!'));
+                    var _msg = (response.data && response.data.msg) ? response.data.msg : '接口出问题啦!';
+                    if (!response.status) {
+                        _msg = '接口超时啦！';
+                    }
+                    var _url = (response.config && response.config.url) ? response.config.url : '';
+                    $notice.error('status-' + response.status + ': ' + _url + ', <br>' + _msg);
                 } catch (e) {
                     console.log('Err in apiHelperInterceptor: ' + e);
                 }

@@ -85,7 +85,7 @@ define(function() {
                     if (!r.config.busy) return;
 
                     if (r.config.busy === 'global') {
-                        angular.element(document.getElementsByClassName('muce-loader')).remove();
+                        angular.element(document.getElementsByClassName('muce-loader-wrapper')).remove();
                         return;
                     }
 
@@ -99,7 +99,7 @@ define(function() {
                         if (config.busy) {
                             if (config.busy === 'global') {
                                 if ($('.muce-loader.outer').length) return;
-                                $('body').append($('<div class="muce-loader outer"><div class="muce-loader inner"></div></div>'));
+                                $('body').append($('<div class="muce-loader-wrapper"><div class="muce-loader outer"><div class="muce-loader inner"></div></div></div>'));
                             } else {
                                 $rootScope.$broadcast('busy.begin', {
                                     busy: config.busy
