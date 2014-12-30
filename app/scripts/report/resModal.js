@@ -136,12 +136,6 @@ define(function() {
                     'rows': '4',
                     'cols': '50'
                 }
-            }, {
-                controlTpl: 'report/_whereConditionTip.html',
-                label: '',
-                wrapAttr: {
-                    style: 'margin-top: -20px'
-                }
             },
             dataDict.metricTypeField, dataDict.commentField, {
                 referTpl: 'report/add_metric/fileds.html'
@@ -602,7 +596,7 @@ define(function() {
                 if ($scope._data) {
                     // adjust timestamp for _data
                     _.each(['modifyTime', 'createTime'], function(_tkey) {
-                        $scope._data[_tkey] = $filter('date')($scope._data[_tkey], 'yyyy-MM-dd hh:mm');
+                        $scope._data[_tkey] = $filter('date')($scope._data[_tkey], 'yyyy-MM-dd HH:mm');
                     });
 
                     // case for metric(whicih has event field huge table)
