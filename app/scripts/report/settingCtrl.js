@@ -4,6 +4,8 @@ define(function() {
         var _state = $rootScope.state;
         console.log('settingCtrl');
 
+        var _maxAvailableDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 1);
+
         $(document).ready(function() {
             var _quickMap = {};
             _.each(Config.quickDataList, function(i) {
@@ -13,8 +15,8 @@ define(function() {
             $('input[name="daterange"]').daterangepicker({
                 ranges: _quickMap,
                 // format: 'YYYY-MM-DD',
-                endDate: moment(),
-                maxDate: moment()
+                endDate: _maxAvailableDate,
+                maxDate: _maxAvailableDate
             }, function(start, end) {
                 _state.endDate = end._d;
                 _state.startDate = start._d;
@@ -33,8 +35,8 @@ define(function() {
             if (!_state.startDate) {
                 var now = new Date();
                 now.setHours(0, 0, 0, 0);
-                _state.endDate = new Date(now.getTime() + (1000 * 60 * 60 * 24) * 14);
-                _state.startDate = new Date(Helper.getMaxAvailableDate());
+                _state.startDate = new Date(now.getTime() - (1000 * 60 * 60 * 24) * 15);
+                _state.endDate = _maxAvailableDate;
                 updateInput();
             }
             if (_state._isFromUrlInit) {
@@ -65,8 +67,8 @@ define(function() {
             if (!val) return;
             var now = new Date();
             now.setHours(0, 0, 0, 0);
-            _state.startDate = new Date(now.getTime() + (1000 * 60 * 60 * 24) * (-val));
-            _state.endDate = new Date(Helper.getMaxAvailableDate());
+            _state.startDate = new Date(now.getTime() + (1000 * 60 * 60 * 24) * (-(val) - 1));
+            _state.endDate = _maxAvailableDate;
             var $daterange = $('#daterange');
             if ($daterange) {
                 $daterange.data('daterangepicker').setStartDate(_state.startDate);
