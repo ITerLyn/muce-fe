@@ -1,8 +1,7 @@
 define(['report/highchart'], function(highchart) {
     // @ngInject
     function detailCtrl($scope, $state, apiHelper, $timeout, $filter, $rootScope) {
-        var _state = $rootScope.state,
-            _annotations;
+        var _state = $rootScope.state;
         _state.isAjaxFetching = false;
         console.log('detailCtrl');
 
@@ -19,8 +18,9 @@ define(['report/highchart'], function(highchart) {
                 }
             };
             if (point.annotationInfo) {
-                annotation = point.annotationInfo;
+                annotation = _.clone(point.annotationInfo);
                 rawAnnotationInfo.mode = 'edit';
+                rawAnnotationInfo._old = point.annotationInfo;
             } else {
                 annotation = {
                     xAxis: $filter('date')(point.x, 'yyyyMMdd'),
@@ -40,21 +40,23 @@ define(['report/highchart'], function(highchart) {
             $scope.rawAnnotationInfo = null;
         };
 
-        $scope.editAnnotation = function(annotation) {
+        $scope.editAnnotation = function() {
             if ($scope.rawAnnotationInfo.mode === 'edit') {
                 apiHelper('editAnnotation', {
-                    data: annotation
-                }).then(function() {
+                    data: $scope.annotation
+                }).then(function(data) {
+                    $scope.rawAnnotationInfo._old.name = data.name;
                     $scope.dismissAnnotationPopover();
+                    triggerRenderAfterAnontate();
                 });
             } else {
                 apiHelper('addAnnotation', {
                     data: $scope.annotation
                 }).then(function(data) {
                     // 加入到当前的 chart anootation 中
-                    console.log(data);
                     _state._allChartData.annotations.push(data);
                     $scope.dismissAnnotationPopover();
+                    triggerRenderAfterAnontate();
                 });
             }
         };
@@ -64,20 +66,17 @@ define(['report/highchart'], function(highchart) {
             apiHelper('delAnnotation', annotation.id).then();
             _annotations.splice(_annotations.indexOf(annotation), 1);
             $scope.dismissAnnotationPopover();
+            triggerRenderAfterAnontate();
         };
 
-        // watch annotation scope, emit jQuery event
-        var throUpdateAnnotation = _.throttle(function(data) {
-            console.log(arguments[0]);
-            if (!data) return;
+        function triggerRenderAfterAnontate() {
             $(".chart-wrapper").trigger('updateAnnotations');
             // Todo: fine grain to update annotations
             // http://jsfiddle.net/gh/get/jquery/1.7.2/highslide-software/highcharts.com/tree/master/samples/highcharts/plotoptions/series-point-events-remove/
             // http://api.highcharts.com/highcharts#Point
+            console.log('update annotations then render chart');
             highchart.buildLineChart(_state.reportDetail, _state._allChartData);
-        }, 1000);
-        $rootScope.$watchCollection('state._allChartData.annotations', throUpdateAnnotation);
-        /* End */
+        }
 
         function triggerFetchDone(data) {
             $rootScope.$emit('report:renderReportData', [$rootScope.state.reportDetail, data]);
@@ -103,7 +102,7 @@ define(['report/highchart'], function(highchart) {
                 params: _.extend(defaultParams, _.pick($state.params, 'period', 'startDate', 'endDate'))
             }).then(function(data) {
                 $rootScope.state._allChartData = data;
-                _annotations = data.annotations || [];
+                console.log('fetch report then render chart');
                 highchart.buildLineChart($rootScope.state.reportDetail, data);
                 // special handler for transposition fetch and process
                 if ($rootScope.state.reportDetail.transMetrics) {

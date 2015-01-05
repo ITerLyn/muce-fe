@@ -170,7 +170,10 @@ define([
             },
             subtitle: {
                 text: currentReport.comment,
-                x: -20
+                useHTML: true,
+                style: {
+                    'white-space': 'normal'
+                }
             },
             xAxis: {
                 type: 'datetime'

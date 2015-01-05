@@ -217,7 +217,7 @@ define(function() {
 
             $timeout(function() {
                 $rootScope.$emit('report:fetchReportData');
-            });
+            }, 100);
         }
         // var fetchReports = _.throttle(_fetchReports, 2000);
         $scope.fetchReports = fetchReports;
