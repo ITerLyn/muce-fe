@@ -11,3 +11,14 @@
 @import "./modules/mq";
 @import "./modules/uamp";
 @import "./modules/snippet";
+
+.highcharts-tooltip span {
+    height:auto;
+    width: 200px;
+    overflow:auto;
+    white-space:normal !important; // add this line...
+
+    p {
+        margin: 0;
+    }
+}

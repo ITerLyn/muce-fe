@@ -114,6 +114,8 @@ define(function() {
         };
 
         $scope.exportTableAsCsv = function(tbFields, tableRows) {
+            // export all records, not which is showed
+            tableRows = _allTableData.result;
 
             function buildCsvName() {
                 return _.template(Config.csvFileNameTpl, {

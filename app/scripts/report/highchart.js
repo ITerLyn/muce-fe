@@ -26,8 +26,7 @@ define([
                     if (metric) {
                         var date = helper.getUTCDateByDateAndPeriod(item.xAxis + '');
                         if (point.series.name === metric.name && point.x === date) {
-                            annotation += '<p style="color: ' + point.series.color + '">' + item.owner + ': ' + item.name;
-                            // '<br/>Create Time: ' + Highcharts.dateFormat('%A %Y-%m-%e', item.createTime)
+                            annotation += item.owner + ': ' + item.name;
                         }
                     }
                 });
@@ -43,7 +42,7 @@ define([
 
             var s = '<b>' + Highcharts.dateFormat(periodFormatMap[data.period], this.x) + '</b>';
             $.each(this.points, function(i, point) {
-                s += '<br/><p style="color: ' + point.series.color + '">' + point.series.name + ': ' +
+                s += '<p style="color: ' + point.series.color + '">' + point.series.name + ': ' +
                     point.y;
 
                 s += buildAnnotation(point) + '</p>';
@@ -182,7 +181,8 @@ define([
             tooltip: {
                 formatter: formatTip,
                 shared: true,
-                crosshairs: true
+                crosshairs: true,
+                useHTML: true
             },
             plotOptions: {
                 series: {
