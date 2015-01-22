@@ -224,4 +224,12 @@
             margin-bottom: 0;
         }
     }
+
+    .table {
+        table-layout: fixed;
+    }
+
+    .table th, .table td {
+        word-wrap: break-word;
+    }
 }

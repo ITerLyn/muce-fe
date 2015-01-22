@@ -492,6 +492,14 @@ define(function() {
                             metrics: JSON.stringify(arr)
                         }
                     }).then(function(data) {
+                        var selectedIds = _.pluck(_.filter($scope.dimensionList, function(i) {
+                            return i.selected;
+                        }), 'id');
+                        _.each(data, function(i) {
+                            if (_.contains(selectedIds, i.id)) {
+                                i.selected = true;
+                            }
+                        });
                         $scope.dimensionList = data;
                     });
                 }
