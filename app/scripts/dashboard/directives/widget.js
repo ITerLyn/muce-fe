@@ -197,7 +197,7 @@ define([
                                         $scope.currentMetric = yesterday[dataId] + yesterday[diffId];
 
                                         data.result.forEach(function(item) {
-                                            item[rateId] = item[rateId] * 100 + '%';
+                                            item[rateId] = (item[rateId] * 100).toFixed(2) + '%';
                                             var temp = [];
                                             temp.push(item['d' + dimenId]);
                                             for (var i in item) {

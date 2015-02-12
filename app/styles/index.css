@@ -1067,10 +1067,11 @@ textarea {
 /* line 72, modules/_dashboard.scss */
 .dashboard-container .current-metric {
   font-size: 20px;
-  margin-left: 20px;
+  margin: 16px 0;
   font-weight: bold;
+  text-align: center;
 }
-/* line 77, modules/_dashboard.scss */
+/* line 78, modules/_dashboard.scss */
 .dashboard-container .chart-widget {
   padding: 0 10px;
 }

@@ -6,8 +6,8 @@
         <highchart config="chartConfig" style="height:250px" ng-if="chart == 1 && layout == 1"></highchart>
     </div>
     <div ng-if="chart == 5 || chart == 6">
-        <div class="widget-title">{{title}}</div>
-        <div class="widget-subtitle">{{subtitle}}</div>
+        <div class="widget-title" ng-if="chart == 5">{{title}}</div>
+        <div class="widget-subtitle" ng-if="chart == 5">{{subtitle}}</div>
         <p ng-if="chart == 6" class="current-metric">{{metricName}}: {{currentMetric}}</p>
         <table class="table table-bordered table-striped widget-table">
             <thead>
