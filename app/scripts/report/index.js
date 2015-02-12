@@ -128,8 +128,8 @@ define([
             $rootScope.$on('$stateChangeStart',
                 function(event, toState, toParams, fromState, fromParams) {
                     // event.preventDefault();
-                    console.log(toState);
-                    console.log(toParams);
+                    console.log('state', toState);
+                    console.log('toParams', toParams);
                     // transitionTo() promise will be rejected with
                     // a 'transition prevented' error
                 });

@@ -1,0 +1,80 @@
+.dashboard-container {
+    padding: 20px 0;
+    iframe {
+        border: none;
+    }
+    .widget-container {
+    }
+    .widget-wrapper {
+        border: 1px solid #ccc;
+        margin: 10px 8px 10px 0;
+        border-radius: 4px;
+    }
+    .layout0.widget-wrapper {
+        height: 500px;
+    }
+    .layout1.widget-wrapper {
+        height: 300px;
+    }
+    .layout2.widget-wrapper {
+        height: 250px;
+    }
+    .radio-inline {
+        display: inline;
+    }
+    .list-container {
+        max-height: 150px;
+        padding: 4px;
+        overflow: scroll;
+    }
+    .modal-mask {
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .add-widget-btn {
+        margin-top: 20px;
+    }
+    li {
+        list-style: none;
+    }
+    .widget-actions {
+        margin: 10px 0 0 20px;
+    }
+    .widget-table {
+        width: 90%;
+        margin: 10px auto 0 auto;
+
+        th, td {
+            padding: 2px;
+        }
+    }
+    .widget-title,
+    .widget-subtitle {
+        text-align: center;
+        margin: 4px 0;
+    }
+    .widget-title {
+        font-size: 17px;
+        font-weight: bold;
+    }
+    .widget-subtitle {
+        font-weight: 500;
+        font-size: 12px;
+    }
+    .date-picker {
+        float: right;
+    }
+    .current-metric {
+        font-size: 20px;
+        margin-left: 20px;
+        font-weight: bold;
+    }
+    .chart-widget {
+        padding: 0 10px;
+    }
+}

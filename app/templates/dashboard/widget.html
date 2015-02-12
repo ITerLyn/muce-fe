@@ -1,0 +1,26 @@
+<div>
+    <!-- <iframe ng-src="{{src}}" width="100%" height={{height}} chart={{chart}} ng-if="chart != 5 && chart != 6"></iframe> -->
+
+    <div ng-if="chart != 5 && chart != 6" class="chart-widget">
+        <highchart config="chartConfig" style="height:{{height}}px" ng-if="chart != 1 || layout != 1"></highchart>
+        <highchart config="chartConfig" style="height:250px" ng-if="chart == 1 && layout == 1"></highchart>
+    </div>
+    <div ng-if="chart == 5 || chart == 6">
+        <div class="widget-title">{{title}}</div>
+        <div class="widget-subtitle">{{subtitle}}</div>
+        <p ng-if="chart == 6" class="current-metric">{{metricName}}: {{currentMetric}}</p>
+        <table class="table table-bordered table-striped widget-table">
+            <thead>
+                <tr>
+                    <th ng-repeat="th in theader">{{th}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in tbody">
+                    <td ng-repeat="d in item">{{d}}</td>
+                </tr>
+            </tbody>
+            
+        </table>
+    </div>
+</div>

@@ -1,0 +1,269 @@
+<div class="row-fluid dashboard-container">
+    
+    <div class="span2">
+        <button type="button" class="btn btn-success" ng-click="showDashboard()">Add Dashboard</button>
+
+        <ul class="nav nav-pills nav-stacked">
+            <li ng-repeat="item in dashboardList" data-id="{{item.id}}" ng-class="{active: currentDashboard.id == item.id}"
+            ng-click="selectDashboard(item)">
+                <a href="">{{item.name}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="span10 container-fluid widget-container">
+
+        <div ng-if="currentDashboard">
+            <button class="btn" ng-click="editDashboard(currentDashboard)">Edit Dashboard</button>
+            <button class="btn" ng-click="deleteDashboard(currentDashboard)">Delete Dashboard</button>
+        </div>
+
+        <div class="widget-row" ng-repeat="item in currentDashboard.style">
+            <div ng-switch="item.layoutType">
+                <div ng-switch-when=0 class="span12">
+                    <div class="span12 widget-wrapper layout0" ng-repeat="w in item.widgets">
+                        <div class="widget-actions">
+                            <a href="" ng-click="deleteWidget(w, $parent.$index)">Delete</a>
+                            <a href="" ng-click="editWidget(w, currentDashboard.id, 0)">Edit</a>
+                        </div>
+                        <div dashboard-widget id="w.reportId"  chart="w.defaultChart" period="w.periods[0]" layout="item.layoutType" ></div>
+                    </div>
+                </div>
+                <div ng-switch-when=1 class="span12">
+                    <div class="span6 widget-wrapper layout1" ng-repeat="w in item.widgets">
+                        <div class="widget-actions">
+                            <a href="" ng-click="deleteWidget(w, $parent.$index)">Delete</a>
+                            <a href="" ng-click="editWidget(w, currentDashboard.id, 1)">Edit</a>
+                        </div>
+                        <div dashboard-widget id="w.reportId"  chart="w.defaultChart" period="w.periods[0]" layout="item.layoutType"></div>
+                    </div>
+                    <button type="button" class="btn btn-primary" ng-if="item.widgets.length < 2" ng-click="addWidget($index)">
+                        Add Widget
+                    </button>
+                </div>
+                <div ng-switch-when=2 class="span12">
+                    <div class="span4 widget-wrapper layout2" ng-repeat="w in item.widgets">
+                        <div class="widget-actions">
+                            <a href="" ng-click="deleteWidget(w, $parent.$index)">Delete</a>
+                            <a href="" ng-click="editWidget(w, currentDashboard.id, 2)">Edit</a>
+                        </div>
+                        <div dashboard-widget id="w.reportId"  chart="w.defaultChart" period="w.periods[0]" layout="item.layoutType"></div>
+                    </div>
+                    <button type="button" class="btn btn-primary" ng-if="item.widgets.length < 3" ng-click="addWidget($index)">
+                        Add Widget
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="add-widget-btn">
+            <button type="button" class="btn btn-primary" ng-click="addWidget(currentDashboard.style.length)">
+                Add Widget
+            </button>
+        </div>
+    </div>
+    <div class="modal-mask" ng-if="showMask"></div>
+
+    <div class="modal" ng-if="showDashboardPanel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="closeDashboard()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" ng-if="!dashboardId">Add Dashboard</h4>
+                    <h4 class="modal-title" ng-if="!!dashboardId">Edit Dashboard</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="formly form-horizontal" name="addDashboard">
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                Dashboard Title
+                            </label>
+                            <div class="controls">
+                                <label>
+                                    <input type="hidden" ng-model="$parent.dashboardId">
+                                    <input type="text" ng-model="$parent.dashboardTitle" name="title" ngRequired>
+                                    <span class="error" ng-show="addDashboard.title.$error.required">
+                                        Required!
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Comment
+                            </label>
+                            <div class="controls">
+                                <label>
+                                    <textarea ng-model="$parent.dashboardComment" name="comment" ngRequired></textarea>
+                                    <span class="error" ng-show="addDashboard.comment.$error.required">
+                                        Required!
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="closeDashboard()">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="saveDashboard()" ng-disabled="!$parent.dashboardTitle.length || !$parent.dashboardComment.length">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" ng-if="showWidgetPanel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="closeWidget()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" ng-if="!$parent.widgetId">Add Widget</h4>
+                     <h4 class="modal-title" ng-if="$parent.widgetId">Edit Widget</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="formly form-horizontal" name="widgetPanel">
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                Widget Title
+                            </label>
+                            <div class="controls">
+                                <label>
+                                    <input type="hidden" ng-modal="$parent.dashboardId">
+                                    <input type="hidden" ng-modal="$parent.reportId">
+                                    <input type="hidden" ng-model="$parent.widgetId">
+                                    <input type="text" ng-model="$parent.widgetTitle" name="title" ngRequired>
+                                    <span class="error" ng-show="widgetPanel.title.$error.required">
+                                        Required!
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                Comment
+                            </label>
+                            <div class="controls">
+                                <label>
+                                    <textarea ng-model="$parent.widgetComment" name="comment" ngRequired></textarea>
+                                    <span class="error" ng-show="widgetPanel.comment.$error.required">
+                                        Required!
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="control-group" >
+                            <label class="control-label">
+                                Choose Layout
+                            </label>
+                            <div class="controls">
+                           <!--  ng-options="opt as opt.name for opt in layout.data" -->
+                                <select ng-model="$parent.selectedLayout" >
+                                    <option value=0 >100%</option>
+                                    <option value=1 >50%</option>
+                                    <option value=2 >30%</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-group" >
+                            <label class="control-label">
+                                Choose Chart Type
+                            </label>
+                            <div class="controls">
+                                <select ng-model="$parent.selectedChartType">
+                                    <option value=0 ng-if="$parent.selectedLayout != 2">LINE</option>
+                                    <option value=1 ng-if="$parent.selectedLayout != 2">PIE</option>
+                                    <option value=4 ng-if="$parent.selectedLayout != 2">COLUMN</option>
+                                    <option value=5 ng-if="$parent.selectedLayout != 2">TABLE</option>
+                                    <option value=6 ng-if="$parent.selectedLayout == 2" ng-selected="$parent.selectedLayout == 2">KIP METRIC</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-group" >
+                            <label class="control-label">
+                                Data Update Frequency
+                            </label>
+                            <div class="controls">
+                                <select ng-model="$parent.selectedFrequency" >
+                                    <option value=0 >Daily</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                Add Metrics
+                            </label>
+                            <div class="controls">
+                                <ul>
+                                    <li ng-repeat="item in $parent.selectedMetricList" ng-click="deleteSelectedMetric(item)"><i class="icon-minus-sign"></i>{{item.name}}</li>
+                                </ul>
+                                <input ng-mousedown="handleSearchMetric()" ng-model="$parent.searchInputMetric">
+                                <div class="list-container">
+                                    <label ng-repeat="item in $parent.filteredMetricList">
+                                        <input  ng-if="$parent.selectedChartType != 1 && $parent.selectedChartType != 6" type="checkbox" ng-value="{{item.id}}" ng-change="updateSelectedMetricList(item)" ng-model="item.selected">
+                                        <input ng-if="$parent.selectedChartType == 1 || $parent.selectedChartType == 6" type="radio" ng-value="{{item.id}}" ng-click="updateSelectedMetricList(item, true)" name="metric" ng-model="item.selected">
+                                        {{item.name}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="control-group" ng-if="$parent.selectedChartType == 1">
+                            <label class="control-label">
+                                Add Dimensions
+                            </label>
+                            <div class="controls">
+                                <ul>
+                                    <li ng-repeat="item in $parent.selectedDimensionList"><i class="icon-minus-sign"></i>{{item.name}}</li>
+                                </ul>
+                                <input ng-mousedown="handleSearchDimension()" ng-model="$parent.searchInputDimension">
+                                <div class="list-container">
+                                    <div ng-repeat="item in $parent.filteredDimensionList">
+                                        <label>
+                                            <input type="radio" name="dimension" ng-value="{{item.id}}" ng-click="updateSelectedDimensionList(item)"> {{item.name}}
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="control-group" ng-if="$parent.selectedChartType == 1">
+                            <label class="control-label">
+                                Display slices number
+                            </label>
+                            <div class="controls">
+                                <select ng-model="$parent.$parent.selectedSlice">
+                                    <option value="10">10 Slices</option>
+                                    <option value="5">5 Slices</option>
+                                    <option value="3">3 Slices</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-group" ng-if="$parent.selectedChartType == 6">
+                            <label class="control-label">
+                                Metric Target
+                            </label>
+                            <div class="controls">
+                                <label>
+                                    <input type="text" ng-model="$parent.$parent.metricTarget" >
+                                </label>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="closeWidget()">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="saveWidget()" ng-disabled="!$parent.widgetTitle.length || !$parent.widgetComment.length">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
