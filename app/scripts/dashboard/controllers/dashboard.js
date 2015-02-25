@@ -250,7 +250,9 @@ define([],
                 var targetItem = _.find(processModels, function(item) { 
                     return item.processType == 3;
                 });
-                $scope.metricTarget = targetItem.other;
+                if (targetItem && targetItem.other) {
+                    $scope.metricTarget = targetItem.other;
+                }
             }
 
             $scope.showWidgetPanel = true;
