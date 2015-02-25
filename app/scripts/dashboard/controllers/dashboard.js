@@ -2,7 +2,8 @@ define([],
     function() 
 {
     'use strict';
-    return ['$scope', 'apiHelper', function($scope, apiHelper) {
+    return ['$scope', 'apiHelper', '$state', function($scope, apiHelper, $state) {
+        console.log($state.params.id);
 
         function fetchCurrentDashboardData() {
             if (!$scope.currentDashboard) {
@@ -50,8 +51,14 @@ define([],
         function fetchDashboards() {
             apiHelper('getDashboards').then(function(res) {
                 $scope.dashboardList = res;
-                $scope.currentDashboard = $scope.dashboardList[0];
-                
+
+                $scope.currentDashboard = _.find($scope.dashboardList, function(item) {
+                    return item.id == $state.params.id;
+                });
+
+                if (!$scope.currentDashboard) {
+                    $scope.currentDashboard = $scope.dashboardList[0];
+                }
                 fetchCurrentDashboardData();
             });
         }
@@ -152,10 +159,20 @@ define([],
 
             if ($scope.dashboardId) {
                 data.id = $scope.dashboardId;
-                data.style = $scope.currentDashboard.style;
+                data.style = [];
 
-                apiHelper('updateDashboard', data).then(function() {
+                var temp = {};
+                $scope.currentDashboard.style.forEach(function(item) {
+                    temp = {};
+                    temp.layoutType = item.layoutType;
+                    temp.widgetIds = item.widgetIds;
+
+                    data.style.push(temp);
+                });
+
+                apiHelper('updateDashboard', {data: data}).then(function() {
                     $scope.closeDashboard();
+                    fetchDashboards();
                 });
             } else {
                 apiHelper('addDashboard', {data: data}).then(function() {
@@ -166,12 +183,13 @@ define([],
             
         };
 
-        $scope.editDashboard = function(currentDashboard) {
+        $scope.editDashboard = function(id) {
             $scope.showDashboard();
-
-            $scope.dashboardTitle = currentDashboard.name;
-            $scope.dashboardComment = currentDashboard.comment;
-            $scope.dashboardId = currentDashboard.id;
+            apiHelper('getDashboardById', id).then(function(resp) {
+                $scope.dashboardTitle = resp.name;
+                $scope.dashboardComment = resp.comment;
+                $scope.dashboardId = resp.id;
+            });
         };
 
         $scope.deleteDashboard = function(currentDashboard) {
@@ -228,7 +246,11 @@ define([],
             if ($scope.selectedChartType == 1) {
                 $scope.selectedSlice = w.sortTop;
             } else if ($scope.selectedChartType == 6) {
-                //$scope.metricTarget = w.
+                var processModels = JSON.parse(w.process).processModels;
+                var targetItem = _.find(processModels, function(item) { 
+                    return item.processType == 3;
+                });
+                $scope.metricTarget = targetItem.other;
             }
 
             $scope.showWidgetPanel = true;

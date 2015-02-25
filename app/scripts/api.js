@@ -60,10 +60,9 @@ define([], function() {
         });
 
         apiHelper.config({
-            //'addDashboard': 'POST /meta/dashboard',
+            'getDashboardById': 'GET /meta/dashboard/:id',
             'getDashboards': 'GET /meta/dashboards',
-            //'updateDashboard': 'POST /meta/dashboard',
-           // 'deleteDashboard': 'DELETE /meta/dashboard',
+            'updateDashboard': 'PUT /meta/dashboard',
             'addWidget': 'POST /meta/widget',
             'deleteWidget': 'DELETE /meta/widget',
             'updateWidget': 'PUT /meta/widget',

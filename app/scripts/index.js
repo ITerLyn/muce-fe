@@ -60,7 +60,7 @@ require([
             },
 
             'dashboard': {
-                url: '/dashboard',
+                url: '/dashboard/:id',
                 templateUrl: 'templates/dashboard/index.html',
                 controller: 'MuceAPP.dashboardController'
             }

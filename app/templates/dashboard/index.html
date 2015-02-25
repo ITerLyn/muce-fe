@@ -6,14 +6,14 @@
         <ul class="nav nav-pills nav-stacked">
             <li ng-repeat="item in dashboardList" data-id="{{item.id}}" ng-class="{active: currentDashboard.id == item.id}"
             ng-click="selectDashboard(item)">
-                <a href="">{{item.name}}</a>
+                <a href="#/dashboard/{{item.id}}">{{item.name}}</a>
             </li>
         </ul>
     </div>
     <div class="span10 container-fluid widget-container">
 
         <div ng-if="currentDashboard">
-            <button class="btn" ng-click="editDashboard(currentDashboard)">Edit Dashboard</button>
+            <button class="btn" ng-click="editDashboard(currentDashboard.id)">Edit Dashboard</button>
             <button class="btn" ng-click="deleteDashboard(currentDashboard)">Delete Dashboard</button>
         </div>
 
@@ -36,7 +36,7 @@
                         </div>
                         <div dashboard-widget id="w.reportId"  chart="w.defaultChart" period="w.periods[0]" layout="item.layoutType"></div>
                     </div>
-                    <button type="button" class="btn btn-primary" ng-if="item.widgets.length < 2" ng-click="addWidget($index)">
+                    <button type="button" class="btn btn-primary add-widget-btn" ng-if="item.widgets.length < 2" ng-click="addWidget($index)">
                         Add Widget
                     </button>
                 </div>
@@ -48,7 +48,7 @@
                         </div>
                         <div dashboard-widget id="w.reportId"  chart="w.defaultChart" period="w.periods[0]" layout="item.layoutType"></div>
                     </div>
-                    <button type="button" class="btn btn-primary" ng-if="item.widgets.length < 3" ng-click="addWidget($index)">
+                    <button type="button" class="btn btn-primary add-widget-btn" ng-if="item.widgets.length < 3" ng-click="addWidget($index)">
                         Add Widget
                     </button>
                 </div>

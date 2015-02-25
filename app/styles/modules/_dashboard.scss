@@ -12,12 +12,17 @@
     }
     .layout0.widget-wrapper {
         height: 500px;
+        width: 97.8%;
     }
     .layout1.widget-wrapper {
         height: 300px;
+        width: 48.4%;
+        overflow: auto;
     }
     .layout2.widget-wrapper {
         height: 250px;
+        width: 32%;
+        overflow: auto;
     }
     .radio-inline {
         display: inline;
@@ -77,5 +82,12 @@
     }
     .chart-widget {
         padding: 0 10px;
+    }
+    .btn {
+        padding: 4px;
+        line-height: 20px;
+    }
+    .add-widget-btn {
+        margin-top: 10px;
     }
 }
