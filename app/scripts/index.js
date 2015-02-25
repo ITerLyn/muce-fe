@@ -70,7 +70,6 @@ require([
             $stateProvider.state(name, opt);
         });
 
-
         // $locationProvider.html5Mode(true).hashPrefix('!');
         // Use $urlRouterProvider to configure any redirects (when) and invalid urls (otherwise).
         $urlRouterProvider.otherwise('/report');
@@ -90,5 +89,5 @@ require([
         console.log('in feedbackCtrl');
     });
 
-    angular.bootstrap(document, ['muceApp']);    
+    angular.bootstrap(document, ['muceApp']);
 });

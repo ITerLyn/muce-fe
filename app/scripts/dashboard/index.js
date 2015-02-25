@@ -9,6 +9,5 @@ function(
     'use strict';
     angular.module('MuceAPP.dashboard', [])
         .controller('MuceAPP.dashboardController', dashboardController)
-        .directive('dashboardWidget', widget)
-        ;
+        .directive('dashboardWidget', widget);
 });
