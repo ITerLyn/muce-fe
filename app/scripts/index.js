@@ -19,13 +19,15 @@ require([
     'api',
     'report/index',
     'mq/index',
-    'tool/index'
+    'tool/index',
+    'dashboard/index'
 ], function() {
     'use strict';
 
     var muceApp = angular.module('muceApp', [
         'ngSanitize',
         'ngAnimate',
+        'ui.bootstrap',
 
         'ui.router',
         'ui.bootstrap',
@@ -45,7 +47,8 @@ require([
         'muceApp.report',
         'muceApp.mq',
         'muceApp.tool',
-        'muceApp.templates'
+        'muceApp.templates',
+        'MuceAPP.dashboard'
     ]);
 
     muceApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -54,6 +57,12 @@ require([
             'feedback': {
                 url: '/feedback',
                 templateUrl: 'templates/feedback.html'
+            },
+
+            'dashboard': {
+                url: '/dashboard/:id',
+                templateUrl: 'templates/dashboard/index.html',
+                controller: 'MuceAPP.dashboardController'
             }
         };
 

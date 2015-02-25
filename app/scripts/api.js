@@ -3,9 +3,9 @@ define([], function() {
     angular.module('muceApp.api', []).run(function(apiHelper) {
         // Meta
         apiHelper.configByType({
-            add: ['group', 'category', 'dimension', 'metric', 'combineMetric', 'report', 'categoryReportRelation', 'annotation'],
-            edit: ['group', 'category', 'dimension', 'metric', 'combineMetric', 'report', 'annotation'],
-            del: ['group', 'category', 'dimension', 'metric', 'categoryReportRelation', 'report', 'annotation'],
+            add: ['group', 'category', 'dimension', 'metric', 'combineMetric', 'report', 'categoryReportRelation', 'annotation', 'dashboard'],
+            edit: ['group', 'category', 'dimension', 'metric', 'combineMetric', 'report', 'annotation', 'dashboard'],
+            del: ['group', 'category', 'dimension', 'metric', 'categoryReportRelation', 'report', 'annotation', 'dashboard'],
             list: ['group', 'category', 'report', 'event', 'field', 'fieldId', 'metric', 'dimension']
         }, {
             prefix: '/meta/'
@@ -58,5 +58,19 @@ define([], function() {
         }, {
             urlPrefix: 'http://apps-datatools0-bgp0.hy01.wandoujia.com:4000/api'
         });
+
+        apiHelper.config({
+            'getDashboardById': 'GET /meta/dashboard/:id',
+            'getDashboards': 'GET /meta/dashboards',
+            'updateDashboard': 'PUT /meta/dashboard',
+            'addWidget': 'POST /meta/widget',
+            'deleteWidget': 'DELETE /meta/widget',
+            'updateWidget': 'PUT /meta/widget',
+            'getWidgetById': 'GET /meta/widget/:id'
+        }
+        // , {
+        //     urlPrefix: 'http://private-75707-muce3.apiary-mock.com/api/v1/meta'
+        // }
+        )
     });
 }) // TODO Missing semicolon
