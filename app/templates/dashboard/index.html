@@ -18,40 +18,17 @@
         </div>
 
         <div class="widget-row" ng-repeat="item in currentDashboard.style">
-            <div ng-switch="item.layoutType">
-                <div ng-switch-when=0 class="span12">
-                    <div class="span12 widget-wrapper layout0" ng-repeat="w in item.widgets">
-                        <div class="widget-actions">
-                            <a href="" ng-click="deleteWidget(w, $parent.$index)">Delete</a>
-                            <a href="" ng-click="editWidget(w, currentDashboard.id, 0)">Edit</a>
-                        </div>
-                        <div dashboard-widget id="w.reportId"  chart="w.defaultChart" period="w.periods[0]" layout="item.layoutType" ></div>
+            <div class="span12" >
+                <div class="widget-wrapper layout{{item.layoutType}}" ng-repeat="w in item.widgets">
+                    <div class="widget-actions">
+                        <a href="" ng-click="deleteWidget(w, $parent.$index)">Delete</a>
+                        <a href="" ng-click="editWidget(w, currentDashboard.id, item.layoutType)">Edit</a>
                     </div>
+                    <div dashboard-widget id="w.reportId"  chart="w.defaultChart" period="w.periods[0]" layout="item.layoutType" title="w.name"></div>
                 </div>
-                <div ng-switch-when=1 class="span12">
-                    <div class="span6 widget-wrapper layout1" ng-repeat="w in item.widgets">
-                        <div class="widget-actions">
-                            <a href="" ng-click="deleteWidget(w, $parent.$index)">Delete</a>
-                            <a href="" ng-click="editWidget(w, currentDashboard.id, 1)">Edit</a>
-                        </div>
-                        <div dashboard-widget id="w.reportId"  chart="w.defaultChart" period="w.periods[0]" layout="item.layoutType"></div>
-                    </div>
-                    <button type="button" class="btn btn-primary add-widget-btn" ng-if="item.widgets.length < 2" ng-click="addWidget($index)">
-                        Add Widget
-                    </button>
-                </div>
-                <div ng-switch-when=2 class="span12">
-                    <div class="span4 widget-wrapper layout2" ng-repeat="w in item.widgets">
-                        <div class="widget-actions">
-                            <a href="" ng-click="deleteWidget(w, $parent.$index)">Delete</a>
-                            <a href="" ng-click="editWidget(w, currentDashboard.id, 2)">Edit</a>
-                        </div>
-                        <div dashboard-widget id="w.reportId"  chart="w.defaultChart" period="w.periods[0]" layout="item.layoutType"></div>
-                    </div>
-                    <button type="button" class="btn btn-primary add-widget-btn" ng-if="item.widgets.length < 3" ng-click="addWidget($index)">
-                        Add Widget
-                    </button>
-                </div>
+                <button type="button" class="btn btn-primary add-widget-btn" ng-if="item.widgets.length < (item.layoutType + 1)" ng-click="addWidget($index)">
+                    Add Widget
+                </button>
             </div>
         </div>
         <div class="add-widget-btn">

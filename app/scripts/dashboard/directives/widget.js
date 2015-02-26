@@ -14,7 +14,8 @@ define([
                 id: '=',
                 period: '=',
                 chart: '=',
-                layout: '='
+                layout: '=',
+                title: '='
             },
             templateUrl: 'templates/dashboard/widget.html',
             link: function($scope, $element, $attrs) {
@@ -91,7 +92,7 @@ define([
                                             },
                                             series: series,
                                             title: {
-                                                text: meta.name
+                                                text: $scope.title
                                             },
                                             subtitle: {
                                                 text: meta.comment
@@ -101,7 +102,6 @@ define([
                                     break;
 
                                     case 5:
-                                        $scope.title = meta.name;
                                         $scope.subtitle = meta.comment;
                                         $scope.theader = ['Date'];
                                         $scope.theader = $scope.theader.concat(_.pluck(data.metricsMeta, 'name'));
@@ -165,7 +165,7 @@ define([
                                             },
                                             series: series,
                                             title: {
-                                                text: meta.name
+                                                text: $scope.title
                                             },
                                             subtitle: {
                                                 text: meta.comment
@@ -176,7 +176,6 @@ define([
 
                                     case 6:
                                         $scope.metricName = meta.metrics[0].name;
-                                        $scope.title = meta.name;
                                         $scope.subtitle = meta.comment;
                                         $scope.theader = ['', 'Data', 'Diff', 'Rate'];
                                         $scope.tbody = [];

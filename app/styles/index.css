@@ -990,35 +990,36 @@ textarea {
   border: 1px solid #ccc;
   margin: 10px 8px 10px 0;
   border-radius: 4px;
+  float: left;
 }
-/* line 13, modules/_dashboard.scss */
+/* line 14, modules/_dashboard.scss */
 .dashboard-container .layout0.widget-wrapper {
   height: 500px;
   width: 97.8%;
 }
-/* line 17, modules/_dashboard.scss */
+/* line 18, modules/_dashboard.scss */
 .dashboard-container .layout1.widget-wrapper {
   height: 300px;
   width: 48.4%;
   overflow: auto;
 }
-/* line 22, modules/_dashboard.scss */
+/* line 23, modules/_dashboard.scss */
 .dashboard-container .layout2.widget-wrapper {
   height: 250px;
   width: 32%;
   overflow: auto;
 }
-/* line 27, modules/_dashboard.scss */
+/* line 28, modules/_dashboard.scss */
 .dashboard-container .radio-inline {
   display: inline;
 }
-/* line 30, modules/_dashboard.scss */
+/* line 31, modules/_dashboard.scss */
 .dashboard-container .list-container {
   max-height: 150px;
   padding: 4px;
   overflow: scroll;
 }
-/* line 35, modules/_dashboard.scss */
+/* line 36, modules/_dashboard.scss */
 .dashboard-container .modal-mask {
   width: 100%;
   height: 100%;
@@ -1028,64 +1029,64 @@ textarea {
   top: 0;
   left: 0;
 }
-/* line 44, modules/_dashboard.scss */
+/* line 45, modules/_dashboard.scss */
 .dashboard-container .add-widget-btn {
   margin-top: 20px;
 }
-/* line 47, modules/_dashboard.scss */
+/* line 48, modules/_dashboard.scss */
 .dashboard-container li {
   list-style: none;
 }
-/* line 50, modules/_dashboard.scss */
+/* line 51, modules/_dashboard.scss */
 .dashboard-container .widget-actions {
   margin: 10px 0 0 20px;
 }
-/* line 53, modules/_dashboard.scss */
+/* line 54, modules/_dashboard.scss */
 .dashboard-container .widget-table {
   width: 90%;
   margin: 10px auto 0 auto;
 }
-/* line 57, modules/_dashboard.scss */
+/* line 58, modules/_dashboard.scss */
 .dashboard-container .widget-table th, .dashboard-container .widget-table td {
   padding: 2px;
 }
-/* line 62, modules/_dashboard.scss */
+/* line 63, modules/_dashboard.scss */
 .dashboard-container .widget-title,
 .dashboard-container .widget-subtitle {
   text-align: center;
   margin: 4px 0;
 }
-/* line 66, modules/_dashboard.scss */
+/* line 67, modules/_dashboard.scss */
 .dashboard-container .widget-title {
   font-size: 17px;
   font-weight: bold;
 }
-/* line 70, modules/_dashboard.scss */
+/* line 71, modules/_dashboard.scss */
 .dashboard-container .widget-subtitle {
   font-weight: 500;
   font-size: 12px;
 }
-/* line 74, modules/_dashboard.scss */
+/* line 75, modules/_dashboard.scss */
 .dashboard-container .date-picker {
   float: right;
 }
-/* line 77, modules/_dashboard.scss */
+/* line 78, modules/_dashboard.scss */
 .dashboard-container .current-metric {
   font-size: 20px;
   margin: 16px 0;
   font-weight: bold;
   text-align: center;
 }
-/* line 83, modules/_dashboard.scss */
+/* line 84, modules/_dashboard.scss */
 .dashboard-container .chart-widget {
   padding: 0 10px;
 }
-/* line 86, modules/_dashboard.scss */
+/* line 87, modules/_dashboard.scss */
 .dashboard-container .btn {
   padding: 4px;
   line-height: 20px;
 }
-/* line 90, modules/_dashboard.scss */
+/* line 91, modules/_dashboard.scss */
 .dashboard-container .add-widget-btn {
   margin-top: 10px;
 }
