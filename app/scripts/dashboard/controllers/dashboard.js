@@ -9,24 +9,32 @@ define([],
             if (!$scope.currentDashboard) {
                 return;
             }
-            $scope.currentDashboard.style.forEach(function(item) {
-                item.widgets = [];
+            var tempItem;
+            var tempList = [];
+            var widgetIdList = _.reduce($scope.currentDashboard.style, function(memo, item) {
+               return memo.concat(item.widgetIds);
+            }, []);
 
-                item.widgetIds.forEach(function(wId, index) {
-                    apiHelper('getWidgetById', wId).then(function(data) {
-                        item.widgets.push(data);
+            widgetIdList.forEach(function(wId) {
+                apiHelper('getWidgetById', wId).then(function(data) {
+                    tempList.push(data);
 
-                        if (index == item.widgetIds.length - 1) {
-                            item.widgets = _.sortBy(item.widgets, function(i) {
-                                return i.id;
+                    if (tempList.length === widgetIdList.length) {
+                        $scope.currentDashboard.style.forEach(function(item) {
+                            item.widgets = [];
+                            item.widgetIds.forEach(function(id) {
+                                tempItem = _.find(tempList, function(t) {
+                                    return t.id === id;
+                                });
+                                if (tempItem) {
+                                    item.widgets.push(tempItem);
+                                }
                             });
-                        }
-                    });
+                        });
 
-                    
+                    }
                 });
             });
-
         }
 
         // LINE(0),    // 折线图
@@ -238,6 +246,7 @@ define([],
             $scope.selectedChartType = w.defaultChart;
             $scope.selectedFrequency = 0;
             $scope.reportId = w.reportId;
+            $scope.reportLink = w.reportLink || '';
 
             $scope.selectedMetricList = w.metrics;
 
@@ -283,7 +292,8 @@ define([],
                 period: $scope.selectedFrequency,
                 metrics: _.pluck($scope.selectedMetricList, 'id'),
                 lineNum: $scope.currentLine,
-                layoutType: $scope.selectedLayout
+                layoutType: $scope.selectedLayout,
+                reportLink: $scope.reportLink || ''
             };
 
             switch($scope.selectedChartType * 1) {

@@ -21,8 +21,9 @@
             <div class="span12" >
                 <div class="widget-wrapper layout{{item.layoutType}}" ng-repeat="w in item.widgets">
                     <div class="widget-actions">
-                        <a href="" ng-click="deleteWidget(w, $parent.$index)">Delete</a>
                         <a href="" ng-click="editWidget(w, currentDashboard.id, item.layoutType)">Edit</a>
+                        <a ng-href="{{w.reportLink}}" target="_blank" ng-if="w.reportLink && w.reportLink.length">link</a>
+                        <a href="" ng-click="deleteWidget(w, $parent.$index)" class="action-right">Delete</a>
                     </div>
                     <div dashboard-widget id="w.reportId"  chart="w.defaultChart" period="w.periods[0]" layout="item.layoutType" title="w.name"></div>
                 </div>
@@ -231,7 +232,16 @@
                                 </label>
                             </div>
                         </div>
-
+                        <div class="control-group">
+                            <label class="control-label">
+                                Report Link
+                            </label>
+                            <div class="controls">
+                                <label>
+                                    <input type="text" ng-model="$parent.reportLink" >
+                                </label>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
