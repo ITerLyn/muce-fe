@@ -22,7 +22,7 @@
                 <div class="widget-wrapper layout{{item.layoutType}}" ng-repeat="w in item.widgets">
                     <div class="widget-actions">
                         <a href="javascript:void(0)" ng-click="editWidget(w, currentDashboard.id, item.layoutType)">Edit</a>
-                        <a ng-href="{{w.reportLink}}" target="_blank" ng-if="w.reportLink && w.reportLink.length">link</a>
+                        <a ng-href="{{w.reportLink}}" target="_blank" ng-if="w.reportLink && w.reportLink.length">Link</a>
                         <a href="javascript:void(0)" ng-click="deleteWidget(w, $parent.$index)" class="action-right">Delete</a>
                     </div>
                     <div dashboard-widget id="w.reportId"  chart="w.defaultChart" period="w.periods[0]" layout="item.layoutType" title="w.name"></div>
