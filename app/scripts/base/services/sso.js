@@ -1,6 +1,6 @@
 define(function() {
     var SSO_LOCATION = 'http://sso.wandoulabs.com/';
-    var whiteList = ['gaohailang', 'zuxinglong', 'gaiyongjuan', 'weijin', 'haiyating', 'songzi'];
+    var whiteList = ['gaohailang', 'zuxinglong', 'gaiyongjuan', 'weijin', 'haiyating', 'songzi', 'zhengwenjie'];
 
     angular.module('muceApp.base.services.sso', [])
         .provider('ssoInterceptor', function() {
