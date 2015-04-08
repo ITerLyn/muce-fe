@@ -1,7 +1,7 @@
 define(['mq/muce-hint'], function() {
     function mqEditorCtrl($scope, $rootScope, $interval, apiHelper, $state) {
         $scope.form = {};
-
+        $scope.form.notification = true;
 
         var runTimer, runStatusTimer;
 
@@ -49,6 +49,7 @@ define(['mq/muce-hint'], function() {
 
         $scope.composeNewQuery = function() {
             $scope.form = {};
+            $scope.form.notification = true;
             cancelCurrentJob();
         };
 
@@ -84,9 +85,11 @@ define(['mq/muce-hint'], function() {
                 _editor.focus();
 
                 _editor.on("change", function(cm, change) {
-                    console.log(arguments);
+                    //console.log(arguments);
                     if (change.origin != '+input') return;
                     // +input, +delete, complete
+                    if (change.text[0] == " ") return;
+                    if (change.text[0] == "" && change.text[1] == "") return;
                     CodeMirror.showHint(cm);
                 });
 
@@ -138,7 +141,10 @@ define(['mq/muce-hint'], function() {
         });
 
         $scope.$watch('form.hql', function(val) {
-            if (!val) return;
+            if (!val){ 
+                $('.mq-editor-wrapper .CodeMirror').css('height', '112px');
+                return;
+            }
             if (val.split('\n').length > 7) {
                 $('.mq-editor-wrapper .CodeMirror').css('height', 'auto');
             } else {

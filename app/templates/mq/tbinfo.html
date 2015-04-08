@@ -1,5 +1,5 @@
 <div class="mq-tb-view" ng-show="currentDb">
-    <div class="tbinfo-db-tb-name">
+    <div class="tbinfo-db-tb-name" style="z-index:99;">
         <i class="icon-th"></i>
         <span class="label label-important">{{currentDb}}</span>
         <i class="icon-table"></i>
@@ -8,10 +8,19 @@
     <tabset ng-show="currentTb">
         <tab heading="Schema">
             <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>FIELD</th>
+                        <!--th>TYPE</th>
+                        <th>COMMENT</th-->
+                    </tr>
+                </thead>
                 <tbody>
                     <tr bindonce quick-ng-repeat="ii in tbInfo.schema track by $index"
                         quick-repeat-list="tbInfo.schema">
                         <td bo-text="ii"></td>
+                        <!--td bo-text="ii"></td>
+                        <td bo-text="ii"></td-->
                     </tr>
                 </tbody>
             </table>

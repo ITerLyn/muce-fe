@@ -13,13 +13,13 @@
             </span>
         </p>
 
-        <input type="text" ng-model="target" class="span3"
+        <input type="text" ng-model="target" class="span3" style="margin-top:10px;" 
             ng-keydown="mqShareInputHandler($event)"
             typeahead="who as who.id for who in whoList | filter:{id:$viewValue}"
             typeahead-wait-ms="100"
             typeahead-template-url="who-item.html">
 
-        <button type="submit" class="btn btn-primary mq-search"
+        <button type="submit" class="btn btn-primary mq-search" style="margin-left:12px; height:30px; line-height:21px;"
             ng-click="queryUserJobList()">Search</button>
     </div>
     <div muce-include="templates/mq/history.html"></div>
