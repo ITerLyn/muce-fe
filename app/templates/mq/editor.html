@@ -6,12 +6,12 @@
 
     <div id="mq_run_animate" style="margin-bottom: 20px;">
         <button class="btn btn-danger"
-            ng-disabled="currentJob || !form.hql" ng-click="runQuery()">Run Query</button>
+            ng-disabled="(currentJob && statusComplete) || !form.hql" ng-click="runQuery()">Run Query</button>
 
         <button class="btn btn-primary" ng-click="composeNewQuery()">Compose Query</button>
 
         <div style="display: inline-block;"
-            ng-style="{'visibility': currentJob ? 'visible' : 'hidden'}">
+            ng-style="{'visibility': currentJob || statusComplete ? 'visible' : 'hidden'}">
             <i class="icon-time"></i>
             <span class="label label-info">
                 {{runTimeText}}
@@ -20,8 +20,8 @@
             <span class="label" ng-class="
                 {'label-warning': (currentJob.status !== 'FAILED' && currentJob.status !== 'COMPLETED'),
                 'label-important': (currentJob.status === 'FAILED'),
-                'label-success': (currentJob.status === 'COMPLETED')}">
-                {{currentJob.status}}
+                'label-success': (statusComplete === 'COMPLETED')}">
+                {{currentJob.status ? currentJob.status : statusComplete}}
             </span>
         </div>
 
@@ -41,7 +41,7 @@
         </div>
     </div> -->
 
-    <div class="bs-docs-example success-example" ng-show="currentJob.status === 'COMPLETED'">
+    <div class="bs-docs-example success-example" ng-show="statusComplete === 'COMPLETED'">
         <div class="mq-run-success-alert">
             <div class="alert alert-block alert-success fade in">
                 <h4 class="alert-heading">Well done!</h4>
@@ -49,11 +49,11 @@
                     Successfully run your query.You can download the result data to your local computer or view at most <em>100</em> lines of result.
                 </p>
                 <p>
-                    <a class="btn btn-success mq-download-btn">
+                    <a class="btn btn-success mq-download-btn" ng-click="downloadCurrentJobView(currentJobId)">
                         <span class="icon-cloud-download"></span>
                         Download
                     </a>
-                    <a class="btn btn-primary mq-show-run-result">
+                    <a class="btn btn-primary mq-show-run-result" ng-click="openCurrentJobView(currentJobId)">
                         <span class="icon-list"></span>
                         View
                     </a>
@@ -61,4 +61,13 @@
             </div>
         </div>
     </div>
+
+    <table class="table table-striped" ng-if="currentJobResult">
+        <tbody>
+            <tr ng-repeat="i in currentJobResult track by $index">
+                <td ng-repeat="ii in i track by $index">{{ii}}</td>
+            </tr>
+        </tbody>
+    </table>
+
 </div>

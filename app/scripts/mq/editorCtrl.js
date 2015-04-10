@@ -1,5 +1,5 @@
 define(['mq/muce-hint'], function() {
-    function mqEditorCtrl($scope, $rootScope, $interval, apiHelper, $state) {
+    function mqEditorCtrl($scope, $rootScope, $interval, apiHelper, $state, downloadFile) {
         $scope.form = {};
         $scope.form.notification = true;
 
@@ -15,6 +15,10 @@ define(['mq/muce-hint'], function() {
                     cancelCurrentJob();
                     // NOTICE BY TOGGLE document.title
                 }
+                if (job.status === 'COMPLETED'){
+                    $scope.statusComplete = job.status;
+                    $scope.currentJobId = job.id;
+                }
             }, function() {
                 cancelCurrentJob();
                 // same with
@@ -23,7 +27,8 @@ define(['mq/muce-hint'], function() {
 
         $scope.runQuery = function() {
             var curTime = 0;
-
+            $scope.statusComplete = '';
+            $scope.currentJobResult = '';
             apiHelper('addJob', {
                 data: $scope.form
             }).then(function(data) {
@@ -48,6 +53,8 @@ define(['mq/muce-hint'], function() {
         };
 
         $scope.composeNewQuery = function() {
+            $scope.statusComplete = '';
+            $scope.currentJobResult = '';
             $scope.form = {};
             $scope.form.notification = true;
             cancelCurrentJob();
@@ -63,6 +70,21 @@ define(['mq/muce-hint'], function() {
             $interval.cancel(runTimer);
             $interval.cancel(runStatusTimer);
         }
+
+        $scope.openCurrentJobView = function (jobid){
+            apiHelper('getJobView', jobid).then(function(data) {
+                $scope.currentJobResult = data;
+                if ($scope.currentJobResult) {
+                    $scope.currentJobResult = _.map($scope.currentJobResult.trim().split('\n'), function(i) {
+                        return i.split('\t');
+                    });
+                }
+            });
+        };
+
+        $scope.downloadCurrentJobView = function(id) {
+            downloadFile(apiHelper.getUrl('getJobResult', id));
+        };
 
         /* code-mirror setting */
         $scope.editorOptions = {

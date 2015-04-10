@@ -11,16 +11,16 @@
                 <thead>
                     <tr>
                         <th>FIELD</th>
-                        <!--th>TYPE</th>
-                        <th>COMMENT</th-->
+                        <th>TYPE</th>
+                        <th>COMMENT</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr bindonce quick-ng-repeat="ii in tbInfo.schema track by $index"
                         quick-repeat-list="tbInfo.schema">
-                        <td bo-text="ii"></td>
-                        <!--td bo-text="ii"></td>
-                        <td bo-text="ii"></td-->
+                        <td bo-text="ii.name"></td>
+                        <td bo-text="typeList[ii.type]"></td>
+                        <td bo-text="ii.comment"></td>
                     </tr>
                 </tbody>
             </table>

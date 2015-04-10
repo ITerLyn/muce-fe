@@ -14,6 +14,7 @@ define(function() {
             var db = $scope.currentDb;
             $scope.currentTb = tb;
             $scope.tbInfo = {};
+            $scope.typeList = ['INT','FLOAT','PERCENT','STRING','RECORD','BOOLEAN','LONG','DOUBLE','BYTE_STRING','MESSAGE','ARRAY'];
             apiHelper('getDbSchema', db, tb).then(function(data) {
                 $scope.tbInfo.schema = data;
             });

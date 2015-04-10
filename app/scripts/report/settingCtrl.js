@@ -18,6 +18,10 @@ define(function() {
                 endDate: _maxAvailableDate,
                 maxDate: _maxAvailableDate
             }, function(start, end) {
+                var copyMaxAvailable = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 1);
+                if(_maxAvailableDate.getDate() != copyMaxAvailable.getDate()) {
+                    location.reload();
+                }
                 _state.endDate = end._d;
                 _state.startDate = start._d;
                 fetchReports();
