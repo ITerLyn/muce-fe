@@ -4,15 +4,17 @@ define(function() {
 
         $scope.changeDb = function(db) {
             $scope.allTables = [];
-            $scope.currentDb = db;
-            apiHelper('getDbTable', db).then(function(data) {
+            $scope.currentDb = db.name;
+            $scope.currentDbComment = db.comment;
+            apiHelper('getDbTable', db.name).then(function(data) {
                 $scope.allTables = data;
             });
         };
 
-        $scope.changeTable = function(tb) {
+        $scope.changeTable = function(tb, comment) {
             var db = $scope.currentDb;
             $scope.currentTb = tb;
+            $scope.currentTbComment = comment;
             $scope.tbInfo = {};
             $scope.typeList = ['INT','FLOAT','PERCENT','STRING','RECORD','BOOLEAN','LONG','DOUBLE','BYTE_STRING','MESSAGE','ARRAY'];
             apiHelper('getDbSchema', db, tb).then(function(data) {

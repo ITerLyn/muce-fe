@@ -3,12 +3,12 @@
     <ul class="db-list">
         <li class="dropdown db-item"
             ng-repeat="db in allDbs">
-            <a class="btn dropdown-toggle" ng-click="changeDb(db)">
-                <i class="icon-th"></i>{{db}}
+            <a class="btn dropdown-toggle" ng-click="changeDb(db)" tooltip="{{db.comment}}" tooltip-placement="right">
+                <i class="icon-th"></i>{{db.name}}
             </a>
-            <ul class="dropdown-menu" ng-if="currentDb==db">
+            <ul class="dropdown-menu" ng-if="currentDb==db.name">
                 <li ng-repeat="tb in allTables">
-                    <a href="javascript:void(0)" ng-click="changeTable(tb)">{{tb}}</a>
+                    <a href="javascript:void(0)" ng-click="changeTable(tb.name, tb.comment)">{{tb.name}}</a>
                 </li>
             </ul>
         </li>
