@@ -1,9 +1,9 @@
 <div class="mq-tb-view" ng-show="currentDb">
     <div class="tbinfo-db-tb-name" style="z-index:99;">
         <i class="icon-th"></i>
-        <span class="label label-important">{{currentDb}}</span>
+        <span class="label label-important" tooltip="{{currentDbComment}}">{{currentDb}}</span>
         <i class="icon-table"></i>
-        <span class="label label-info">{{currentTb}}</span>
+        <span class="label label-info" tooltip="{{currentTbComment}}">{{currentTb}}</span>
     </div>
     <tabset ng-show="currentTb">
         <tab heading="Schema">
@@ -34,6 +34,9 @@
                     </tr>
                 </tbody>
             </table>
+        </tab>
+        <tab heading="Description">
+            <p>{{currentTbComment}}</p>
         </tab>
     </tabset>
 </div>

@@ -8,6 +8,7 @@
             <th>Hql&nbsp;&nbsp;
                 <i class="icon-question-sign" tooltip-placement="right"
                     tooltip="Tip: 点击特定的 HQL，快速复制到 SQL 编辑器中"></i></th>
+            <th>Cost</th>
             <th>Operate</th>
         </tr>
     </thead>
@@ -23,7 +24,7 @@
             <td ng-if="!job.size">UNKOWN</td>
 
             <td class="i-cursor-handle" ng-click="setHqlEditor(job.hql)">{{job.hql}}</td>
-
+            <td>{{job.cost | number:2}}</td>
             <!-- 操作 -->
             <td ng-switch on="job.status">
                 <a ng-switch-when="PENDING" ng-click="killJob(job.id)">Kill</a>
