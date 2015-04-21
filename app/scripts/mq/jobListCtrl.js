@@ -40,6 +40,39 @@ define(function() {
         $scope.downloadJobResultView = function(id) {
             downloadFile(apiHelper.getUrl('getJobResult', id));
         };
+
+        $scope.searchById = function(id) {
+            apiHelper('getBigJob', id).then(function(data) {
+                $scope.jobList = [];
+                $scope.jobList.push(data);
+            });
+        };
+
+        $scope.reset = function(id) {
+            function fetchHistory(type) {
+                apiHelper('getBigJobList', {
+                    busy: type
+                }).then(function(data) {
+                    $scope.jobList = data ? data.reverse() : [];
+                    angular.forEach($scope.jobList, function(v, k){
+                        // v.checked = false;
+                        $scope.jobList[k].checked = false;
+                        console.log($scope.jobList)
+                    });
+                });
+            }
+
+            $scope.searchText = '';
+            fetchHistory('global');
+            $rootScope.$on('mq:fetchHistory', function(e, opt) {
+                if (opt && opt.channel === 'auto') {
+                    fetchHistory('hide');
+                } else {
+                    fetchHistory('global');
+                }
+            });
+        };
+
     }
 
     angular.module('muceApp.mq.mqJobListCtrl', [])

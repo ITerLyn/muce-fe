@@ -1,0 +1,17 @@
+<style type="text/css">
+    div.modal{border:0 none;background-color: initial;box-shadow: none;left: 0;margin: auto;width: 100%;}
+    div.modal-dialog{position:relative;width:600px;min-width:400px;margin:30px auto;}.modal-content{position:relative;background-color:#fff;border:1px solid #999;border:1px solid rgba(0,0,0,.2);border-radius:6px;-webkit-box-shadow:0 3px 9px rgba(0,0,0,.5);box-shadow:0 3px 9px rgba(0,0,0,.5);background-clip:padding-box;outline:0}
+    div.modal-dialog .modal-body{padding: 32px 100px; line-height: 30px;}
+    div.modal-dialog .modal-footer{text-align: center;}
+    div.modal-dialog .modal-footer button{border-radius:4px;}
+</style>
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$close()">×</button>
+    <h3 class="modal-title">NOTICE</h3>
+</div>
+<div class="modal-body">
+    <p ng-if="notice">{{notice}}</p>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="$close()">我知道了</button>
+</div>

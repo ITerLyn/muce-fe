@@ -3,7 +3,7 @@
     <ul class="db-list">
         <li class="dropdown db-item"
             ng-repeat="db in allDbs">
-            <a class="btn dropdown-toggle" ng-click="changeDb(db)" tooltip="{{db.comment}}" tooltip-placement="right">
+            <a class="btn dropdown-toggle" ng-click="changeDb(db)" tooltip="{{db.comment}}" tooltip-placement="top">
                 <i class="icon-th"></i>{{db.name}}
             </a>
             <ul class="dropdown-menu" ng-if="currentDb==db.name">

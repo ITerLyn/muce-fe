@@ -1,9 +1,24 @@
 define(['mq/muce-hint'], function() {
-    function mqEditorCtrl($scope, $rootScope, $interval, apiHelper, $state, downloadFile) {
+    function mqEditorCtrl($scope, $rootScope, $interval, apiHelper, $state, $modal, downloadFile) {
         $scope.form = {};
         $scope.form.notification = true;
 
         var runTimer, runStatusTimer;
+
+        function onBigQuery() {
+
+            var notice = '你的 query 较大，在计算资源紧张的情况下，会跑得很慢或者被kill。'+
+                        '如有疑问请联系 muce-team@wandoujia.com';
+            var newScope = $scope.$new(true);
+            newScope.notice = notice;
+
+            $modal.open({
+                templateUrl: 'templates/mq/partials/big-query-notice-modal.html',
+                backdrop: false,
+                size: 'lg',
+                scope: newScope
+            });
+        }
 
         function updateStatus(data) {
             $rootScope.$emit('mq:fetchHistory', {
@@ -45,6 +60,9 @@ define(['mq/muce-hint'], function() {
                     updateStatus(data);
                 }, 3000);
                 updateStatus(data);
+                if(data.isLarge){
+                    onBigQuery();
+                }
             }, function() {
                 // error handler
                 // alert-error(error.reason)

@@ -4,7 +4,8 @@ define([
     'mq/historyCtrl',
     'mq/editorCtrl',
     'mq/shareCtrl',
-    'mq/jobListCtrl'
+    'mq/jobListCtrl',
+    'mq/bigqueryCtrl'
 ], function(routeInfo) {
 
     function buildCtrlDepArr(ctrlNames) {
@@ -13,7 +14,7 @@ define([
         });
     }
 
-    angular.module('muceApp.mq', buildCtrlDepArr(['mqCtrl', 'mqHistoryCtrl', 'mqEditorCtrl', 'mqShareCtrl', 'mqJobListCtrl']))
+    angular.module('muceApp.mq', buildCtrlDepArr(['mqCtrl', 'mqHistoryCtrl', 'mqBigqueryCtrl', 'mqEditorCtrl', 'mqShareCtrl', 'mqJobListCtrl']))
         .config(function($stateProvider) {
             _.each(routeInfo, function(opt, name) {
                 $stateProvider.state(name, opt);
