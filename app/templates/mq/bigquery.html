@@ -1,0 +1,55 @@
+<div ng-controller="mqJobListCtrl">
+<form class="navbar-form navbar-left pull-left">
+    <div style="line-height:60px;">
+        <input type="text" class="span3" style="margin-top:0px;" ng-model="searchText" placeholder="Job Id" >
+
+        <button type="submit" class="btn btn-primary mq-search" style="margin-left:12px; height:30px; line-height:21px;"
+            ng-click="searchById(searchText)">Search</button>
+        <button type="submit" class="btn" style="margin-left:12px; height:30px; line-height:21px;"
+            ng-click="reset();">Reset</button>
+    </div>
+</form>
+
+<table class="table table-bordered mq-job-history" style="table-layout:fixed;">
+    <thead>
+        <tr>
+            <th>Job Id</th>
+            <td>Submit Time</td>
+            <th>Status</th>
+            <th>Size</th>
+            
+            <th>Cost</th>
+            <th>Cost(Time)</th>
+            <th>Operate</th>
+            <th style="width:50%;">Hql</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="job in jobList track by $index | filter:searchText"
+            ng-class="{'error': job.status == 'FAILED',
+                       'info': (job.status == 'PENDING') || (job.status == 'RUNNING')}">
+            
+            <td>{{job.id}}</td>
+            <td>{{job.sTime|date: 'yyyy/MM/dd HH:mm:ss'}}</td>
+            <td class="w-text-warning">{{job.status}}</td>
+
+            <td ng-if="job.size">{{job.size|humanBytes}}</td>
+            <td ng-if="!job.size">UNKOWN</td>
+
+            
+            <td>{{job.cost | number:2}}</td>
+            <td>{{job.costTime|date: 'yyyy/MM/dd HH:mm:ss'}}</td>
+            <!-- 操作 -->
+            <td ng-switch on="job.status">
+                <a ng-switch-when="PENDING" ng-click="killJob(job.id)">Kill</a>
+                <a ng-switch-when="RUNNING" ng-click="killJob(job.id)">Kill</span>
+            </td>
+            <td style="word-wrap:break-word; word-break:break-word;">{{job.hql}}</td>
+
+        </tr>
+        <tr ng-if="!jobList.length && hasQueryJobList">
+            <td> 暂无结果 </td>
+        </tr>
+    </tbody>
+</table>
+</div>

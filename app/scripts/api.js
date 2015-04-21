@@ -36,6 +36,10 @@ define([], function() {
             'delJob': 'DELETE /mq/job/:id',
             'getJobList': 'GET /mq/job',
 
+            'getBigJobList': 'GET /mq/job?isLarge=true',
+            'getBigJob': 'GET /mq/job/:id/?isLarge=true',
+
+
             'getJobResult': 'GET /mq/job/:id/result',
             'getJobResultSize': 'GET /mq/job/:id/result/size',
             'getJobView': 'GET /mq/job/:id/view',

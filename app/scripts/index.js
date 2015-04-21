@@ -63,6 +63,12 @@ require([
                 url: '/dashboard/:id',
                 templateUrl: 'templates/dashboard/index.html',
                 controller: 'MuceAPP.dashboardController'
+            },
+
+            'bigquery': {
+                url: '/bigquery',
+                templateUrl: 'templates/mq/bigquery.html',
+                controller: 'mqBigqueryCtrl'
             }
         };
 
