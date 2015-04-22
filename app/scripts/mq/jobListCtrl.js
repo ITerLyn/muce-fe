@@ -54,11 +54,6 @@ define(function() {
                     busy: type
                 }).then(function(data) {
                     $scope.jobList = data ? data.reverse() : [];
-                    angular.forEach($scope.jobList, function(v, k){
-                        // v.checked = false;
-                        $scope.jobList[k].checked = false;
-                        console.log($scope.jobList)
-                    });
                 });
             }
 
@@ -77,4 +72,4 @@ define(function() {
 
     angular.module('muceApp.mq.mqJobListCtrl', [])
         .controller('mqJobListCtrl', mqJobListCtrl);
-})
+});
