@@ -6,6 +6,14 @@ define(function() {
 
         var _maxAvailableDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 1);
 
+        Date.prototype.Format = function(formatStr){   
+            var str = formatStr;
+            str=str.replace(/yyyy|YYYY/,this.getFullYear());
+            str=str.replace(/MM/,(this.getMonth()+1)>9?(this.getMonth()+1).toString():'0' + (this.getMonth()+1)); 
+            str=str.replace(/dd|DD/,this.getDate()>9?this.getDate().toString():'0' + this.getDate());          
+            return str;   
+        };
+
         $(document).ready(function() {
             var _quickMap = {};
             _.each(Config.quickDataList, function(i) {
@@ -22,6 +30,10 @@ define(function() {
                 if(_maxAvailableDate.getDate() != copyMaxAvailable.getDate()) {
                     location.reload();
                 }
+                var s = new Date(start).Format('MM/DD/YYYY'),
+                e = new Date(end).Format('MM/DD/YYYY'),
+                dr = s +' - '+ e;
+                $('input[name="daterange"]').val(dr);
                 _state.endDate = end._d;
                 _state.startDate = start._d;
                 fetchReports();

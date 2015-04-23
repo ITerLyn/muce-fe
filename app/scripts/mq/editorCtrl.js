@@ -60,7 +60,7 @@ define(['mq/muce-hint'], function() {
                     updateStatus(data);
                 }, 3000);
                 updateStatus(data);
-                if(data.isLarge){
+                if(data.large){
                     onBigQuery();
                 }
             }, function() {
