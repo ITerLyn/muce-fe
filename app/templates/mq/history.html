@@ -25,7 +25,8 @@
             <td>{{job.status}}</td>
 
             <td ng-if="job.size">{{job.size|humanBytes}}</td>
-            <td ng-if="!job.size">UNKOWN</td>
+            <td ng-if="job.size == 0 && job.status != 'FAILED'">{{job.size}} bytes</td>
+            <td ng-if="job.size == 0 && job.status == 'FAILED'">UNKOWN</td>
 
             <td class="i-cursor-handle" ng-click="setHqlEditor(job.hql)" style="word-wrap:break-word; word-break:break-word;">{{job.hql}}</td>
             <td>{{job.cost | number:2}}</td>
