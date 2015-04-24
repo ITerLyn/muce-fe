@@ -1,5 +1,5 @@
 define(function() {
-    function mqHistoryCtrl($scope, $rootScope, apiHelper) {
+    function mqHistoryCtrl($scope, $rootScope, $filter, apiHelper) {
         // 支持 选项： order, querys_showed, more_querys
         function fetchHistory(type) {
             apiHelper('getJobList', {
@@ -10,48 +10,11 @@ define(function() {
                     var ct = $scope.jobList[i]['cTime'],
                     st = $scope.jobList[i]['sTime'];
                     var costtime = ct-st;
-                    // console.log(i+'==>'+rt+' - '+st+' = '+costtime);
-                    $scope.jobList[i]['costtime'] = format(costtime);
+                    $scope.jobList[i]['costtime'] = $filter('formatDuration')(costtime);
 
                 }
                 
             });
-        }
-
-        function format(formatSecond){
-            var num = parseInt(formatSecond / 1000);
-            var m = 60;
-            var h = 60 * 60;
-            var ftime;
-            if(num > h){
-                var fh = parseInt(num / h);
-                var fy = num % h;
-                if(fy > m){
-                    var gh = parseInt(fy / m);
-                    var gy = fy % m;
-
-                    ftime = fh+'H '+gh+'M '+gy+'S';
-                } else {
-                    ftime = fh+'H '+'0M '+fy+'S';
-                }
-
-            } else if(num == h) {
-                var fh = parseInt(num /h);
-                ftime = fh+'H 0M 0S';
-            } else {
-                if(num > m){
-                    var gh = parseInt(num / m);
-                    var gy = num % m;
-                    ftime = gh+'M '+gy+'S';
-                } else if(num == m) {
-                    var gh = parseInt(num /m);
-                    ftime = gh+'M 0S';
-                } else {
-                    ftime = num+'S';
-                }
-            }
-
-            return ftime;
         }
 
         fetchHistory('global');

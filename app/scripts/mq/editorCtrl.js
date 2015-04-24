@@ -93,6 +93,10 @@ define(['mq/muce-hint'], function() {
             apiHelper('getJobView', jobid).then(function(data) {
                 $scope.currentJobResult = data;
                 if ($scope.currentJobResult) {
+                    if(angular.isObject($scope.currentJobResult)){
+                        $scope.currentJobResult = '';
+                        return;
+                    }
                     $scope.currentJobResult = _.map($scope.currentJobResult.trim().split('\n'), function(i) {
                         return i.split('\t');
                     });

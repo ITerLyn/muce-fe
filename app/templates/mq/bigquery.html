@@ -41,7 +41,7 @@ table td{word-wrap:break-word;}
             <td ng-if="!job.size">UNKOWN</td>
 
             
-            <td>{{job.cost | number:2}}</td>
+            <td>{{job.cost | number:2 | currency:"￥"}}</td>
             <td>{{job.costtime}}</td>
             <!-- 操作 -->
             <td ng-switch on="job.status">
