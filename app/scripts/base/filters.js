@@ -50,6 +50,44 @@ define([], function() {
         }
     }
 
+    function formatDuration(){
+        return function(seconds) {
+            var num = parseInt(seconds / 1000);
+            var m = 60;
+            var h = 60 * 60;
+            var ftime;
+            if(num > h){
+                var fh = parseInt(num / h);
+                var fy = num % h;
+                if(fy > m){
+                    var gh = parseInt(fy / m);
+                    var gy = fy % m;
+
+                    ftime = fh+'H '+gh+'M '+gy+'S';
+                } else {
+                    ftime = fh+'H '+'0M '+fy+'S';
+                }
+
+            } else if(num == h) {
+                var fh = parseInt(num /h);
+                ftime = fh+'H 0M 0S';
+            } else {
+                if(num > m){
+                    var gh = parseInt(num / m);
+                    var gy = num % m;
+                    ftime = gh+'M '+gy+'S';
+                } else if(num == m) {
+                    var gh = parseInt(num /m);
+                    ftime = gh+'M 0S';
+                } else {
+                    ftime = num+'S';
+                }
+            }
+
+            return ftime;
+        }
+    }
+
     angular.module('muceApp.base.filters', [])
         .filter('capitalize', capitalize)
         .filter('joinArr', joinArr)
@@ -57,6 +95,7 @@ define([], function() {
         .filter('humanBytes', humanBytes)
         .filter('linizeArray', linizeArray)
         .filter('joinArrExt', joinArrExt)
+        .filter('formatDuration', formatDuration)
         .filter('percentize', ['$filter',
             function($filter) {
                 return function(input, decimals) {

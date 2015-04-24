@@ -19,6 +19,10 @@ define(function() {
                     controller: function($scope) {
                         // Todo: hive result stdout
                         if ($scope.result) {
+                            if(angular.isObject($scope.result)){
+                                $scope.result = '';
+                                return;
+                            }
                             $scope.result = _.map($scope.result.trim().split('\n'), function(i) {
                                 return i.split('\t');
                             });

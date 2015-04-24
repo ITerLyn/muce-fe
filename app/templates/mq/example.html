@@ -1,27 +1,28 @@
 <div id="mq_user_query_example" class="span9">
     <div class="bs-docs-example">
-        <code>&lt;distinct&gt;</code> Android DAU #
+        <code>&lt;distinct&gt;</code> WDJ DAU: 从 commonpackage 算Wandoujia 整体的 DAU
     </div>
-    <pre class="prettyprint linenums">select count(distinct id) from detail_common_package where product = 'ANDROID' and p_date='20141026'
+    <pre class="prettyprint linenums">select count(distinct id) from muce_topic.commonpackage where p_product = 'ANDROID' and p_date='20150401'
     </pre>
     <div class="bs-docs-example">
-        <code>&lt;group by&gt;</code> 按 view_url 来看用户数
+        <code>&lt;distinct&gt;</code> WDJ NDLU: 从 applicationstart 算Wandoujia 整体的 NDLU
     </div>
-    <pre class="prettyprint linenums">select count(distinct id),view_url from detail_clickevent WHERE p_date>='20141020' and p_date<='20141023' group by view_url
+    <pre class="prettyprint linenums">select count(distinct id) from muce_topic.applicationstart where is_start_new = 1 and p_product='ANDROID' and p_date='20150401'
     </pre>
     <div class="bs-docs-example">
-        <code>&lt;like&gt;</code> Music DLU: 音乐 vertical 日访问用户数
+        <code>&lt;group by&gt;</code> 分 bd_source_alias 来看 ANDROID 点击用户数
     </div>
-    <pre class="prettyprint linenums">select count (distinct id) from detail_showevent where view_url like '％/music％' and view_url not like '%/mything%' and p_date='20141026'
+    <pre class="prettyprint linenums">select count(distinct id),bd_source_alias from muce_topic.click WHERE p_product='ANDROID' and p_date>='20150401' and p_date<='20150403' group by bd_source_alias
     </pre>
     <div class="bs-docs-example">
-        <code>&lt;limit&gt;</code> 查询前10条 detail_taskevent 日志
+        <code>&lt;like&gt; &lt;in&gt;</code> Android Music Distribution: 来自推送和播放消费来源的 Music 的下载与在线播放次数
     </div>
-    <pre class="prettyprint linenums">select * from detail_taskevent where p_date=20141010 and p_hourmin=1200 limit 10
+    <pre class="prettyprint linenums">select count(*) from muce_topic.consumption where consumption_type in ('DOWNLOAD','ONLINE_PLAY') and content_type like '%MUSIC%' and consumption_source in ( 'push','player') and p_product='ANDROID' and p_date='20150401'
     </pre>
     <div class="bs-docs-example">
-        <code>&lt;in&gt;</code> App Consumption: 服务器接收到 App Download 和 Play请求的次数。
+        <code>&lt;limit&gt;</code> 查询 taskevent 的前10条日志记录
     </div>
-    <pre class="prettyprint linenums">select count(*) from detail_taskevent where product = 'ANDROID' and task_action in ('DOWNLOAD', 'PLAY') and content_type= 'APP' and p_date='20141026'
+    <pre class="prettyprint linenums">select * from muce_event_client.taskevent where p_date='20150401' and p_hourmin=1200 limit 10
     </pre>
+
 </div>

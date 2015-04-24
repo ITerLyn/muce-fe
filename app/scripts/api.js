@@ -36,8 +36,8 @@ define([], function() {
             'delJob': 'DELETE /mq/job/:id',
             'getJobList': 'GET /mq/job',
 
-            'getBigJobList': 'GET /mq/job?isLarge=true',
-            'getBigJob': 'GET /mq/job/:id/?isLarge=true',
+            'getBigJobList': 'GET /mq/jobs?isLarge=true',
+            'getBigJob': 'GET /mq/jobs/:id/?isLarge=true',
 
 
             'getJobResult': 'GET /mq/job/:id/result',

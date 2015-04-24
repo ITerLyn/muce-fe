@@ -1,15 +1,19 @@
+<style type="text/css">
+    table td{word-wrap:break-word;}
+</style>
 <table class="table table-bordered mq-job-history" ng-controller="mqJobListCtrl" style="table-layout:fixed;">
     <thead>
         <tr>
             <th>Job Id</th>
             <td>Submit Time</td>
-            <th>Status</th>
+            <th width="10%;">Status</th>
             <th>Size</th>
-            <th style="width:50%;">Hql&nbsp;&nbsp;
+            <th style="width:40%;">Hql&nbsp;&nbsp;
                 <i class="icon-question-sign" tooltip-placement="right"
                     tooltip="Tip: 点击特定的 HQL，快速复制到 SQL 编辑器中"></i></th>
-            <th>Cost</th>
-            <th>Operate</th>
+            <th>Cost(RMB)</th>
+            <th>Cost(Time)</th>
+            <th style="width:10%;">Operate</th>
         </tr>
     </thead>
     <tbody>
@@ -21,10 +25,12 @@
             <td>{{job.status}}</td>
 
             <td ng-if="job.size">{{job.size|humanBytes}}</td>
-            <td ng-if="!job.size">UNKOWN</td>
+            <td ng-if="job.size == 0 && job.status != 'FAILED'">{{job.size}} bytes</td>
+            <td ng-if="job.size == 0 && job.status == 'FAILED'">UNKOWN</td>
 
             <td class="i-cursor-handle" ng-click="setHqlEditor(job.hql)" style="word-wrap:break-word; word-break:break-word;">{{job.hql}}</td>
-            <td>{{job.cost | number:2}}</td>
+            <td>{{job.cost | number:2 | currency:"￥"}}</td>
+            <td>{{job.costtime}}</td>
             <!-- 操作 -->
             <td ng-switch on="job.status">
                 <a ng-switch-when="PENDING" ng-click="killJob(job.id)">Kill</a>

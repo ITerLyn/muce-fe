@@ -9,19 +9,22 @@
             ng-click="reset();">Reset</button>
     </div>
 </form>
-
+<style type="text/css">
+table td{word-wrap:break-word;}
+</style>
 <table class="table table-bordered mq-job-history" style="table-layout:fixed;">
     <thead>
         <tr>
+            <th>User</th>
             <th>Job Id</th>
             <td>Submit Time</td>
             <th>Status</th>
             <th>Size</th>
             
-            <th>Cost</th>
+            <th>Cost(RMB)</th>
             <th>Cost(Time)</th>
             <th>Operate</th>
-            <th style="width:50%;">Hql</th>
+            <th style="width:40%;">Hql</th>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +32,7 @@
             ng-class="{'error': job.status == 'FAILED',
                        'info': (job.status == 'PENDING') || (job.status == 'RUNNING')}">
             
+            <td>{{job.user}}</td>
             <td>{{job.id}}</td>
             <td>{{job.sTime|date: 'yyyy/MM/dd HH:mm:ss'}}</td>
             <td class="w-text-warning">{{job.status}}</td>
@@ -37,8 +41,8 @@
             <td ng-if="!job.size">UNKOWN</td>
 
             
-            <td>{{job.cost | number:2}}</td>
-            <td>{{job.costTime|date: 'yyyy/MM/dd HH:mm:ss'}}</td>
+            <td>{{job.cost | number:2 | currency:"￥"}}</td>
+            <td>{{job.costtime}}</td>
             <!-- 操作 -->
             <td ng-switch on="job.status">
                 <a ng-switch-when="PENDING" ng-click="killJob(job.id)">Kill</a>

@@ -22,6 +22,10 @@ define(function() {
                 if(_maxAvailableDate.getDate() != copyMaxAvailable.getDate()) {
                     location.reload();
                 }
+                var s = $filter('date')(new Date(start), 'MM/dd/yyyy'),
+                e = $filter('date')(new Date(end), 'MM/dd/yyyy'),
+                dr = s +' - '+ e;
+                $('input[name="daterange"]').val(dr);
                 _state.endDate = end._d;
                 _state.startDate = start._d;
                 fetchReports();
