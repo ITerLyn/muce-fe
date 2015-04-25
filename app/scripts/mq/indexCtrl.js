@@ -28,12 +28,12 @@ define(function() {
                 });
             }, 500);
             // change to info state
-            if (!$state.is('mq.info')) {
+            // if (!$state.is('mq.info')) {
                 $state.go('mq.info', {
                     database: db,
                     table: tb
                 });
-            }
+            // }
         };
 
         $scope.switchTbView = function(view) {
