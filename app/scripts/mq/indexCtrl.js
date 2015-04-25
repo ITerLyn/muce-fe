@@ -1,5 +1,5 @@
 define(function() {
-    function mqCtrl($scope, apiHelper, $state, $stateParams) {
+    function mqCtrl($scope, apiHelper, $state, $stateParams, $timeout) {
         $scope.$root.appTitle = 'MQ';
 
         $scope.changeDb = function(db) {
@@ -20,11 +20,13 @@ define(function() {
             apiHelper('getDbSchema', db, tb).then(function(data) {
                 $scope.tbInfo.schema = data;
             });
-            apiHelper('getDbParts', db, tb, {
-                busy: 'global'
-            }).then(function(data) {
-                $scope.tbInfo.partition = data ? data.reverse() : [];
-            });
+            $timeout(function(){
+                apiHelper('getDbParts', db, tb, {
+                  //  busy: 'global'
+                }).then(function(data) {
+                    $scope.tbInfo.partition = data ? data.reverse() : [];
+                });
+            }, 500);
             // change to info state
             if (!$state.is('mq.info')) {
                 $state.go('mq.info', {
