@@ -52,38 +52,35 @@ define([], function() {
 
     function formatDuration(){
         return function(seconds) {
-            var num = parseInt(seconds / 1000);
-            var m = 60;
-            var h = 60 * 60;
-            var ftime;
+            var num = parseInt(seconds / 1000),
+                m = 60,
+                h = 60 * 60,
+                ftime;
             if(num > h){
                 var fh = parseInt(num / h);
                 var fy = num % h;
                 if(fy > m){
                     var gh = parseInt(fy / m);
                     var gy = fy % m;
-
-                    ftime = fh+'H '+gh+'M '+gy+'S';
+                    ftime = fh+'h '+gh+'m '+gy+'s';
                 } else {
-                    ftime = fh+'H '+'0M '+fy+'S';
+                    ftime = fh+'h '+'0m '+fy+'s';
                 }
-
             } else if(num == h) {
                 var fh = parseInt(num /h);
-                ftime = fh+'H 0M 0S';
+                ftime = fh+'h 0m 0s';
             } else {
                 if(num > m){
                     var gh = parseInt(num / m);
                     var gy = num % m;
-                    ftime = gh+'M '+gy+'S';
+                    ftime = gh+'m '+gy+'s';
                 } else if(num == m) {
                     var gh = parseInt(num /m);
-                    ftime = gh+'M 0S';
+                    ftime = gh+'m 0s';
                 } else {
-                    ftime = num+'S';
+                    ftime = num+'s';
                 }
             }
-
             return ftime;
         }
     }
