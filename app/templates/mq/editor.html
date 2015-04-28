@@ -62,12 +62,14 @@
         </div>
     </div>
 
-    <table class="table table-striped" ng-if="currentJobResult">
+    <div ng-if="currentJobResult" style="height: 200px;overflow: scroll;margin: 10px 0 16px;">
+    <table class="table table-striped">
         <tbody>
             <tr ng-repeat="i in currentJobResult track by $index">
                 <td ng-repeat="ii in i track by $index">{{ii}}</td>
             </tr>
         </tbody>
     </table>
+    </div>
 
 </div>
