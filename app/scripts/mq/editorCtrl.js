@@ -34,6 +34,10 @@ define(['mq/muce-hint'], function() {
                     $scope.statusComplete = job.status;
                     $scope.currentJobId = job.id;
                 }
+                if (job.large && ((job.status == 'RUNNING') || (job.status == 'PENDING')) && $scope.atOnce){
+                    $scope.atOnce = false;
+                    onBigQuery();
+                }
             }, function() {
                 cancelCurrentJob();
                 // same with
@@ -59,10 +63,9 @@ define(['mq/muce-hint'], function() {
                 runStatusTimer = $interval(function() {
                     updateStatus(data);
                 }, 3000);
+                $scope.atOnce = true;
                 updateStatus(data);
-                if(data.large){
-                    onBigQuery();
-                }
+                
             }, function() {
                 // error handler
                 // alert-error(error.reason)

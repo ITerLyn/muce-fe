@@ -48,7 +48,7 @@ define(function() {
         };
 
         $scope.searchById = function(id) {
-            apiHelper('getBigJob', id).then(function(data) {
+            apiHelper('getJob', id).then(function(data) {
                 $scope.jobList = [];
                 $scope.jobList.push(data);
             });
