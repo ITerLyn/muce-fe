@@ -24,13 +24,30 @@
             <td>{{job.sTime|date: 'yyyy/MM/dd HH:mm:ss'}}</td>
             <td>{{job.status}}</td>
 
-            <td ng-if="job.size">{{job.size|humanBytes}}</td>
-            <td ng-if="job.size == 0 && job.status != 'FAILED'">{{job.size}} bytes</td>
+            <td ng-if="job.size && (job.status != 'PENDING') && (job.status != 'RUNNING') && (job.status != 'PREPARING') && (job.status != 'TO_KILL')">{{job.size|humanBytes}}</td>
+            <td ng-if="(job.status == 'PENDING') || (job.status == 'RUNNING') || (job.status == 'PREPARING') || (job.status == 'TO_KILL')"></td>
+            <td ng-if="job.size == 0 && ((job.status == 'COMPLETED') || (job.status == 'KILLED'))">{{job.size}} bytes</td>
             <td ng-if="job.size == 0 && job.status == 'FAILED'">UNKOWN</td>
 
             <td class="i-cursor-handle" ng-click="setHqlEditor(job.hql)" style="word-wrap:break-word; word-break:break-word;">{{job.hql}}</td>
-            <td>{{job.cost | number:2 | currency:"￥"}}</td>
-            <td>{{job.costtime}}</td>
+            <td ng-switch on="job.status">
+                <span ng-switch-when="PENDING"></span>
+                <span ng-switch-when="RUNNING"></span>
+                <span ng-switch-when="PREPARING"></span>
+                <span ng-switch-when="TO_KILL"></span>
+                <span ng-switch-when="COMPLETED">{{job.cost | number:2 | currency:"￥"}}</span>
+                <span ng-switch-when="FAILED">{{job.cost | number:2 | currency:"￥"}}</span>
+                <span ng-switch-when="KILLED">{{job.cost | number:2 | currency:"￥"}}</span>
+            </td>
+            <td ng-switch on="job.status">
+                <span ng-switch-when="PENDING"></span>
+                <span ng-switch-when="RUNNING"></span>
+                <span ng-switch-when="PREPARING"></span>
+                <span ng-switch-when="TO_KILL">{{job.costtime}}</span>
+                <span ng-switch-when="COMPLETED">{{job.costtime}}</span>
+                <span ng-switch-when="FAILED">{{job.costtime}}</span>
+                <span ng-switch-when="KILLED">{{job.costtime}}</span>
+            </td>
             <!-- 操作 -->
             <td ng-switch on="job.status">
                 <a ng-switch-when="PENDING" ng-click="killJob(job.id)">Kill</a>

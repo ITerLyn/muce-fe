@@ -6,7 +6,9 @@ define(function() {
 
         $scope.openJobResultView = function(job) {
             var newScope = $scope.$new(true);
-            apiHelper('getJobView', job.id).then(function(data) {
+            apiHelper('getJobView', job.id, {
+                   busy: 'global'
+                }).then(function(data) {
                 newScope.result = data;
                 openModal();
             });

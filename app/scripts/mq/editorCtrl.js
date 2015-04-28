@@ -90,7 +90,7 @@ define(['mq/muce-hint'], function() {
         }
 
         $scope.openCurrentJobView = function (jobid){
-            apiHelper('getJobView', jobid).then(function(data) {
+            apiHelper('getJobView', jobid, {busy: 'global'}).then(function(data) {
                 $scope.currentJobResult = data;
                 if ($scope.currentJobResult) {
                     if(angular.isObject($scope.currentJobResult)){
