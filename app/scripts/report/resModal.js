@@ -310,6 +310,8 @@ define(function() {
             }
         },
         combinedMetric: function($scope, apiHelper) {
+            $scope.formlyData.metricId1 = $scope.formlyData.metricId1.id;
+            $scope.formlyData.metricId2 = $scope.formlyData.metricId2.id;
             var postData = _.clone($scope.formlyData);
             $scope.expressionErr = '';
             if ($scope._data) {
@@ -645,6 +647,7 @@ define(function() {
     });
 
     resModalModule.controller('metricModalWrapperCtrl', function($scope) {
+        $scope.modalTitle = 'Add Metric';
         $scope.toggleMetricTypeTab = function(type) {
             $scope.$root.currentMetricTab = type;
         };
