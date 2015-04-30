@@ -550,11 +550,13 @@ define(function() {
                     // Todo 找不到~ metricId1(变化过的)
                     $scope.formlyData.metricId1 = _.find(data, function(i) {
                         return i.id == $scope.formlyData.metricId1;
-                    }).id;
+                    });
                     $scope.formlyData.metricId2 = _.find(data, function(i) {
                         return i.id == $scope.formlyData.metricId2;
-                    }).id;
+                    });
                 } else {
+                    $scope.formlyData.metricId1 = data[0];
+                    $scope.formlyData.metricId2 = data[1];
                     $scope.formlyData.type = '0';
                 }
             });
