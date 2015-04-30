@@ -20,6 +20,47 @@ define(['mq/muce-hint'], function() {
             });
         }
 
+        function confirmHql() {
+            var confirmInfo = 'Please confirm whether you need to enter 「p_product」?';
+            var newScope = $scope.$new(true);
+            newScope.confirmInfo = confirmInfo;
+            newScope.ok = function(){
+                //console.log('ok');
+                modalInst.close();
+            };
+            newScope.cancel = function(scope){
+                //console.log('cancel');
+                modalInst.close();
+                var curTime = 0;
+                apiHelper('addJob', {
+                    data: $scope.form
+                }).then(function(data) {
+                    // Todo: know the job id
+                    $scope.currentJob = data;
+                    if (!$state.is('mq.history')) {
+                        $state.go('mq.history');
+                    }
+                    runTimer = $interval(function() {
+                        $scope.runTimeText = getFormatedTimeDelta(curTime);
+                        curTime += 7;
+                    }, 70);
+                    runStatusTimer = $interval(function() {
+                        updateStatus(data);
+                    }, 3000);
+                    $scope.atOnce = true;
+                    updateStatus(data);
+                    
+                }, function() {
+                });
+            };
+
+            var modalInst = $modal.open({
+                templateUrl: 'templates/mq/partials/confirm-hql-modal.html',
+                size: 'lg',
+                scope: newScope
+            });
+        }
+
         function updateStatus(data) {
             $rootScope.$emit('mq:fetchHistory', {
                 channel: 'auto'
@@ -48,29 +89,35 @@ define(['mq/muce-hint'], function() {
             var curTime = 0;
             $scope.statusComplete = '';
             $scope.currentJobResult = '';
-            apiHelper('addJob', {
-                data: $scope.form
-            }).then(function(data) {
-                // Todo: know the job id
-                $scope.currentJob = data;
-                if (!$state.is('mq.history')) {
-                    $state.go('mq.history');
-                }
-                runTimer = $interval(function() {
-                    $scope.runTimeText = getFormatedTimeDelta(curTime);
-                    curTime += 7;
-                }, 70);
-                runStatusTimer = $interval(function() {
+            var hql = $scope.form.hql;
+            var tt = /\s+p_product/;
+            if(tt.test(hql)){
+                apiHelper('addJob', {
+                    data: $scope.form
+                }).then(function(data) {
+                    // Todo: know the job id
+                    $scope.currentJob = data;
+                    if (!$state.is('mq.history')) {
+                        $state.go('mq.history');
+                    }
+                    runTimer = $interval(function() {
+                        $scope.runTimeText = getFormatedTimeDelta(curTime);
+                        curTime += 7;
+                    }, 70);
+                    runStatusTimer = $interval(function() {
+                        updateStatus(data);
+                    }, 3000);
+                    $scope.atOnce = true;
                     updateStatus(data);
-                }, 3000);
-                $scope.atOnce = true;
-                updateStatus(data);
-                
-            }, function() {
-                // error handler
-                // alert-error(error.reason)
-                // label-import - error.responseText
-            });
+                    
+                }, function() {
+                    // error handler
+                    // alert-error(error.reason)
+                    // label-import - error.responseText
+                });
+            } else {
+                confirmHql();
+            }
         };
 
         $scope.composeNewQuery = function() {

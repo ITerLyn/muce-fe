@@ -24,7 +24,7 @@ define(function() {
                 apiHelper('getDbParts', db, tb, {
                   //  busy: 'global'
                 }).then(function(data) {
-                    $scope.tbInfo.partition = data ? data.reverse() : [];
+                    $scope.tbInfo.partition = data ? data : [];
                 });
             }, 500);
             // change to info state

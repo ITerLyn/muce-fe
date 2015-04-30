@@ -310,6 +310,8 @@ define(function() {
             }
         },
         combinedMetric: function($scope, apiHelper) {
+            $scope.formlyData.metricId1 = $scope.formlyData.metricId1.id;
+            $scope.formlyData.metricId2 = $scope.formlyData.metricId2.id;
             var postData = _.clone($scope.formlyData);
             $scope.expressionErr = '';
             if ($scope._data) {
@@ -548,11 +550,13 @@ define(function() {
                     // Todo 找不到~ metricId1(变化过的)
                     $scope.formlyData.metricId1 = _.find(data, function(i) {
                         return i.id == $scope.formlyData.metricId1;
-                    }).id;
+                    });
                     $scope.formlyData.metricId2 = _.find(data, function(i) {
                         return i.id == $scope.formlyData.metricId2;
-                    }).id;
+                    });
                 } else {
+                    $scope.formlyData.metricId1 = data[0];
+                    $scope.formlyData.metricId2 = data[1];
                     $scope.formlyData.type = '0';
                 }
             });
@@ -645,6 +649,7 @@ define(function() {
     });
 
     resModalModule.controller('metricModalWrapperCtrl', function($scope) {
+        $scope.modalTitle = 'Add Metric';
         $scope.toggleMetricTypeTab = function(type) {
             $scope.$root.currentMetricTab = type;
         };
