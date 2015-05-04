@@ -92,16 +92,27 @@ define(function() {
             // use native sort method, instead of angular's filter orderBy
             $scope.sortType = type;
             $scope.sortReverse = !$scope.sortReverse;
+            // need sort all datas , not only current page datas
+            _allTableData.result = _.sortBy(_allTableData.result, function(item) {
+                return item[type];
+            });
+            if ($scope.sortReverse) {
+                _allTableData.result.reverse();
+            }
+            _tableDataPg = 1;
+            var tableRows = _allTableData.result.slice(_pageSize * (_tableDataPg - 1), _pageSize * _tableDataPg);
+            /*
             var tableRows = _.sortBy($scope.tableRows, function(item) {
                 /*if ($scope.sortBy === 'date') {
                     // make date number to sort
                     return +item[type];
                 }*/
-                return item[type];
+            /*    return item[type];
             });
             if ($scope.sortReverse) {
                 tableRows.reverse();
             }
+            */
             $scope.tableRows = [];
             $timeout(function() {
                 $scope.tableRows = tableRows;
