@@ -91,7 +91,9 @@ define(['mq/muce-hint'], function() {
             $scope.currentJobResult = '';
             var hql = $scope.form.hql;
             var tt = /\s+p_product/;
-            if(tt.test(hql)){
+            // if(tt.test(hql)){
+            // because of server side checking , browser side checking was temporarily pretermitted
+            if(true){
                 apiHelper('addJob', {
                     data: $scope.form
                 }).then(function(data) {

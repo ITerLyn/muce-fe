@@ -649,7 +649,8 @@ define(function() {
     });
 
     resModalModule.controller('metricModalWrapperCtrl', function($scope) {
-        $scope.modalTitle = 'Add Metric';
+        var prefix = $scope._data ? 'Edit ' : 'Add ';
+        $scope.modalTitle = prefix + 'Metric';
         $scope.toggleMetricTypeTab = function(type) {
             $scope.$root.currentMetricTab = type;
         };
