@@ -12,7 +12,7 @@ define([
     var Config = {
         delAlertPrefix: 'Are you sure you wish to delete ',
         quickDataList: _.zip(
-            'Last day,Last 2 days,Last 3 days,Last 1 week,Last 2 week,Last 1 month'.split(','), [1, 2, 3, 7, 14, 31]
+            'Last day,Last 2 days,Last 3 days,Last 1 week,Last 2 weeks,Last 1 month'.split(','), [1, 2, 3, 7, 14, 31]
         ),
         periodFormatMap: {
             0: 'yyyy-MM-dd',

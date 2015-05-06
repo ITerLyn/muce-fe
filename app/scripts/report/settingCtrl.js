@@ -30,6 +30,16 @@ define(function() {
                 _state.startDate = start._d;
                 fetchReports();
             });
+
+            var changeDom = function(){
+                $('.daterangepicker .ranges .range_inputs').after($('.daterangepicker .ranges ul'));
+                $('.daterangepicker .ranges .range_inputs button').eq(1).after($('.daterangepicker .ranges .range_inputs button')[0]);
+                
+            }, once = _.once(changeDom);
+
+            $('input[name="daterange"]').on('show.daterangepicker', function(ev, picker) {
+                once();
+            });
         });
 
         function setDefaultDateRange() {
