@@ -63,25 +63,19 @@
 }
 
 @-webkit-keyframes spin {
-  /* line 45, component/loader.scss */
   0% {
-    -webkit-transform: rotate3D(0, 0, 0, 0deg);
     -moz-transform: rotate3D(0, 0, 0, 0deg);
     -ms-transform: rotate3D(0, 0, 0, 0deg);
-    -o-transform: rotate3D(0, 0, 0, 0deg);
+    -webkit-transform: rotate3D(0, 0, 0, 0deg);
     transform: rotate3D(0, 0, 0, 0deg);
   }
-
-  /* line 48, component/loader.scss */
   100% {
-    -webkit-transform: rotate3D(0, 0, 1, 360deg);
     -moz-transform: rotate3D(0, 0, 1, 360deg);
     -ms-transform: rotate3D(0, 0, 1, 360deg);
-    -o-transform: rotate3D(0, 0, 1, 360deg);
+    -webkit-transform: rotate3D(0, 0, 1, 360deg);
     transform: rotate3D(0, 0, 1, 360deg);
   }
 }
-
 /* ngShow/ngHide - add and remove
     ngIf - enter and leave
     ngInclude - enter and leave
@@ -135,67 +129,45 @@
 }
 
 @-moz-keyframes fadeDownEnter {
-  /* line 40, component/animate.scss */
   from {
     -moz-transform: translate3D(0, -15px, 0);
     transform: translate3D(0, -15px, 0);
     opacity: 0;
   }
-
-  /* line 44, component/animate.scss */
   to {
     -moz-transform: translate3D(0, 0, 0);
     transform: translate3D(0, 0, 0);
     opacity: 1;
   }
 }
-
 @-webkit-keyframes fadeDownEnter {
-  /* line 40, component/animate.scss */
   from {
     -webkit-transform: translate3D(0, -15px, 0);
     transform: translate3D(0, -15px, 0);
     opacity: 0;
   }
-
-  /* line 44, component/animate.scss */
   to {
     -webkit-transform: translate3D(0, 0, 0);
     transform: translate3D(0, 0, 0);
     opacity: 1;
   }
 }
-
-@-o-keyframes fadeDownEnter {
-  /* line 40, component/animate.scss */
-  from {
-    -o-transform: translate3D(0, -15px, 0);
-    transform: translate3D(0, -15px, 0);
-    opacity: 0;
-  }
-
-  /* line 44, component/animate.scss */
-  to {
-    -o-transform: translate3D(0, 0, 0);
-    transform: translate3D(0, 0, 0);
-    opacity: 1;
-  }
-}
-
 @keyframes fadeDownEnter {
-  /* line 40, component/animate.scss */
   from {
+    -moz-transform: translate3D(0, -15px, 0);
+    -ms-transform: translate3D(0, -15px, 0);
+    -webkit-transform: translate3D(0, -15px, 0);
     transform: translate3D(0, -15px, 0);
     opacity: 0;
   }
-
-  /* line 44, component/animate.scss */
   to {
+    -moz-transform: translate3D(0, 0, 0);
+    -ms-transform: translate3D(0, 0, 0);
+    -webkit-transform: translate3D(0, 0, 0);
     transform: translate3D(0, 0, 0);
     opacity: 1;
   }
 }
-
 /* line 2, modules/_global.scss */
 .with-metric-popover .popover {
   max-width: 550px;
@@ -327,7 +299,7 @@ textarea {
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 2dppx) {
-  /* line 120, modules/_global.scss */
+  /* line 117, modules/_global.scss */
   .select2-search input,
   .select2-search-choice-close,
   .select2-container .select2-choice abbr,
@@ -357,6 +329,11 @@ textarea {
 }
 
 /* 外部组件设置 */
+/*// 业务前缀 mc-<modle>-
+// 组件前缀 i-<componentName>-
+// 一次性限定 x-语义+限定
+
+// 基础组件*/
 /* line 151, modules/_global.scss */
 .mc-notices .alert {
   max-width: 400px;
@@ -393,6 +370,23 @@ textarea {
   .container-wrapper {
     margin-top: 10px;
   }
+}
+
+/* line 184, modules/_global.scss */
+.daterangepicker .ranges .range_inputs {
+  margin-bottom: 10px;
+}
+/* line 186, modules/_global.scss */
+.daterangepicker .ranges .range_inputs input {
+  width: 62px;
+}
+/* line 189, modules/_global.scss */
+.daterangepicker .ranges .range_inputs button.btn {
+  margin-right: 8px;
+}
+/* line 194, modules/_global.scss */
+.daterangepicker .ranges .range_inputs > div:nth-child(2) {
+  padding-left: 6px;
 }
 
 /* report page fix */
@@ -432,195 +426,197 @@ textarea {
   border-radius: 4px !important;
   margin-bottom: 0;
   width: 180px;
+  cursor: pointer;
+  background-color: #fff !important;
 }
-/* line 33, modules/_report.scss */
+/* line 35, modules/_report.scss */
 .mc-report-container .setting-wrapper .daterange-wrapper i {
   position: absolute;
   right: 7px;
   top: 7px;
 }
-/* line 41, modules/_report.scss */
+/* line 43, modules/_report.scss */
 .mc-report-container .setting-wrapper > *, .mc-report-container .setting-wrapper .date-operator > *, .mc-report-container .setting-wrapper .dimension-operator > *, .mc-report-container .setting-wrapper .dimension-wrapper > * {
   margin-right: 10px;
   margin-bottom: 0 !important;
   vertical-align: middle;
   display: inline-block !important;
 }
-/* line 46, modules/_report.scss */
+/* line 48, modules/_report.scss */
 .mc-report-container .setting-wrapper > *.ng-hide, .mc-report-container .setting-wrapper .date-operator > *.ng-hide, .mc-report-container .setting-wrapper .dimension-operator > *.ng-hide, .mc-report-container .setting-wrapper .dimension-wrapper > *.ng-hide {
   display: none !important;
 }
-/* line 51, modules/_report.scss */
+/* line 53, modules/_report.scss */
 .mc-report-container .setting-wrapper .dimension-wrapper {
   border-left: 1px solid #ccc;
   padding-left: 5px;
 }
-/* line 56, modules/_report.scss */
+/* line 58, modules/_report.scss */
 .mc-report-container .setting-wrapper .dimension-operator > .ng-hide {
   display: none !important;
 }
-/* line 62, modules/_report.scss */
+/* line 64, modules/_report.scss */
 .mc-report-container .setting-wrapper .date-operator .btn-group .btn {
   padding-left: 18px;
   padding-right: 18px;
 }
-/* line 68, modules/_report.scss */
+/* line 70, modules/_report.scss */
 .mc-report-container .setting-wrapper .dimension-operator {
   margin: 10px 0;
 }
-/* line 71, modules/_report.scss */
+/* line 73, modules/_report.scss */
 .mc-report-container .setting-wrapper .dimension-operator button, .mc-report-container .setting-wrapper .dimension-operator label {
   display: inline-block;
 }
-/* line 79, modules/_report.scss */
+/* line 81, modules/_report.scss */
 .mc-report-container .setting-wrapper .dimension-operator label select {
   margin: 0;
 }
-/* line 83, modules/_report.scss */
+/* line 85, modules/_report.scss */
 .mc-report-container .setting-wrapper .trigger-wrapper {
   /* vertical-align: middle;
   margin-top: 10px; */
 }
-/* line 88, modules/_report.scss */
+/* line 90, modules/_report.scss */
 .mc-report-container .setting-wrapper select {
   width: 130px;
   margin-bottom: 0;
 }
-/* line 94, modules/_report.scss */
+/* line 96, modules/_report.scss */
 .mc-report-container .table-wrapper {
   min-height: 500px;
   /*margin: 20px 0;*/
   border: none;
   min-height: initial;
 }
-/* line 100, modules/_report.scss */
+/* line 102, modules/_report.scss */
 .mc-report-container .table-wrapper td {
   text-align: center;
   max-width: 300px;
   word-break: break-all;
 }
-/* line 106, modules/_report.scss */
+/* line 108, modules/_report.scss */
 .mc-report-container .table-wrapper thead td {
   cursor: pointer;
 }
-/* line 108, modules/_report.scss */
+/* line 110, modules/_report.scss */
 .mc-report-container .table-wrapper thead td i {
   padding-left: 10px;
 }
-/* line 113, modules/_report.scss */
+/* line 115, modules/_report.scss */
 .mc-report-container .table-wrapper double-bounce-spinner {
   position: fixed;
   bottom: -85px;
   left: 55%;
 }
 
-/* line 121, modules/_report.scss */
+/* line 123, modules/_report.scss */
 .mc-report-filter-table {
   table-layout: fixed;
 }
-/* line 124, modules/_report.scss */
+/* line 126, modules/_report.scss */
 .mc-report-filter-table td > select, .mc-report-filter-table td > input {
   width: 95%;
 }
 
 /* advanced dimension modal */
-/* line 131, modules/_report.scss */
+/* line 133, modules/_report.scss */
 .mc-report-dimenAdv-form .controls select {
   width: 35%;
 }
-/* line 134, modules/_report.scss */
+/* line 136, modules/_report.scss */
 .mc-report-dimenAdv-form .controls input {
   width: 40%;
 }
 
-/* line 139, modules/_report.scss */
+/* line 141, modules/_report.scss */
 .mc-report-sidebar {
   padding: 0;
 }
-/* line 142, modules/_report.scss */
+/* line 144, modules/_report.scss */
 .mc-report-sidebar > li {
   margin-top: 5px;
 }
-/* line 147, modules/_report.scss */
+/* line 149, modules/_report.scss */
 .mc-report-sidebar .sidebar-list > li {
   position: relative;
   overflow: hidden;
 }
-/* line 151, modules/_report.scss */
+/* line 153, modules/_report.scss */
 .mc-report-sidebar .sidebar-list > li a {
   padding: 8px 14px;
   margin: 0 0 -1px;
   padding-right: 4px;
 }
-/* line 157, modules/_report.scss */
+/* line 159, modules/_report.scss */
 .mc-report-sidebar .sidebar-list > li i[class*="icon-"] {
   font-size: 14px;
   position: absolute;
   top: 8px;
   right: 5px;
 }
-/* line 166, modules/_report.scss */
+/* line 168, modules/_report.scss */
 .mc-report-sidebar .nav-list {
   margin-top: 10px;
   border-radius: 6px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
 }
-/* line 171, modules/_report.scss */
+/* line 173, modules/_report.scss */
 .mc-report-sidebar .nav-list > li > a {
   border: 1px solid #E5E5E5;
 }
-/* line 176, modules/_report.scss */
+/* line 178, modules/_report.scss */
 .mc-report-sidebar .btn-group {
   width: 100%;
 }
-/* line 179, modules/_report.scss */
+/* line 181, modules/_report.scss */
 .mc-report-sidebar .btn-group .btn-name, .mc-report-sidebar .btn-group .btn-caret {
   height: 35px;
   font-size: 16px;
 }
-/* line 184, modules/_report.scss */
+/* line 186, modules/_report.scss */
 .mc-report-sidebar .btn-group .btn-name {
   width: 87%;
 }
-/* line 188, modules/_report.scss */
+/* line 190, modules/_report.scss */
 .mc-report-sidebar .btn-group .dropdown-menu {
   width: 100%;
   overflow: auto;
 }
-/* line 197, modules/_report.scss */
+/* line 199, modules/_report.scss */
 .mc-report-sidebar .report-list > li i.icon-pencil {
   right: 20px !important;
 }
-/* line 203, modules/_report.scss */
+/* line 205, modules/_report.scss */
 .mc-report-sidebar h3 {
   font-size: 18px;
   line-height: 22px;
   padding-left: 10px;
   border-left: 2px solid red;
 }
-/* line 209, modules/_report.scss */
+/* line 211, modules/_report.scss */
 .mc-report-sidebar select {
   max-width: 100%;
 }
-/* line 212, modules/_report.scss */
+/* line 214, modules/_report.scss */
 .mc-report-sidebar input {
   max-width: 95%;
 }
 
-/* line 218, modules/_report.scss */
+/* line 220, modules/_report.scss */
 .mc-mgr {
   margin-top: 20px;
 }
-/* line 222, modules/_report.scss */
+/* line 224, modules/_report.scss */
 .mc-mgr .report-op-bar select, .mc-mgr .report-op-bar input {
   width: 120px;
   margin-bottom: 0;
 }
-/* line 228, modules/_report.scss */
+/* line 230, modules/_report.scss */
 .mc-mgr .table {
   table-layout: fixed;
 }
-/* line 232, modules/_report.scss */
+/* line 234, modules/_report.scss */
 .mc-mgr .table th, .mc-mgr .table td {
   word-wrap: break-word;
 }
@@ -1051,7 +1047,7 @@ textarea {
   padding: 2px;
   text-align: center;
 }
-/* line 64, modules/_dashboard.scss */
+/* line 63, modules/_dashboard.scss */
 .dashboard-container .widget-title,
 .dashboard-container .widget-subtitle {
   text-align: center;

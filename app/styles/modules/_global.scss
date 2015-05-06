@@ -179,3 +179,21 @@ textarea {
         margin-top: 10px;
     }
 }
+
+.daterangepicker .ranges{
+    .range_inputs{
+        margin-bottom:10px;
+        input{
+            width: 62px;
+        }
+        button.btn{
+            margin-right:8px;
+        }
+    }
+    
+    .range_inputs>div:nth-child(2) {
+        padding-left: 6px;
+    }
+    
+    
+}
