@@ -31,13 +31,14 @@ define(function() {
                 fetchReports();
             });
 
-            var doonce;
+            var changeDom = function(){
+                $('.daterangepicker .ranges .range_inputs').after($('.daterangepicker .ranges ul'));
+                $('.daterangepicker .ranges .range_inputs button').eq(1).after($('.daterangepicker .ranges .range_inputs button')[0]);
+                
+            }, once = _.once(changeDom);
+
             $('input[name="daterange"]').on('show.daterangepicker', function(ev, picker) {
-                if(!doonce){
-                    $('.daterangepicker .ranges .range_inputs').after($('.daterangepicker .ranges ul'));
-                    $('.daterangepicker .ranges .range_inputs button').eq(1).after($('.daterangepicker .ranges .range_inputs button')[0]);
-                    doonce = true;
-                }
+                once();
             });
         });
 
