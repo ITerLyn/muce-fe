@@ -95,7 +95,8 @@ define(['mq/muce-hint'], function() {
             // because of server side checking , browser side checking was temporarily pretermitted
             if(true){
                 apiHelper('addJob', {
-                    data: $scope.form
+                    data: $scope.form,
+                    busy: 'global'
                 }).then(function(data) {
                     // Todo: know the job id
                     $scope.currentJob = data;
