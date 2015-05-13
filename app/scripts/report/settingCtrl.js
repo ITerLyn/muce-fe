@@ -11,7 +11,7 @@ define(function() {
             _.each(Config.quickDataList, function(i) {
                 _quickMap[i[0]] = [moment().subtract('days', i[1])._d, moment()._d];
             });
-
+            $('.daterangepicker').remove();
             $('input[name="daterange"]').daterangepicker({
                 ranges: _quickMap,
                 // format: 'YYYY-MM-DD',
