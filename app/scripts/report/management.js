@@ -31,9 +31,9 @@ define([], function() {
             _initFetchData();
 
             $scope['del' + capitalizeType] = function(item) {
+                var alertTip = Config.delAlertPrefix + type + ' ' + item.name;
+                if (!window.confirm(alertTip)) return;
                 apiHelper('del' + capitalizeType, item.id).then(function() {
-                    var alertTip = Config.delAlertPrefix + type + ' ' + item.name;
-                    if (!window.confirm(alertTip)) return;
                     // remove metric from list
                     $scope[type + 'List'] = _.without($scope[type + 'List'], item);
                 });
