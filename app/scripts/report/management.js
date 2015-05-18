@@ -75,12 +75,23 @@ define([], function() {
                 _initFetchData();
             });
 
-            if (type === 'report') {
+            if (type === 'report' || type === 'metric' || type == 'dimension') {
                 function handleShowDisable() {
                     if ($scope.showDisable) {
-                        delete $scope.filterObj.enable;
+                        delete  $scope.filterObj.enable;
                     } else {
                         $scope.filterObj.enable = true;
+                    }
+                }
+                $scope.filterList = 'enable';
+                function handleFilterList(){
+                    $scope.filterObj = {};
+                    if($scope.filterList == 'disable'){
+                        $scope.filterObj.enable = false;
+                    }else if($scope.filterList == 'enable'){
+                        $scope.filterObj.enable = true;
+                    }else{
+                        delete $scope.filterObj.enable;
                     }
                 }
 
@@ -214,10 +225,12 @@ define([], function() {
                 $scope.showDisable = false;
                 $scope.$watch('showDisable', function(val, old) {
                     if (_.isUndefined(old)) return;
-                    console.log(val);
                     handleShowDisable($scope.filterObj);
                 });
-
+                $scope.$watch('filterList', function(val, old) {
+                    if (_.isUndefined(old)) return;
+                    handleFilterList($scope.filterObj);
+                });
                 $scope.$watch(function() {
                     return [$scope.filterText, $scope.filterField]
                 }, function() {

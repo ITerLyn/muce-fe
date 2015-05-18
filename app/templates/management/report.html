@@ -8,12 +8,19 @@
 
         <a ng-click="showIntro()">Intro Me!</a>
 
-        <label class="pull-right" id="intro-management-show_disable_report">
+        <!-- <label class="pull-right" id="intro-management-show_disable_report">
             Show Disable Report
             <input name="switch-field-1" ng-model="showDisable"
                 class="ace ace-switch ace-switch-7" type="checkbox">
             <span class="lbl"></span>
-        </label>
+        </label> -->
+
+        <select class="pull-right span4" style="width:auto" ng-model="filterList">
+            <option value="disable">Show disabled</option>
+            <option value="enable">Show enabled</option>
+            <option value="all">Show all</option>
+        </select>
+        
     </p>
     <table class="table table-bordered table-striped">
         <tr>
