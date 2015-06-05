@@ -19,7 +19,7 @@
         <th>isEnable</th>
         <th>Operate</th>
     </tr>
-    <tr ng-repeat="dimension in dimensionList">
+    <tr ng-repeat="dimension in dimensionList|filter:filterObj">
         <td>{{dimension.id}}</td>
         <td>{{dimension.name}}</td>
         <td ng-bind-html="dimension.fields|linizeArray"></td>

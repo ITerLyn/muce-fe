@@ -77,6 +77,29 @@
     </table>
 </script>
 
+
+<script type="text/ng-template" id="report/add_metric/retention_days">
+    <div class="control-group ng-scope" ng-if="formlyData.period == 0">
+        <label class="control-label ng-binding">BaseStart</label>
+        <div class="controls" > 
+        <input placeholder="基期开始距现在 Period 数" id="baseStartDay" name="baseStartDay" type="text" ng-model="formlyData.baseStartDay" validator="required">
+        </div>
+    </div>
+    <div class="control-group ng-scope">
+        <label class="control-label ng-binding">BaseEnd</label>
+        <div class="controls" > 
+        <input placeholder="基标期开始距现在 Period 数" id="baseEndDay" name="baseEndDay" type="text" ng-model="formlyData.baseEndDay" validator="required" class="">
+        </div>
+    </div>
+    <div class="control-group ng-scope">
+        <label class="control-label ng-binding">ReportStart</label>
+        <div class="controls" > 
+            <input placeholder="目标期开始距现在 Period 数" id="reportStartDay" name="reportStartDay" type="text" ng-model="formlyData.reportStartDay" validator="required" class="">
+        </div>
+        </div>
+    </div>
+</script>
+
 <script type="text/ng-template" id="report/add_dimension/fields.html">
     <ui-select ng-model="formlyData.field">
       <ui-select-match placeholder="Select or search in the list...">{{$select.selected.name}}</ui-select-match>
@@ -97,22 +120,42 @@
     </div>
 
     <div class="modal-body">
-        <tabset>
-            <tab heading="Normal Metric" ng-if="checkViewStats('normal_metric')"
-                select="toggleMetricTypeTab('normal_metric')">
-                <div ng-controller="metricModalCtrl" id="normal_metric"
-                    ng-if="$root.currentMetricTab == 'normal_metric'">
-                    <formly-form fields="formFields" key="{{formName}}"></formly-form>
+        <div class="form-horizontal">
+            <div class="control-group ng-scope">
+                <label class="control-label ng-binding"> Metric Type </label>
+                <div class="controls" >
+                    <select ng-model="$root.currentMetricTab " ng-options="item.value as item.text for item in metricTypeOptions"></select>
                 </div>
-            </tab>
-            <tab heading="Combine Metric" ng-if="checkViewStats('combine_metric')"
-                select="toggleMetricTypeTab('combine_metric')">
-                <div ng-controller="combinedMetricModalCtrl" id="combine_metric"
-                    ng-if="$root.currentMetricTab == 'combine_metric'">
-                    <formly-form fields="formFields" key="{{formName}}"></formly-form>
-                </div>
-            </tab>
-        </tabset>
+            </div>
+        </div>
+        <div ng-controller="metricModalCtrl" id="normal_metric"
+            ng-if="$root.currentMetricTab == 'normal'">
+            <formly-form fields="formFields" key="{{formName}}"></formly-form>
+        </div>
+        <div ng-controller="combinedMetricModalCtrl" id="combine_metric"
+            ng-if="$root.currentMetricTab == 'combine'">
+            <formly-form fields="formFields" key="{{formName}}"></formly-form>
+        </div>
+        <div ng-controller="activeMetricModalCtrl" id="active"
+            ng-if="$root.currentMetricTab == 'active'">
+            <formly-form fields="formFields" key="{{formName}}"></formly-form>
+        </div>
+        <div ng-controller="retentionMetricModalCtrl" id="retention"
+            ng-if="$root.currentMetricTab == 'retention'">
+            <formly-form fields="formFields" key="{{formName}}"></formly-form>
+        </div>
+        <div ng-controller="newMetricModalCtrl" id="new"
+            ng-if="$root.currentMetricTab == 'new'">
+            <formly-form fields="formFields" key="{{formName}}"></formly-form>
+        </div>
+        <div ng-controller="avgMetricModalCtrl" id="avg"
+            ng-if="$root.currentMetricTab == 'avg'">
+            <formly-form fields="formFields" key="{{formName}}"></formly-form>
+        </div>
+        <div ng-controller="feedMetricModalCtrl" id="feed"
+            ng-if="$root.currentMetricTab == 'feed'">
+            <formly-form fields="formFields" key="{{formName}}"></formly-form>
+        </div>
     </div>
 
     <div class="modal-footer">

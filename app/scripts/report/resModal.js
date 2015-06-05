@@ -17,15 +17,22 @@ define(function() {
             key: 'group',
             type: 'select'
         },
-        metricTypeField: {
+        metricDataTypeField: {
             type: 'select',
-            label: 'Metric Type',
+            label: 'Data Type',
             key: 'type',
             optionStr: 'idx as opt for (idx, opt) in options.options',
             options: ['int', 'float', 'percent'],
             attrs: {
                 validator: 'required'
             }
+        },
+        metricBaseMetricField: { 
+            label: 'Base Metirc',
+            key: 'metricId',
+            type: 'select',
+            optionStr: 'item.value as item.text for item in options.options',
+            options: []
         },
         chartOptions: ['Line'],
 
@@ -137,7 +144,7 @@ define(function() {
                     'cols': '50'
                 }
             },
-            dataDict.metricTypeField, dataDict.commentField, {
+            dataDict.metricDataTypeField, dataDict.commentField, {
                 referTpl: 'report/add_metric/fileds.html'
             }
         ],
@@ -147,7 +154,95 @@ define(function() {
             }, {
                 referTpl: 'report/add_metric/expression.html'
             },
-            dataDict.metricTypeField, dataDict.commentField
+            dataDict.metricDataTypeField, dataDict.commentField
+        ],
+        activeMetric: [{
+                label: 'Metric Name',
+                key: 'name'
+            }, dataDict.metricBaseMetricField, {
+                label: 'Cross Days',
+                key: 'startDays',
+                type: 'select',
+                optionStr: 'idx as opt for (idx, opt) in options.options',
+                options: [7,15,30]
+            }, {
+                label: 'Active Days',
+                key: 'standardDays', 
+                attrs: {
+                    'placeholder' : '例≥1天，写1'
+                }
+            }, dataDict.commentField
+        ],
+        retentionMetric: [{
+                label: 'Metric Name',
+                key: 'name'
+            }, dataDict.metricBaseMetricField, {
+                label: 'Report Metirc',
+                key: 'absReportMetricId',
+                type: 'select',
+                optionStr: 'item.value as item.text for item in options.options',
+                options :[]
+            }, {
+                label: 'Retention Period',
+                key: 'period',
+                type: 'select',
+                optionStr: 'item.value as item.text for item in options.options',
+                options: [{value:1,text:'天'},{value:7,text:'周'},{value:0,text:'月'}]
+
+            }, {
+                label: 'Sequence',
+                key: 'sequence'
+            }, {
+                referTpl: 'report/add_metric/retention_days.html',
+            },
+            // {
+            //     label: 'BaseStart',
+            //     key: 'baseStartDay',
+            //     attrs: {
+            //         'placeholder': '基期开始距现在 Period 数',
+            //         'ng-if' : 'formlyData.period == 0'
+            //     }
+            // }, {
+            //     label: 'BaseEnd',
+            //     key: 'baseEndDay',
+            //     attrs: {
+            //         'placeholder': '基标期开始距现在 Period 数'
+            //     }
+            // }, {
+            //     label: 'ReportStart',
+            //     key: 'reportStartDay',
+            //     attrs: {
+            //         'placeholder': '目标期开始距现在 Period 数', 
+            //     }
+            // }, 
+            dataDict.metricDataTypeField, dataDict.commentField
+        ], 
+        newMetric: [{
+                label: 'Metric Name',
+                key: 'name'
+            }, dataDict.metricBaseMetricField, {
+                label: 'Cross Days',
+                key: 'startDays',
+                type: 'select',
+                optionStr: 'idx as opt for (idx, opt) in options.options',
+                options: [7,15,30]
+            }, dataDict.commentField
+        ],
+        avgMetric: [{
+                label: 'Metric Name',
+                key: 'name'
+            }, dataDict.metricBaseMetricField, {
+                label: 'Cross Days',
+                key: 'startDays',
+                type: 'select',
+                optionStr: 'idx as opt for (idx, opt) in options.options',
+                options: [7,15,30]
+            }, dataDict.metricDataTypeField, dataDict.commentField
+        ],
+        feedMetric: [{
+                label: 'Metric Name',
+                key: 'name'
+            }, dataDict.metricBaseMetricField, dataDict.metricDataTypeField, dataDict.commentField
         ],
         dimension: [{
                 label: 'Select Field',
@@ -157,7 +252,7 @@ define(function() {
                 label: 'Dimension Name'
             }, {
                 key: 'type',
-                label: 'Dimension Type',
+                label: 'Data Type',
                 options: _.db.dimensionTypes,
                 optionStr: 'idx as opt for (idx, opt) in options.options'
             },
@@ -334,6 +429,92 @@ define(function() {
                     $scope.expressionErr = '请先填写表达式';
                 }
             }
+        },
+        activeMetric: function($scope, apiHelper){
+            var postData = _.clone($scope.formlyData);
+            if ($scope._data) {
+                apiHelper('editActiveUserMetric', {
+                    data: postData
+                }).then(function(_ret) {
+                    $scope.$emit('report:editMetric', _ret);
+                    $scope.$close();
+                });
+            }else{
+                apiHelper('addActiveUserMetric', {
+                    data: postData
+                }).then(function(data) {
+                    $scope.$emit('report:addMetric', data);
+                    $scope.$close();
+                });
+            }
+        },
+        retentionMetric: function($scope, apiHelper){
+
+            var sequence = Number($scope.formlyData.sequence);
+            var period = $scope.formlyData.period || 1;
+            if(Number(period)){
+                $scope.formlyData.baseStartDay = ( sequence + 1) * period - 1;
+                $scope.formlyData.baseEndDay = period * sequence;
+                $scope.formlyData.reportStartDay = period - 1;
+            }else{
+
+            }
+            return false;
+
+            var postData = _.clone($scope.formlyData);
+            if ($scope._data) {
+                apiHelper('editRetentionUserMetric', {
+                    data: postData
+                }).then(function(_ret) {
+                    $scope.$emit('report:editMetric', _ret);
+                    $scope.$close();
+                });
+            }else{
+                apiHelper('addRetentionUserMetric', {
+                    data: postData
+                }).then(function(data) {
+                    $scope.$emit('report:addMetric', data);
+                    $scope.$close();
+                });
+            }
+        },
+        newMetric: function($scope, apiHelper){
+            var postData = _.clone($scope.formlyData);
+            if ($scope._data) {
+                apiHelper('editNewUserMetric', {
+                    data: postData
+                }).then(function(_ret) {
+                    $scope.$emit('report:editMetric', _ret);
+                    $scope.$close();
+                });
+            }else{
+                apiHelper('addNewUserMetric', {
+                    data: postData
+                }).then(function(data) {
+                    $scope.$emit('report:addMetric', data);
+                    $scope.$close();
+                });
+            }
+        },
+        avgMetric: function($scope, apiHelper){
+            if ($scope._data) {
+                apiHelper('editAvgMetric', {
+                    data: postData
+                }).then(function(_ret) {
+                    $scope.$emit('report:editMetric', _ret);
+                    $scope.$close();
+                });
+            }else{
+                apiHelper('addAvgMetric', {
+                    data: postData
+                }).then(function(data) {
+                    $scope.$emit('report:addMetric', data);
+                    $scope.$close();
+                });
+            }
+        },
+        feedMetric: function($scope, apiHelper){
+            
         },
         dimension: function($scope, apiHelper) {
             var postData = processIdObj($scope.formlyData, 'field');
@@ -514,7 +695,7 @@ define(function() {
                 $scope._validateDimension = new Date().getTime();
             }, true);
         },
-        metric: function($scope, apiHelper) {
+        metric: function($scope, apiHelper) { 
             apiHelper('getEventList').then(function(data) {
                 $scope.formFields[0].options = data;
                 if ($scope._data) {
@@ -561,6 +742,21 @@ define(function() {
                 }
             });
         },
+        activeMetric: function($scope, apiHelper) {
+            initMetricData($scope, apiHelper);
+        },
+        retentionMetric: function($scope, apiHelper) {
+            initMetricData($scope, apiHelper);
+        },
+        newMetric: function($scope, apiHelper) {
+            initMetricData($scope, apiHelper);
+        },
+        avgMetric: function($scope, apiHelper) {
+            initMetricData($scope, apiHelper);
+        },
+        feedMetric: function($scope, apiHelper) {
+        },
+
         dimension: function($scope, apiHelper) {
             apiHelper('getFieldIdList').then(function(data) {
                 data = transFieldIds(data);
@@ -580,6 +776,58 @@ define(function() {
             });
         }
     };
+
+    function initMetricData($scope, apiHelper){
+        $scope.formlyData.startDays = 7;
+        apiHelper('getDetailMetricsList').then(function(data){
+            var options = [];
+            var metricType = $scope.$root.currentMetricTab;
+            var reportMetric = [];
+            _.each(data,function(item,i){
+                if(metricType == 'active'){
+                    if(item.metricType == 'NORMAL' && item.metricSubType == "USER"){
+                        var tmp = {
+                            'text':item.name,
+                            'value':item.id
+                        }; 
+                        options.push(tmp);
+                    }
+                }else if(metricType == 'retention'){
+                    if(item.metricType == 'NEW_USER' || item.metricSubType == "USER"){
+                        var tmp = {
+                            'text':item.name,
+                            'value':item.id
+                        }; 
+                        options.push(tmp);
+                    }
+                }else if(metricType == 'new'){
+                    if(item.metricSubType == "USER"){
+                        var tmp = {
+                            'text':item.name,
+                            'value':item.id
+                        }; 
+                        options.push(tmp);
+                    }
+                }else if(metricType == 'avg'){
+                    var tmp = {
+                        'text':item.name,
+                        'value':item.id
+                    }; 
+                    options.push(tmp);
+                }else if(metricType == 'feed'){
+                    
+                }
+            });
+            $scope.formFields[1].options = options;
+            $scope.formlyData.metricId = options[0].value;
+            $scope.formlyData.absReportMetricId = options[0].value;
+            if(metricType == 'retention')  $scope.formFields[2].options = options;
+            if ($scope._data) {
+                $scope.formlyData = $scope._data;
+            }
+        });
+        
+    }
 
     function transFieldIds(data) {
         return _.map(data, function(val, key) {
@@ -651,6 +899,22 @@ define(function() {
     resModalModule.controller('metricModalWrapperCtrl', function($scope) {
         var prefix = $scope._data ? 'Edit ' : 'Add ';
         $scope.modalTitle = prefix + 'Metric';
+        $scope.metricTypeOptions = [
+            {value:'normal',text:'Normal'},
+            {value:'combine',text:'Combine'},
+            {value:'active',text:'Active'},
+            {value:'retention',text:'Retention'},
+            {value:'new',text:'New'},
+            {value:'avg',text:'Avg'}
+        ];
+
+        // $scope.$root.currentMetricTab = $scope._data ? $scope._data.metricType.toLocaleLowerCase() + '_metric' : 'normal_metric';
+        // $scope.$root.metricType = 'normal';
+
+        // $scope.$watch('$root.currentMetricTab',function(type){
+        //     $scope.$root.currentMetricTab = type + '_metric';
+        // });
+
         $scope.toggleMetricTypeTab = function(type) {
             $scope.$root.currentMetricTab = type;
         };
@@ -658,18 +922,23 @@ define(function() {
         $scope.checkViewStats = function(type) {
             if ($scope._data) {
                 if ($scope._data.metricType == 'COMBINE') {
-                    $scope.$root.currentMetricTab = 'combine_metric';
+                    $scope.$root.currentMetricTab = 'combine';
+                } else if ($scope._data.metricType == 'RETENTION_USER'){
+                    $scope.$root.currentMetricTab = 'retention';
+                } else if ($scope._data.metricType == 'ACTIVE_USER') {
+                    $scope.$root.currentMetricTab = 'active';
+                } else if ($scope._data.metricType == 'NEW_USER') {
+                    $scope.$root.currentMetricTab = 'new';
+                } else if ($scope._data.metricType == 'AVG') {
+                    $scope.$root.currentMetricTab = 'avg';
                 } else {
-                    $scope.$root.currentMetricTab = 'normal_metric';
+                    $scope.$root.currentMetricTab = 'normal';
                 }
-                if ($scope.$root.currentMetricTab == type) {
-                    return true;
-                } else {
-                    return false;
-                }
+            }else{
+                $scope.$root.currentMetricTab = 'normal';
             }
-            return true;
         };
+        $scope.checkViewStats();
     });
 
     resModalModule.config(function($validationProvider) {

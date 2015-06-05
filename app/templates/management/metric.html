@@ -13,6 +13,7 @@
             <th>Name</th>
             <th style="width: 30%">Hql</th>
             <th style="width: 60px">Metric Type</th>
+            <th style="width: 60px">Metric Sub Type</th>
             <th>Data Type</th>
             <th>Event Id</th>
             <th>Create Time</th>
@@ -22,7 +23,7 @@
             <td>isEnable</td>
             <th>Operate</th>
         </tr>
-        <tr ng-repeat="metric in metricList">
+        <tr ng-repeat="metric in metricList|filter:filterObj">
             <td>{{metric.id}}</td>
             <td>{{metric.name}}</td>
             <td>{{metric.hql}}</td>
@@ -31,6 +32,7 @@
                 <div tip-marker content="metric.hql"></div>
             </td> -->
             <td>{{metric.metricType}}</td>
+            <td>{{metric.metricSubType}}</td>
             <td>{{metric.type|castTypeFromInt}}</td>
             <td>{{metric.eventId}}</td>
             <td>{{metric.createTime|date:'yyyy-MM-dd'}}</td>
