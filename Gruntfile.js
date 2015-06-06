@@ -188,7 +188,8 @@ module.exports = function(grunt) {
                 singleQuotes: true,
             },
             dist: {
-                src: '.tmp/concat/scripts/app.js'
+                src: '.tmp/concat/scripts/app.js',
+                dest: '.tmp/concat/scripts/app.js'
             }
         },
         filerev: {
