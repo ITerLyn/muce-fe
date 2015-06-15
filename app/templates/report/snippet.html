@@ -128,11 +128,11 @@
                 </div>
             </div>
         </div>
-        <div ng-controller="metricModalCtrl" id="normal_metric"
+        <div ng-controller="metricModalCtrl" id="normal"
             ng-if="$root.currentMetricTab == 'normal'">
             <formly-form fields="formFields" key="{{formName}}"></formly-form>
         </div>
-        <div ng-controller="combinedMetricModalCtrl" id="combine_metric"
+        <div ng-controller="combinedMetricModalCtrl" id="combine"
             ng-if="$root.currentMetricTab == 'combine'">
             <formly-form fields="formFields" key="{{formName}}"></formly-form>
         </div>
