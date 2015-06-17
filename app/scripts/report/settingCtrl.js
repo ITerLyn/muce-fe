@@ -40,6 +40,10 @@ define(function() {
             $('input[name="daterange"]').on('show.daterangepicker', function(ev, picker) {
                 once();
             });
+
+            $('#dimensions_1,#dimensions_2,#dimensions_3').find('select').change(function(){
+
+            })
         });
 
         function setDefaultDateRange() {
@@ -75,9 +79,17 @@ define(function() {
 
             apiHelper('getReportDetail', report.id, {
                 busy: 'global'
-            }).then(function(data) {
+            }).then(function(data) { 
+
                 _state.reportDetail = data;
                 _state.dimenAdv.clearStatus();
+
+                _state.dimensionsSelect = [
+                    _state.reportDetail.dimensions,
+                    _state.reportDetail.dimensions,
+                    _state.reportDetail.dimensions,
+                ]
+
             });
         }, true);
 
@@ -104,6 +116,21 @@ define(function() {
             });
             fetchReports();
         });
+
+        $scope.filterItem = function(index){
+            var currentItem = _state.dimenAdv.dimensions[index];
+            for(var i in _state.dimensionsSelect){
+                i = Number(i); 
+                if(i != index){ 
+                    if(currentItem){
+                        _state.dimensionsSelect[i] = _.without(_state.dimensionsSelect[i],currentItem);
+                    }else{
+                        _state.dimensionsSelect[i] = _state.dimensionsSelect[i].concat(_state.dimensionsSelect[index]);
+                    }
+                    
+                }
+            }
+        }
 
         /* Dimen Advanced Modal */
         var dimenAdvModal;
