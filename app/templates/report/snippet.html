@@ -193,7 +193,9 @@
             <tr ng-repeat="i in [1,2,3] track by $index">
                 <td>
                     <select ng-model="state.dimenAdv.dimensions[$index]"
-                        ng-options="i as i.name for i in state.reportDetail.dimensions">
+                        ng-options="i as i.name for i in state.dimensionsSelect[$index]"
+                        ng-change="filterItem($index)"
+                        >
                         <option ng-value="ghostDimension"></option>
                     </select>
                 </td>

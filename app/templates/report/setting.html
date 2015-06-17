@@ -11,21 +11,27 @@
         <label for="dimensions_1"
             ng-show="state.reportDetail.dimensions.length>0">
             <select id="dimensions_1" ng-model="state.dimenAdv.dimensions[0]"
-                ng-options="i as i.name for i in state.reportDetail.dimensions">
+                ng-options="i as i.name for i in state.dimensionsSelect[0]"
+                ng-change="filterItem(0)"
+                >
                 <option ng-value="ghostDimension"></option>
             </select>
         </label>
         <label for="dimensions_2"
             ng-show="state.reportDetail.dimensions.length>1">
             <select id="dimensions_2"  ng-model="state.dimenAdv.dimensions[1]"
-                ng-options="i as i.name for i in state.reportDetail.dimensions">
+                ng-options="i as i.name for i in state.dimensionsSelect[1]"
+                ng-change="filterItem(1)"
+                >
                 <option ng-value="ghostDimension"></option>
             </select>
         </label>
         <label for="dimensions_3"
             ng-show="state.reportDetail.dimensions.length>2">
             <select id="dimensions_3" ng-model="state.dimenAdv.dimensions[2]"
-                ng-options="i as i.name for i in state.reportDetail.dimensions">
+                ng-options="i as i.name for i in state.dimensionsSelect[2]"
+                ng-change="filterItem(2)"
+                >
                 <option ng-value="ghostDimension"></option>
             </select>
         </label>
