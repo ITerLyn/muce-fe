@@ -39,11 +39,7 @@ define(function() {
 
             $('input[name="daterange"]').on('show.daterangepicker', function(ev, picker) {
                 once();
-            });
-
-            $('#dimensions_1,#dimensions_2,#dimensions_3').find('select').change(function(){
-
-            })
+            }); 
         });
 
         function setDefaultDateRange() {
@@ -125,9 +121,22 @@ define(function() {
                     if(currentItem){
                         _state.dimensionsSelect[i] = _.without(_state.dimensionsSelect[i],currentItem);
                     }else{
-                        _state.dimensionsSelect[i] = _state.dimensionsSelect[i].concat(_state.dimensionsSelect[index]);
+                        // _state.dimensionsSelect[i] = _state.dimensionsSelect[i].concat(_state.dimensionsSelect[index]);
+                        var repeat = 0;
+                        for(var _i in _state.dimensionsSelect[index]){
+                            for(var _j in _state.dimensionsSelect[i]){
+                                if(_state.dimensionsSelect[index][_i].name == _state.dimensionsSelect[i][_j].name){
+                                    count++;
+                                }
+                            }
+                            if(count == 0)
+                            {
+                                _state.dimensionsSelect[i].push(_state.dimensionsSelect[index][_i]);
+                            }
+                        }
+
+
                     }
-                    
                 }
             }
         }

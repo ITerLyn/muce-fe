@@ -34,7 +34,7 @@ define(function() {
             }
         };
 
-        $scope.killJob = function(id) {
+        $scope.killJob = function(id) { 
             apiHelper('delJob', id).then(function() {
                 // refresh ?!
                 $rootScope.$emit('mq:fetchHistory', {
