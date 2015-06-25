@@ -80,11 +80,7 @@ define(function() {
                 _state.reportDetail = data;
                 _state.dimenAdv.clearStatus();
 
-                _state.dimensionsSelect = [
-                    _state.reportDetail.dimensions,
-                    _state.reportDetail.dimensions,
-                    _state.reportDetail.dimensions,
-                ]
+                _state.dimensionsSelect = _state.reportDetail.dimensions;
 
             });
         }, true);
@@ -112,33 +108,22 @@ define(function() {
             });
             fetchReports();
         });
-
-        $scope.filterItem = function(index){
-            var currentItem = _state.dimenAdv.dimensions[index];
-            for(var i in _state.dimensionsSelect){
-                i = Number(i); 
-                if(i != index){ 
-                    if(currentItem){
-                        _state.dimensionsSelect[i] = _.without(_state.dimensionsSelect[i],currentItem);
-                    }else{
-                        // _state.dimensionsSelect[i] = _state.dimensionsSelect[i].concat(_state.dimensionsSelect[index]);
-                        var repeat = 0;
-                        for(var _i in _state.dimensionsSelect[index]){
-                            for(var _j in _state.dimensionsSelect[i]){
-                                if(_state.dimensionsSelect[index][_i].name == _state.dimensionsSelect[i][_j].name){
-                                    count++;
-                                }
-                            }
-                            if(count == 0)
-                            {
-                                _state.dimensionsSelect[i].push(_state.dimensionsSelect[index][_i]);
-                            }
-                        }
-
-
-                    }
-                }
+        var hasInArr = [];
+        $scope.addDimension = function(arg){
+            //repeat check
+            if (hasInArr.length == 3) {
+                hasInArr.shift(); 
+                _state.dimenAdv.dimensions.shift();
             }
+            if (hasInArr.indexOf(arg.dimensions.name) == -1) {
+                hasInArr.push(arg.dimensions.name); 
+                _state.dimenAdv.dimensions.push(arg.dimensions);
+            }
+        }
+        
+        $scope.delDimension = function(item){
+            hasInArr = _.without(hasInArr, item.name);
+            _state.dimenAdv.dimensions = _.without(_state.dimenAdv.dimensions , item);
         }
 
         /* Dimen Advanced Modal */
@@ -181,6 +166,7 @@ define(function() {
             },
             clearStatus: function() {
                 var self = this;
+                hasInArr = [];
                 self.dimensions = [];
                 self.filters = null;
                 self.nowDimensionsVal = [];
@@ -211,6 +197,7 @@ define(function() {
             if ($state.params.dimensions) {
                 _state.dimenAdv.dimensions = _.map(JSON.parse($state.params.dimensions), function(id) {
                     return _.find(_state.reportDetail.dimensions, function(item) {
+                        hasInArr.push(item.name);
                         return item.id === id;
                     });
                 });

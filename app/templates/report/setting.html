@@ -5,36 +5,22 @@
       <i class="icon-calendar"></i>
     </div>
 
-    <div ng-show="state.reportDetail.dimensions.length > 0"
-        class="dimension-wrapper">
+    <div class="dimension-wrapper">
         Dimensions：
-        <label for="dimensions_1"
-            ng-show="state.reportDetail.dimensions.length>0">
-            <select id="dimensions_1" ng-model="state.dimenAdv.dimensions[0]"
-                ng-options="i as i.name for i in state.dimensionsSelect[0]"
-                ng-change="filterItem(0)"
+        <label for="dimensions">
+            <select id="dimensions"
+                ng-model="dimensions"
+                ng-options="i as i.name for i in state.dimensionsSelect" 
+                ng-change="addDimension(this)"
                 >
-                <option ng-value="ghostDimension"></option>
             </select>
         </label>
-        <label for="dimensions_2"
-            ng-show="state.reportDetail.dimensions.length>1">
-            <select id="dimensions_2"  ng-model="state.dimenAdv.dimensions[1]"
-                ng-options="i as i.name for i in state.dimensionsSelect[1]"
-                ng-change="filterItem(1)"
-                >
-                <option ng-value="ghostDimension"></option>
-            </select>
-        </label>
-        <label for="dimensions_3"
-            ng-show="state.reportDetail.dimensions.length>2">
-            <select id="dimensions_3" ng-model="state.dimenAdv.dimensions[2]"
-                ng-options="i as i.name for i in state.dimensionsSelect[2]"
-                ng-change="filterItem(2)"
-                >
-                <option ng-value="ghostDimension"></option>
-            </select>
-        </label>
+        <ul class="list-unstyled dimensionTag clearfix">
+            <li ng-repeat="item in state.dimenAdv.dimensions track by $index" ng-model="state.dimenAdv.dimensions[$index]" class="pull-left" tooltip="{{item.name}}">
+                <span class="tag-text">{{item.name}}</span>
+                <span class="tag-close" ng-click="delDimension(item)">×</span>
+            </li>
+        </ul>  
 
         <a class="i-ng-bg-btn"
             ng-show="state.reportDetail.dimensions.length"

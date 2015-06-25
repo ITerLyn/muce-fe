@@ -34,8 +34,12 @@ define(function() {
             }
         };
 
-        $scope.killJob = function(id) { 
-            apiHelper('delJob', id).then(function() {
+        $scope.killJob = function(job) { 
+            if(job.user != $scope.$root.userInfo.mail.split('@')[0]){
+                alert("You have no right to kill other‘s query.");
+                return false;
+            }
+            apiHelper('delJob', job.id).then(function() {
                 // refresh ?!
                 $rootScope.$emit('mq:fetchHistory', {
                     channel: 'auto'
