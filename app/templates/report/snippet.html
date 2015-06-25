@@ -25,6 +25,37 @@
     </label>
 </script>
 
+<script type="text/ng-template" id="report/add_metric/base_metric.html">
+    <div class="control-group x-control-stack-select">
+        <label class="control-label">
+            Base Metric 
+        </label>
+        <div class="controls">
+            <ui-select ng-model="formlyData.metricId">
+              <ui-select-match placeholder="Select or search in the list...">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="opt in metricList | filter: {name: $select.search}">
+                <span>{{opt.name}}</span>
+              </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="report/add_metric/report_metric.html">
+    <div class="control-group x-control-stack-select">
+        <label class="control-label">
+            Report Metric 
+        </label>
+        <div class="controls">
+            <ui-select ng-model="formlyData.absReportMetricId">
+              <ui-select-match placeholder="Select or search in the list...">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="opt in metricList | filter: {name: $select.search}">
+                <span>{{opt.name}}</span>
+              </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+</script>
 <script type="text/ng-template" id="report/add_metric/expression.html">
 
     <div class="control-group x-control-stack-select">
@@ -184,31 +215,47 @@
     </div>
     <div class="modal-body">
         <!-- Todo: 加个提示说不能超过三个！！ -->
-        <table class="mc-report-filter-table">
+
+        <div class="form-horizontal">
+            <div class="control-group ng-scope">
+                <label class="control-label ng-binding">Dimensions：</label>
+                <div class="controls">
+                    <select id="dimensions"
+                        ng-model="dimensions"
+                        ng-options="i as i.name for i in state.dimensionsSelect" 
+                        ng-change="addDimension(this)"
+                        >
+                    </select>
+                </div>
+            </div>
+        </div> 
+        <table class="mc-report-filter-table" width="100%">
             <tr>
                 <th width="33%">Dimension</th>
                 <th width="33%">Filter Type</th>
                 <th width="34%">Filter Value</th>
             </tr>
-            <tr ng-repeat="i in [1,2,3] track by $index">
+            <tr ng-repeat="i in state.dimenAdv.dimensions track by $index">
                 <td>
-                    <select ng-model="state.dimenAdv.dimensions[$index]"
-                        ng-options="i as i.name for i in state.dimensionsSelect[$index]"
-                        ng-change="filterItem($index)"
-                        >
-                        <option ng-value="ghostDimension"></option>
-                    </select>
+                    <ul class="list-unstyled dimensionTag clearfix">
+                        <li tooltip="{{i.name}}">
+                            <span class="tag-text">{{i.name}}</span>
+                            <span class="tag-close" ng-click="delDimension(i)">×</span>
+                        </li>
+                    </ul>  
+                    
                 </td>
                 <td>
                     <select ng-model="state.dimenAdv.nowDimensionsType[$index]"
-                        ng-options="i for i in state.dimenAdv.filterTypes">
+                        ng-options="i for i in state.dimenAdv.filterTypes" 
+                        >
                         <option value=""></option>
                     </select>
                 </td>
                 <td>
                     <input type="text"
                         ng-model="state.dimenAdv.nowDimensionsVal[$index]"
-                        ng-show="state.dimenAdv.nowDimensionsType[$index]">
+                        ng-disabled="!state.dimenAdv.nowDimensionsType[$index]">
                 </td>
             </tr>
         </table>

@@ -28,11 +28,7 @@ define(function() {
             }
         },
         metricBaseMetricField: { 
-            label: 'Base Metirc',
-            key: 'metricId',
-            type: 'select',
-            optionStr: 'item.value as item.text for item in options.options',
-            options: []
+            referTpl: 'report/add_metric/base_metric.html'
         },
         chartOptions: ['Line'],
 
@@ -177,11 +173,7 @@ define(function() {
                 label: 'Metric Name',
                 key: 'name'
             }, dataDict.metricBaseMetricField, {
-                label: 'Report Metirc',
-                key: 'absReportMetricId',
-                type: 'select',
-                optionStr: 'item.value as item.text for item in options.options',
-                options :[]
+                referTpl: 'report/add_metric/report_metric.html'
             }, {
                 label: 'Retention Period',
                 key: 'period',
@@ -431,6 +423,7 @@ define(function() {
             }
         },
         activeMetric: function($scope, apiHelper){
+            $scope.formlyData.metricId = $scope.formlyData.metricId.id;
             var postData = _.clone($scope.formlyData);
             if ($scope._data) {
                 apiHelper('editActiveUserMetric', {
@@ -456,10 +449,10 @@ define(function() {
                 $scope.formlyData.baseStartDay = ( sequence + 1) * period - 1;
                 $scope.formlyData.baseEndDay = period * sequence;
                 $scope.formlyData.reportStartDay = period - 1;
-            }else{
-
             }
-            return false;
+            $scope.formlyData.metricId = $scope.formlyData.metricId.id;
+            $scope.formlyData.absReportMetricId = $scope.formlyData.absReportMetricId.id;
+            $scope.formlyData.type = Number($scope.formlyData.type);
 
             var postData = _.clone($scope.formlyData);
             if ($scope._data) {
@@ -479,6 +472,7 @@ define(function() {
             }
         },
         newMetric: function($scope, apiHelper){
+            $scope.formlyData.metricId = $scope.formlyData.metricId.id;
             var postData = _.clone($scope.formlyData);
             if ($scope._data) {
                 apiHelper('editNewUserMetric', {
@@ -497,6 +491,8 @@ define(function() {
             }
         },
         avgMetric: function($scope, apiHelper){
+            $scope.formlyData.metricId = $scope.formlyData.metricId.id;
+            var postData = _.clone($scope.formlyData);
             if ($scope._data) {
                 apiHelper('editAvgMetric', {
                     data: postData
@@ -786,44 +782,43 @@ define(function() {
             _.each(data,function(item,i){
                 if(metricType == 'active'){
                     if(item.metricType == 'NORMAL' && item.metricSubType == "USER"){
-                        var tmp = {
-                            'text':item.name,
-                            'value':item.id
-                        }; 
-                        options.push(tmp);
+                        options.push(item);
                     }
                 }else if(metricType == 'retention'){
                     if(item.metricType == 'NEW_USER' || item.metricSubType == "USER"){
-                        var tmp = {
-                            'text':item.name,
-                            'value':item.id
-                        }; 
-                        options.push(tmp);
+                        options.push(item);
                     }
                 }else if(metricType == 'new'){
                     if(item.metricSubType == "USER"){
-                        var tmp = {
-                            'text':item.name,
-                            'value':item.id
-                        }; 
-                        options.push(tmp);
+                        options.push(item);
                     }
                 }else if(metricType == 'avg'){
-                    var tmp = {
-                        'text':item.name,
-                        'value':item.id
-                    }; 
-                    options.push(tmp);
+                    options.push(item);
                 }else if(metricType == 'feed'){
                     
                 }
             });
-            $scope.formFields[1].options = options;
-            $scope.formlyData.metricId = options[0].value;
-            $scope.formlyData.absReportMetricId = options[0].value;
-            if(metricType == 'retention')  $scope.formFields[2].options = options;
+            $scope.metricList = options; 
+            $scope.formlyData.metricId = options[0];
+            
+            if(metricType == 'retention')  {
+                $scope.formlyData.type = '2';
+                $scope.formlyData.absReportMetricId = options[0];
+            }
             if ($scope._data) {
                 $scope.formlyData = $scope._data;
+                $scope.formlyData.metricId = _.find(options, function(i) {
+                    return i.id == $scope.formlyData.metricId;
+                });
+                
+                if(metricType == 'retention')  {
+                    $scope.formlyData.metricId = _.find(options, function(i) {
+                        return i.id == $scope.formlyData.absBaseMetricId;
+                    });
+                    $scope.formlyData.absReportMetricId = _.find(options, function(i) {
+                        return i.id == $scope.formlyData.absReportMetricId;
+                    });
+                }
             }
         });
         

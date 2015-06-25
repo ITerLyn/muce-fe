@@ -90,7 +90,7 @@
         select {
             width: 130px;
             margin-bottom: 0;
-        }
+        } 
     }
 
     .table-wrapper {
@@ -233,5 +233,46 @@
 
     .table th, .table td {
         word-wrap: break-word;
+    }
+}
+
+ul.dimensionTag {
+    margin-left:0;
+    li{
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle; 
+        margin-right:10px;
+        padding: 0 5px;
+        line-height:30px;
+        color: #fff;
+        background-color: #12ae50;
+        border-radius: 5px;
+        .tag-text{
+            width:100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display:block;
+        }
+        .tag-close{
+            display: none;
+            cursor: pointer;
+            position: absolute;
+            top: -9px;
+            right: -9px;
+            width: 18px;
+            height: 18px;
+            line-height: 20px;
+            text-align: center;
+            background-color: rgba(0,0,0,0.5);
+            border-radius: 100%
+        }
+    }
+    li:hover {
+        .tag-close {
+            display: block;
+        }
     }
 }
