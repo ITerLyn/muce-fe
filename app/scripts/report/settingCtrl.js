@@ -124,6 +124,7 @@ define(function() {
         $scope.delDimension = function(item){
             hasInArr = _.without(hasInArr, item.name);
             _state.dimenAdv.dimensions = _.without(_state.dimenAdv.dimensions , item);
+            $scope.dimensions = _state.dimenAdv.dimensions[_state.dimenAdv.dimensions.length - 1];
         }
 
         /* Dimen Advanced Modal */
