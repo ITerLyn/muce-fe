@@ -2,8 +2,8 @@
     <h5>DataBases</h5>
     <ul class="db-list">
         <li class="dropdown db-item"
-            ng-repeat="db in allDbs">
-            <a class="btn dropdown-toggle" ng-click="changeDb(db)" tooltip="{{db.comment}}" tooltip-placement="top">
+            ng-repeat="db in allDbs" ng-style="{background:db.name=='muce_topic' ? '#3baa24' : '#abbac3'}">
+            <a class="btn dropdown-toggle" ng-click="changeDb(db)" tooltip="{{db.comment}}" tooltip-placement="top"  data-ng-attr-style="{{db.name == 'muce_topic' && 'background-color:#3baa24!important;border-color:#3baa24'}}">
                 <i class="icon-th"></i>{{db.name}}
             </a>
             <ul class="dropdown-menu" ng-if="currentDb==db.name">
