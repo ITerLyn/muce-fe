@@ -452,7 +452,7 @@ define(function() {
             }
             $scope.formlyData.metricId = $scope.formlyData.metricId.id;
             $scope.formlyData.absReportMetricId = $scope.formlyData.absReportMetricId.id;
-            $scope.formlyData.type = Number($scope.formlyData.type);
+            $scope.formlyData.type = 2;
 
             var postData = _.clone($scope.formlyData);
             if ($scope._data) {
@@ -743,6 +743,7 @@ define(function() {
         },
         retentionMetric: function($scope, apiHelper) {
             initMetricData($scope, apiHelper);
+            $scope.formFields[6].options = ['percent'];
         },
         newMetric: function($scope, apiHelper) {
             initMetricData($scope, apiHelper);
