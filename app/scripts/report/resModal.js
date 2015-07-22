@@ -180,10 +180,13 @@ define(function() {
                 type: 'select',
                 optionStr: 'item.value as item.text for item in options.options',
                 options: [{value:1,text:'天'},{value:7,text:'周'},{value:0,text:'月'}]
-
             }, {
                 label: 'Sequence',
-                key: 'sequence'
+                key: 'sequence',
+                attrs:{
+                    readonly : true,
+                    placeholder:1
+                }
             }, {
                 referTpl: 'report/add_metric/retention_days.html',
             },
@@ -444,13 +447,13 @@ define(function() {
         retentionMetric: function($scope, apiHelper){
 
             var sequence = Number($scope.formlyData.sequence);
-            var period = $scope.formlyData.period || 1;
+            var period = 1; //$scope.formlyData.period || 1;
             if(Number(period)){
                 $scope.formlyData.baseStartDay = ( sequence + 1) * period - 1;
                 $scope.formlyData.baseEndDay = period * sequence;
                 $scope.formlyData.reportStartDay = period - 1;
             }
-            $scope.formlyData.metricId = $scope.formlyData.metricId.id;
+            $scope.formlyData.absBaseMetricId = $scope.formlyData.metricId.id;
             $scope.formlyData.absReportMetricId = $scope.formlyData.absReportMetricId.id;
             $scope.formlyData.type = 2;
 
@@ -744,6 +747,7 @@ define(function() {
         retentionMetric: function($scope, apiHelper) {
             initMetricData($scope, apiHelper);
             $scope.formFields[6].options = ['percent'];
+            $scope.formlyData.sequence = 1;
         },
         newMetric: function($scope, apiHelper) {
             initMetricData($scope, apiHelper);

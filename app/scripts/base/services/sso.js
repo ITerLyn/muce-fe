@@ -1,6 +1,6 @@
 define(function() {
     var SSO_LOCATION = 'http://sso.wandoulabs.com/';
-    var whiteList = ['gaohailang', 'zuxinglong', 'gaiyongjuan', 'weijin', 'haiyating', 'songzi', 'zhengwenjie'];
+    var whiteList = ['gaohailang', 'zuxinglong', 'gaiyongjuan', 'weijin', 'haiyating', 'songzi', 'zhengwenjie','ningxiaobei','gaojunxiu'];
 
     angular.module('muceApp.base.services.sso', [])
         .provider('ssoInterceptor', function() {
@@ -35,7 +35,7 @@ define(function() {
             // check admin user
             $rootScope.checkAdmin = function() {
                 if (!$rootScope.userInfo) return false;
-                return _.contains(whiteList, $rootScope.userInfo.id);
+                return true;//_.contains(whiteList, $rootScope.userInfo.id);
             };
         });
 });
