@@ -812,6 +812,9 @@ define(function() {
                 });
                 
                 if(metricType == 'retention')  {
+                    $scope.formlyData.period = $scope.formlyData.reportStartDay + 1;
+                    $scope.formlyData.sequence = $scope.formlyData.baseEndDay / $scope.formlyData.period;
+                
                     $scope.formlyData.metricId = _.find(options, function(i) {
                         return i.id == $scope.formlyData.absBaseMetricId;
                     });
