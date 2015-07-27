@@ -73,11 +73,10 @@ define([
                                             tempObj.pointInterval =  24 * 3600 * 1000;
                                             var start = data.result[0].date + '';
                                             var dateAry = start.match(/(\d{4})(\d{2})(\d{2})/);
-                                            tempObj.pointStart = Date.UTC(dateAry[1], dateAry[2], dateAry[3]);
+                                            tempObj.pointStart = Date.UTC(dateAry[1], dateAry[2]-1, dateAry[3]);
                                             tempObj.data = _.pluck(data.result, metric.id);
                                             series.push(tempObj);
-                                        });
-
+                                        }); 
                                         $scope.chartConfig = {
                                             options: {
                                                 chart: {
