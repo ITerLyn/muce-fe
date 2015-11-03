@@ -187,7 +187,7 @@ define(['mq/muce-hint'], function() {
                     // +input, +delete, complete
                     if (change.text[0] == " ") return;
                     if (change.text[0] == "" && change.text[1] == "") return;
-                    CodeMirror.showHint(cm);
+                    // CodeMirror.showHint(cm);
                 });
 
                 _editor.on("change", autoReplace);
